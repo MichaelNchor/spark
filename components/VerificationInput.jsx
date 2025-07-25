@@ -1,6 +1,6 @@
-import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { router } from "expo-router";
 
 const VerificationInput = ({ length = 4, onComplete }) => {
   const [digits, setDigits] = useState([]);
@@ -100,12 +100,11 @@ const VerificationInput = ({ length = 4, onComplete }) => {
         </View>
       </View>
       <View>
-        <Link
-          href={"/profile-details"}
-          className="font-poppins-semibold text-primary text-base text-center mt-12"
-        >
-          Send again
-        </Link>
+        <TouchableOpacity onPress={() => router.push("/profile-details")}>
+          <Text className="font-poppins-semibold text-primary text-base text-center mt-12">
+            Send again
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
