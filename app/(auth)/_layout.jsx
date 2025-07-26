@@ -4,6 +4,7 @@ import React from "react";
 const AuthLayout = () => {
   return (
     <>
+    {/* todo: use themprovider to switch dark mode and light mode */}
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen
           name="phonenumber"
