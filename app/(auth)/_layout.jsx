@@ -23,6 +23,12 @@ const AuthLayout = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="gender"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </>
   );

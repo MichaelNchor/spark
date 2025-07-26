@@ -97,8 +97,8 @@ const ProfileDetails = () => {
 
           <CustomButton
             title="Confirm"
-            handlePress={() => router.push("/verify-code")}
-            containerStyles="w-full h-[64px] mt-8"
+            handlePress={() => router.push("/gender")}
+            containerStyles="w-full h-[64px] mt-14"
           />
         </View>
       </ScrollView>
