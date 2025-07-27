@@ -18,7 +18,7 @@ const Gender = () => {
     { id: "2", label: "Male", value: "Male", icon: "checkmark-sharp" }
   ];
 
-  const [gender, setGender] = useState("Woman");
+  const [gender, setGender] = useState("Female");
 
   return (
     <SafeAreaView className="bg-white">
@@ -64,8 +64,8 @@ const Gender = () => {
           </View>
 
           <CustomButton
-            title="Confirm"
-            handlePress={() => router.push("/gender")}
+            title="Continue"
+            handlePress={() => router.push("/interests")}
             containerStyles="w-full h-[64px] mt-96"
           />
         </View>

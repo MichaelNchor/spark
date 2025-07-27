@@ -108,8 +108,10 @@ const ProfileDetails = () => {
         mode="date"
         onConfirm={handleConfirmDate}
         onCancel={() => setDatePickerVisibility(false)}
-        maximumDate={new Date()}
+        minimumDate={new Date('1980-01-01')}
+        maximumDate={new Date('2008-01-01')}        
       />
+
     </SafeAreaView>
   );
 };

@@ -10,24 +10,35 @@ const AuthLayout = () => {
           name="phonenumber"
           options={{
             headerShown: false,
+            animation: "slide_from_right"
           }}
         />
         <Stack.Screen
           name="verify-code"
           options={{
             headerShown: false,
+            animation: "slide_from_right"
           }}
         />
         <Stack.Screen
           name="profile-details"
           options={{
             headerShown: false,
+            animation: "slide_from_right"
           }}
         />
         <Stack.Screen
-          name="gender"
+          name="interests"
           options={{
             headerShown: false,
+            animation: "slide_from_right"
+          }}
+        />
+        <Stack.Screen
+          name="friends"
+          options={{
+            headerShown: false,
+            animation: "slide_from_right"
           }}
         />
       </Stack>
