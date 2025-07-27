@@ -11,6 +11,9 @@ import profile from './icons/puffy-filled-profile-100.png';
 import settings from './icons/puffy-filled-settings-100.png';
 import logo from './icons/spark-icon.png';
 import checkMark from './icons/check-100.png';
+import notifications from './images/notifications.png'
+import people from './images/people.png';
+import filter from './icons/filter-100.png'
 
 export default {
   audioRecord,
@@ -25,5 +28,8 @@ export default {
   facebook,
   apple,
   back,
-  checkMark
+  checkMark, 
+  people,
+  notifications,
+  filter
 };

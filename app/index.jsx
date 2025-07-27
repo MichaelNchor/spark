@@ -22,7 +22,7 @@ export default function App() {
           <Text className="text-base font-poppins-medium text-gray-500">
             Already have an account?
             <Link
-              href={"/signup"}
+              href={"/friends"}
               className="text-primary font-poppins-medium text-lg"
             >
               Sign In
