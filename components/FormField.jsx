@@ -13,13 +13,13 @@ const FormField = ({
 
   return (
     <View className={`space-y-2 ${otherStyles}`}>
-      <Text className="text-base text-gray-500 font-poppins-medium">
+      <Text className="absolute top-1 left-4 text-xs text-gray-400 font-poppins-medium z-10">
         {title}
       </Text>
 
       <View
         className={`w-full h-16 px-4 rounded-2xl border ${
-          isFocused ? "border-primary" : "border-[#CCCCCC]"
+          isFocused ? "border-primary" : "border-[#cccccc]"
         }`}
       >
         <TextInput

@@ -19,7 +19,7 @@ const CustomButton = ({
         isOutline
           ? {
               borderWidth: 1,
-              borderColor: "#CCCCCC",
+              borderColor: "#cccccc",
             }
           : {}
       }

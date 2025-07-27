@@ -40,7 +40,7 @@ const PhoneNumber = () => {
           <CustomButton
             title="Continue"
             handlePress={() => router.push("/verify-code")}
-            containerStyles="w-full h-[64px]"
+            containerStyles="w-full h-[64px] mt-96"
           />
         </View>
       </ScrollView>
