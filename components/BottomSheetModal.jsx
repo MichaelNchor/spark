@@ -13,7 +13,7 @@ const BottomSheetModal = ({ visible, onClose, children }) => {
     <Animated.View
       entering={FadeInUp}
       exiting={FadeOutDown}
-      className="absolute inset-0 justify-end"
+      className="absolute z-30 inset-0 justify-end"
     >
       <BlurView intensity={50} tint="dark" className="absolute inset-0">
         <Pressable className="flex-1" onPress={onClose} />

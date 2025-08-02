@@ -33,6 +33,7 @@ const TabLayout = () => {
           tabBarActiveTintColor: "#E94057",
           tabBarStyle: {
             height: 84,
+            paddingHorizontal: 20
           }
         }}
       >
@@ -43,7 +44,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.home}
+                icon={icons.homeOutline}
                 color={color}
                 focused={focused}
                 name="Home"
@@ -58,7 +59,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.discover}
+                icon={icons.discoverOutline}
                 color={color}
                 focused={focused}
                 name="Discover"
@@ -73,7 +74,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.heart}
+                icon={icons.heartOutline}
                 color={color}
                 focused={focused}
                 name="Likes"
@@ -88,7 +89,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.chat}
+                icon={icons.chatOutline}
                 color={color}
                 focused={focused}
                 name="Chat"
@@ -103,7 +104,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.profile}
+                icon={icons.profileOutline}
                 color={color}
                 focused={focused}
                 name="Profile"

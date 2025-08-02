@@ -3,26 +3,28 @@ import back from './icons/back-100.png';
 import facebook from './icons/facebook-100.png';
 import google from './icons/google-100.png';
 import audioRecord from './icons/puffy-filled-audio-record-100.png';
-import chat from './icons/puffy-filled-chat-100.png';
-import discover from './icons/puffy-filled-compass-100.png';
-import heart from './icons/puffy-filled-heart-100.png';
-import home from './icons/puffy-filled-home-100.png';
-import profile from './icons/puffy-filled-profile-100.png';
+import chatOutline from './icons/chat-outline-100.png';
+import discoverOutline from './icons/discover-outline-100.png';
+import heartOutline from './icons/heart-outline-100.png';
+import homeOutline from './icons/home-outline-100.png';
+import profileOutline from './icons/profile-outline-100.png';
 import settings from './icons/puffy-filled-settings-100.png';
 import logo from './icons/spark-icon.png';
 import checkMark from './icons/check-100.png';
 import notifications from './images/notifications.png'
 import people from './images/people.png';
-import filter from './icons/filter-100.png'
+import filter from './icons/filter-100.png';
+import filterOutline from './icons/filter-outline-100.png';
+import undo from './icons/undo-100.png';
 
 export default {
   audioRecord,
-  chat,
-  heart,
-  home,
-  profile,
+  chatOutline,
+  heartOutline,
+  homeOutline,
+  profileOutline,
   settings,
-  discover,
+  discoverOutline,
   logo,
   google,
   facebook,
@@ -31,5 +33,7 @@ export default {
   checkMark, 
   people,
   notifications,
-  filter
+  filter,
+  filterOutline,
+  undo
 };

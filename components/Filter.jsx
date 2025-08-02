@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const discover = () => {
+const Filter = () => {
   return (
     <View>
-      <Text>discover</Text>
+      <Text>Filter is Open</Text>
     </View>
   )
 }
 
-export default discover
+export default Filter

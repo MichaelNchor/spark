@@ -23,7 +23,7 @@ const CustomButtonWithIcon = ({
       style={
         isOutline
           ? {
-              borderWidth: 1,
+              borderWidth: 0,
               borderColor: "#cccccc",
             }
           : {}
