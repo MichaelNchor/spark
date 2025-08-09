@@ -9,7 +9,7 @@ import heartOutline from './icons/heart-outline-100.png';
 import homeOutline from './icons/home-outline-100.png';
 import profileOutline from './icons/profile-outline-100.png';
 import settings from './icons/puffy-filled-settings-100.png';
-import logo from './icons/spark-icon.png';
+import logo from './icons/spark-logo.png';
 import checkMark from './icons/check-100.png';
 import notifications from './images/notifications.png'
 import people from './images/people.png';

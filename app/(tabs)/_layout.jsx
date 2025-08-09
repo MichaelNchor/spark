@@ -23,9 +23,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
     </View>
   );
 };
-
 const TabLayout = () => {
-
   const TAB_COLORS = "#777777";
 
   return (
@@ -40,7 +38,7 @@ const TabLayout = () => {
           tabBarStyle: {
             height: 84,
             paddingHorizontal: 20,
-            paddingTop:10,
+            paddingTop: 10,
             backgroundColor: "#121212",
             borderTopWidth: 0,
             elevation: 0,

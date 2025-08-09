@@ -37,7 +37,7 @@ const SwipeCard = ({ user }) => {
             <Pressable
               key={i}
               onPress={() => setActiveIndex(i)}
-              className={`h-[5px] flex-1 rounded-full ${
+              className={`h-[5px] flex-1 rounded-full border-[0.5px] border-gray-500/50 ${
                 i === activeIndex ? "bg-white" : "bg-white/40"
               }`}
             />
