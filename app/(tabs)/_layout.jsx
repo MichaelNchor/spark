@@ -13,7 +13,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
         style={{ width: 24, height: 24, tintColor: color }}
       />
       <Text
-        className={`${focused ? "font-poppins-bold" : "font-poppins-semibold"} text-xs`}
+        className={`${focused ? "font-poppins-semibold" : "font-poppins-medium"} text-[0.6rem]`}
         style={{ color }}
         numberOfLines={1}
         ellipsizeMode="tail"
@@ -25,16 +25,29 @@ const TabIcon = ({ icon, color, name, focused }) => {
 };
 
 const TabLayout = () => {
+
+  const TAB_COLORS = "#777777";
+
   return (
     <>
       <Tabs
         screenOptions={{
+          tabBarIconStyle: {
+            color: TAB_COLORS,
+          },
           tabBarShowLabel: false,
           tabBarActiveTintColor: "#E94057",
           tabBarStyle: {
             height: 84,
-            paddingHorizontal: 20
-          }
+            paddingHorizontal: 20,
+            paddingTop:10,
+            backgroundColor: "#121212",
+            borderTopWidth: 0,
+            elevation: 0,
+          },
+          sceneStyle: {
+            backgroundColor: "#121212",
+          },
         }}
       >
         <Tabs.Screen

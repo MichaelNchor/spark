@@ -46,7 +46,7 @@ const SwipeCard = ({ user }) => {
 
         {/* Bottom Gradient Overlay */}
         <LinearGradient
-          colors={["transparent", "rgba(0,0,0,0.7)"]}
+          colors={["transparent", "#121212"]}
           style={{
             position: "absolute",
             bottom: 0,
@@ -63,7 +63,7 @@ const SwipeCard = ({ user }) => {
           {/* Location Badge */}
           <View className="bg-[#E94057] px-3 py-1 rounded-full flex-row items-center mb-2 self-start">
             <Ionicons name="location-sharp" color="#fff" size={18} />
-            <Text className="text-white text-sm ml-1">Near By</Text>
+            <Text className="text-white text-sm ml-1">{user.location}</Text>
           </View>
 
           {/* User Info */}
@@ -72,7 +72,7 @@ const SwipeCard = ({ user }) => {
           </Text>
 
           <Text className="text-base text-white font-poppins-light">
-            Figuring Things out
+            {user.bio}
           </Text>
         </View>
       </ImageBackground>

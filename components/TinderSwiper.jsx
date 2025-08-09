@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, Dimensions, Pressable, Text } from "react-native";
 import SwipeCard from "./SwipeCard";
 import Animated, {
@@ -17,12 +17,21 @@ const TinderSwiper = ({ users }) => {
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const { width, height } = Dimensions.get("window");
   const hiddenTranslateX = width * 2;
+  const velocityThreshold = 1000;
+  const swipeThreshold = width * 0.3;
 
   const currentProfile = users[currentUserIndex];
   const nextProfile = users[currentUserIndex + 1];
 
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
+
+  useEffect(() => {
+    if (currentUserIndex < users.length) {
+      translateX.value = 0;
+      translateY.value = 0;
+    }
+  }, [currentProfile]);
 
   const rotateDeg = useDerivedValue(() => {
     return `${interpolate(
@@ -34,7 +43,7 @@ const TinderSwiper = ({ users }) => {
 
   const currentCardStyle = useAnimatedStyle(() => ({
     transform: [
-      { translateX: translateX.value },
+      { translateX: translateX.value * 1.5 },
       { translateY: translateY.value },
       { rotate: rotateDeg.value },
     ],
@@ -80,44 +89,44 @@ const TinderSwiper = ({ users }) => {
     ),
   }));
 
+  const setNextCard = () => {
+    if (currentUserIndex < users.length - 1) {
+      setCurrentUserIndex((prev) => prev + 1);
+    }
+  };
+
   const gestureHandler = Gesture.Pan()
     .onUpdate((e) => {
       translateX.value = e.translationX;
       translateY.value = e.translationY;
     })
-    .onEnd(() => {
-      const swipedRight = translateX.value > width * 0.3;
-      const swipedLeft = translateX.value < -width * 0.3;
-      const superLiked = translateY.value < -150;
+    .onEnd((e) => {
+      const swipedRight =
+        translateX.value > swipeThreshold || e.velocityX > velocityThreshold;
+      const swipedLeft =
+        translateX.value < -swipeThreshold || e.velocityX < -velocityThreshold;
+      const superLiked =
+        translateY.value < -150 || e.velocityY < -velocityThreshold;
 
       if (superLiked) {
-        translateY.value = withSpring(-height, {}, () => {
-          runOnJS(setNextCard)();
-        });
+        translateY.value = withSpring(-height, { velocity: e.velocityY });
+        runOnJS(setNextCard)();
       } else if (swipedRight || swipedLeft) {
-        translateX.value = withSpring(swipedRight ? width : -width, {}, () => {
-          runOnJS(setNextCard)();
+        translateX.value = withSpring(swipedRight ? width : -width, {
+          velocity: e.velocityX,
         });
+        runOnJS(setNextCard)();
       } else {
         translateX.value = withSpring(0);
         translateY.value = withSpring(0);
       }
     });
 
-  const setNextCard = () => {
-    if (currentUserIndex < users.length - 1) {
-      setCurrentUserIndex((prev) => prev + 1);
-    }
-
-    translateX.value = 0;
-    translateY.value = 0;
-  };
-
   return (
-    <SafeAreaView className="bg-white w-full h-full">
+    <SafeAreaView className="bg-[#121212] w-full h-full">
       {currentUserIndex >= users.length ? (
-        <View className="flex-1 items-center justify-center">
-          <Text className="text-xl font-bold">No more users</Text>
+        <View className="flex-1 items-center justify-center h-full">
+          <Text className="font-poppins-bold text-2xl text-black">No more users</Text>
         </View>
       ) : (
         <>

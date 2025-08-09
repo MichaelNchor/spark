@@ -1,12 +1,13 @@
 export const dummyUsers = [
   {
     id: "1",
-    name: "Jessica, 25",
+    name: "Jessica, 20",
     bio: "Adventurer and foodie. Let's explore together!",
     occupation: "Graphic Designer",
     education: "Parsons School of Design",
     interests: ["Art", "Travel", "Dancing"],
     isVerified: true,
+    location: "2.4 km away",
     media: [
       {
         type: "image",
@@ -30,6 +31,7 @@ export const dummyUsers = [
     education: "MIT",
     interests: ["Tech", "Gaming", "Running"],
     isVerified: false,
+    location: "5.1 km away",
     media: [
       {
         type: "image",
@@ -49,6 +51,7 @@ export const dummyUsers = [
     education: "Berklee College of Music",
     interests: ["Music", "Writing", "Yoga"],
     isVerified: true,
+    location: "1.2 km away",
     media: [
       {
         type: "image",
@@ -68,6 +71,7 @@ export const dummyUsers = [
     education: "Harvard Business School",
     interests: ["Startups", "Travel", "Reading"],
     isVerified: false,
+    location: "3.7 km away",
     media: [
       {
         type: "image",

@@ -16,6 +16,12 @@ import people from './images/people.png';
 import filter from './icons/filter-100.png';
 import filterOutline from './icons/filter-outline-100.png';
 import undo from './icons/undo-100.png';
+import notification from './icons/notification-100.png'
+import likeMain from './icons/like-main.png'
+import passMain from './icons/pass-main.png'
+import sendMessageMain from './icons/send-message-main.png'
+import superlikeMain from './icons/superlike-main.png'
+import previousMain from './icons/previous-main.png'
 
 export default {
   audioRecord,
@@ -35,5 +41,11 @@ export default {
   notifications,
   filter,
   filterOutline,
-  undo
+  undo,
+  notification,
+  likeMain,
+  passMain,
+  sendMessageMain,
+  superlikeMain,
+  previousMain
 };
