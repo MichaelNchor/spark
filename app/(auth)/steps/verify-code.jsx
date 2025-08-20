@@ -1,9 +1,9 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import icons from "../../assets/constants";
-import CustomButtonWithIcon from "../../components/CustomButtonWithImage";
-import VerificationInput from "../../components/VerificationInput";
+import icons from "../../../assets/constants";
+import CustomButtonWithIcon from "../../../components/CustomButtonWithIcon";
+import VerificationInput from "../../../components/VerificationInput";
 
 const VerifyCode = () => {
 

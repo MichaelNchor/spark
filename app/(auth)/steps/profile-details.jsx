@@ -10,14 +10,14 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import CustomButton from "../../components/CustomButton";
-import FormField from "../../components/FormField";
+import CustomButton from "../../../components/CustomButton";
+import InputField from "../../../components/InputField";
 
 const DATA = [
   {
     id: "1",
     title: "Male",
-    image: require("../../assets/images/profile-image-man.jpg"),
+    image: require("../../../assets/images/profile-image-man.jpg"),
   },
 ];
 
@@ -73,13 +73,13 @@ const ProfileDetails = () => {
             </View>
           </View>
 
-          <FormField
+          <InputField
             title="First name"
             value={firstName}
             handleChangeText={setFirstName}
           />
 
-          <FormField
+          <InputField
             title="Last name"
             value={lastName}
             handleChangeText={setLastName}
@@ -97,7 +97,7 @@ const ProfileDetails = () => {
 
           <CustomButton
             title="Confirm"
-            handlePress={() => router.push("/gender")}
+            handlePress={() => router.push("/steps/gender")}
             containerStyles="w-full h-[64px] mt-14"
           />
         </View>

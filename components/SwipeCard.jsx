@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { View, Text, Dimensions, Pressable } from "react-native";
 import { ImageBackground } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import icons from "../assets/constants";
+import { Image } from "expo-image";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -46,7 +48,7 @@ const SwipeCard = ({ user }) => {
 
         {/* Bottom Gradient Overlay */}
         <LinearGradient
-          colors={["transparent", "#121212"]}
+          colors={["transparent", "#000000"]}
           style={{
             position: "absolute",
             bottom: 0,
@@ -63,13 +65,24 @@ const SwipeCard = ({ user }) => {
           {/* Location Badge */}
           <View className="bg-[#E94057] px-3 py-1 rounded-full flex-row items-center mb-2 self-start">
             <Ionicons name="location-sharp" color="#fff" size={18} />
-            <Text className="text-white text-sm ml-1">{user.location}</Text>
+            <Text className="text-white text-sm ml-1">{user.location.distance}</Text>
           </View>
 
-          {/* User Info */}
-          <Text className="text-2xl text-white font-poppins-semibold">
-            {user.name}
-          </Text>
+          <View className="flex-row gap-2">
+            {/* User Info */}
+            <Text className="text-2xl text-white font-poppins-semibold">
+              {`${user.name}, ${user.age}`}
+            </Text>
+
+            {/* Verified */}
+            {user.isVerified && (
+              <Image
+                source={icons.verified}
+                style={{ width: 25, height: 25 }}
+                contentFit="contain"
+              />
+            )}
+          </View>
 
           <Text className="text-base text-white font-poppins-light">
             {user.bio}

@@ -7,9 +7,9 @@ import {
 } from "react-native";
 import React from "react";
 import { router } from "expo-router";
-import icons from "../../assets/constants";
+import icons from "../../../assets/constants";
 import { Image } from "expo-image";
-import CustomButton from "../../components/CustomButton";
+import CustomButton from "../../../components/CustomButtonWithIcon";
 
 const friends = () => {
   return (
@@ -58,8 +58,8 @@ const friends = () => {
           </View>
         </View>
         <CustomButton
-          title="Access to your contact list"
-          handlePress={() => router.push("/notifications")}
+          text="Access to your contact list"
+          handlePress={() => router.push("/steps/notifications")}
           containerStyles="w-full h-[64px]"
         />
       </ScrollView>

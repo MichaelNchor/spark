@@ -7,9 +7,9 @@ import {
   } from "react-native";
   import React from "react";
   import { router } from "expo-router";
-  import icons from "../../assets/constants";
+  import icons from "../../../assets/constants";
   import { Image } from "expo-image";
-  import CustomButton from "../../components/CustomButton";
+  import CustomButton from "../../../components/CustomButton";
   
   const Notifications = () => {
     return (
@@ -59,7 +59,7 @@ import {
           </View>
           <CustomButton
             title="I want to be notified"
-            handlePress={() => router.push("/gender")}
+            handlePress={() => router.push("/steps/gender")}
             containerStyles="w-full h-[64px]"
           />
         </ScrollView>

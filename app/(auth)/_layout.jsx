@@ -1,56 +1,19 @@
 import { Stack } from "expo-router";
-import React from "react";
 
-const AuthLayout = () => {
+export default function AuthLayout() {
   return (
-    <>
-      {/* todo: use themprovider to switch dark mode and light mode */}
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="phonenumber"
-          options={{
-            headerShown: false,
-            // animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen
-          name="verify-code"
-          options={{
-            headerShown: false,
-            // animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen
-          name="profile-details"
-          options={{
-            headerShown: false,
-            // animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen
-          name="interests"
-          options={{
-            headerShown: false,
-            // animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen
-          name="friends"
-          options={{
-            headerShown: false,
-            // animation: "slide_from_right",
-          }}
-        />
-        <Stack.Screen
-          name="notifications"
-          options={{
-            headerShown: false,
-            // animation: "slide_from_right",
-          }}
-        />
-      </Stack>
-    </>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        animation: "slide_from_right",
+      }}
+    >
+      <Stack.Screen name="steps" />
+      <Stack.Screen name="signup" />
+      <Stack.Screen name="welcome" />
+      <Stack.Screen name="birthday" />
+      <Stack.Screen name="email" />
+      <Stack.Screen name="oops" />
+    </Stack>
   );
-};
-
-export default AuthLayout;
+}

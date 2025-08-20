@@ -25,7 +25,7 @@ const CustomButton = ({
       }
     >
       <Text
-        className={`${isOutline ? "text-primary" : "text-white"}  font-poppins-bold text-lg ${textStyles}`}
+        className={`${isOutline ? "text-primary" : "text-white"}  font-poppins-medium text-lg ${textStyles}`}
       >
         {title}
       </Text>

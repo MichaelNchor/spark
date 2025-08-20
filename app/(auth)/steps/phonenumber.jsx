@@ -1,8 +1,8 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import CustomButton from "../../components/CustomButton";
-import FormField from "../../components/FormField";
+import CustomButton from "../../../components/CustomButton";
+import InputField from "../../../components/InputField";
 
 const PhoneNumber = () => {
   const [form, setPhoneNumber] = useState({
@@ -26,7 +26,7 @@ const PhoneNumber = () => {
           </Text>
 
           <View className="w-full mb-12">
-            <FormField
+            <InputField
               title=""
               value={form.PhoneNumber}
               handleChangeText={(e) =>

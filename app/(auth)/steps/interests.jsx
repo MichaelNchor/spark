@@ -6,43 +6,14 @@ import {
   SafeAreaView,
   ScrollView,
 } from "react-native";
-import CustomButton from "../../components/CustomButton";
-import CustomButtonWithIcon from "../../components/CustomButtonWithImage";
-import icons from "../../assets/constants";
-import MultiSelect from "../../components/MultiSelect";
+import CustomButton from "../../../components/CustomButton";
+import CustomButtonWithIcon from "../../../components/CustomButtonWithIcon";
+import MultiSelect from "../../../components/MultiSelect";
 import { router } from "expo-router";
+import { InterestsOptions } from "../../../data/mockData";
+import icons from "../../../assets/constants"
 
 const Interests = () => {
-  const OPTIONS = [
-    {
-      id: "1",
-      label: "Photography",
-      value: "Photography",
-      active: true,
-      icon: "camera-outline",
-    },
-    {
-      id: "2",
-      label: "Shopping",
-      value: "Shopping",
-      active: false,
-      icon: "checkmark-sharp",
-    },
-    {
-      id: "3",
-      label: "Karaoke",
-      value: "Karaoke",
-      active: true,
-      icon: "checkmark-sharp",
-    },
-    {
-      id: "4",
-      label: "Yoga",
-      value: "Yoga",
-      active: false,
-      icon: "checkmark-sharp",
-    },
-  ];
 
   const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -89,7 +60,7 @@ const Interests = () => {
 
           <View className="w-full flex-row">
             <MultiSelect
-              options={OPTIONS}
+              options={InterestsOptions}
               selectedOptions={selectedOptions}
               onChange={setSelectedOptions}
             />
@@ -97,7 +68,7 @@ const Interests = () => {
 
           <CustomButton
             title="Confirm"
-            handlePress={() => router.push("/friends")}
+            handlePress={() => router.push("/steps/friends")}
             containerStyles="w-full h-[64px]"
           />
         </View>

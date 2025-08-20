@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const discover = () => {
   return (
     <View>
-      <Text>discover</Text>
+      
     </View>
   )
 }

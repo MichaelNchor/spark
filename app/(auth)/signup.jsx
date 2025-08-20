@@ -4,7 +4,7 @@ import React from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import icons from "../../assets/constants";
 import CustomButton from "../../components/CustomButton";
-import CustomButtonWithIcon from "../../components/CustomButtonWithImage";
+import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 
 const SignUp = () => {
   return (

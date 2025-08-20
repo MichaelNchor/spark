@@ -3,6 +3,7 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import icons from "../../assets/constants";
+import { Provider as PaperProvider } from "react-native-paper";
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -23,15 +24,17 @@ const TabIcon = ({ icon, color, name, focused }) => {
     </View>
   );
 };
-const TabLayout = () => {
+
+export default function TabLayout() {
   const TAB_COLORS = "#777777";
 
   return (
-    <>
+    <PaperProvider>
       <Tabs
         screenOptions={{
           tabBarIconStyle: {
             color: TAB_COLORS,
+            backgroundColor: "#121212",
           },
           tabBarShowLabel: false,
           tabBarActiveTintColor: "#E94057",
@@ -124,8 +127,6 @@ const TabLayout = () => {
           }}
         />
       </Tabs>
-    </>
+    </PaperProvider>
   );
-};
-
-export default TabLayout;
+}
