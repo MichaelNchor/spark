@@ -21,7 +21,7 @@ const LikeCard = ({ user }) => {
       >
         {/* Bottom Gradient Overlay */}
         <LinearGradient
-          colors={["transparent", "#121212"]}
+          colors={["transparent", "#000000"]}
           style={{
             position: "absolute",
             bottom: 0,

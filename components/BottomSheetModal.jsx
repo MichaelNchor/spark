@@ -92,7 +92,7 @@ const BottomSheetModal = ({ visible, onClose, header, children }) => {
               padding: 15
             }}
           >
-            <Text className="font-poppins-medium text-base text-[#E94057]">
+            <Text className="font-poppins-medium text-base text-white">
               {header}
             </Text>
             <TouchableOpacity onPress={onClose}>

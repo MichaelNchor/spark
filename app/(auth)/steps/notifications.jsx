@@ -58,9 +58,9 @@ import {
             </View>
           </View>
           <CustomButton
-            title="I want to be notified"
+            text="I want to be notified"
             handlePress={() => router.push("/steps/gender")}
-            containerStyles="w-full h-[64px]"
+            containerStyles="w-full h-[48px]"
           />
         </ScrollView>
       </SafeAreaView>

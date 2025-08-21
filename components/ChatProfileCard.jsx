@@ -23,7 +23,7 @@ const ChatProfileCard = ({ user }) => {
         imageStyle={{ borderRadius: 50 }}
       />
       <View className="flex-col ml-4 justify-center py-2 items-start w-[70%] border-b-[0.5px] border-[#777777]">
-        {/* Title Text Area */}
+        {/* text Text Area */}
         <View className="flex-row justify-between mr-12">
           <View className="flex-row gap-1 justify-start items-center w-full">
             {/* User Info */}

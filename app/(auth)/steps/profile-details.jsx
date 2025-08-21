@@ -16,7 +16,7 @@ import InputField from "../../../components/InputField";
 const DATA = [
   {
     id: "1",
-    title: "Male",
+    text: "Male",
     image: require("../../../assets/images/profile-image-man.jpg"),
   },
 ];
@@ -74,20 +74,20 @@ const ProfileDetails = () => {
           </View>
 
           <InputField
-            title="First name"
+            text="First name"
             value={firstName}
             handleChangeText={setFirstName}
           />
 
           <InputField
-            title="Last name"
+            text="Last name"
             value={lastName}
             handleChangeText={setLastName}
           />
 
           <TouchableOpacity
             onPress={() => setDatePickerVisibility(true)}
-            className="flex-row items-center gap-2 bg-pink-50 border-pink-200 rounded-xl px-4 py-3 h-16"
+            className="flex-row items-center gap-2 bg-pink-50 border-pink-200 rounded-full px-4 py-3 h-16"
           >
             <Ionicons name="calendar-outline" size={20} color="#E94057" />
             <Text className="text-primary font-poppins-regular">
@@ -96,9 +96,9 @@ const ProfileDetails = () => {
           </TouchableOpacity>
 
           <CustomButton
-            title="Confirm"
+            text="Confirm"
             handlePress={() => router.push("/steps/gender")}
-            containerStyles="w-full h-[64px] mt-14"
+            containerStyles="w-full h-[48px] mt-14"
           />
         </View>
       </ScrollView>

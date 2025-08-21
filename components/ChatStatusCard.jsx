@@ -35,7 +35,7 @@ const ChatStatusCard = ({ user }) => {
           <ImageBackground
             source={{ uri: user.media[0].uri }}
             contentFit="cover"
-            style={{ height: 100, width: "100%" }}
+            style={{ height: 90, width: "100%" }}
             imageStyle={{ borderRadius: 20 }}
           />
         </View>

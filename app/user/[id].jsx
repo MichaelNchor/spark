@@ -75,7 +75,7 @@ const UserProfile = () => {
           <View className="px-6 py-5  bg-[#1c1c1e] rounded-3xl mt-[-10px]">
             <View className="flex-row items-center justify-between my-2 mb-6">
               <View className="flex-row items-center justify-between">
-                <Text className="text-white text-3xl font-poppins-bold">
+                <Text className="text-white text-3xl font-poppins-medium">
                   {`${user.name}, ${user.age}`}
                 </Text>
                 {/* Verified */}
@@ -104,24 +104,24 @@ const UserProfile = () => {
             <Text className="text-gray-300 text-sm mt-2 font-poppins-medium">
               🔎 {"Looking for"}
             </Text>
-            <Text className="text-gray-300 text-base mt-4 font-poppins-medium">
+            <Text className="text-gray-300 text-base mt-4 font-poppins-regular">
               {user.lookingFor}
             </Text>
           </View>
 
           {/* About / Me */}
-          <View className="px-6 py-5 mt-2 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
-              About me
+              {"About me"}
             </Text>
-            <Text className="text-gray-200 text-base font-poppins-medium">
+            <Text className="text-gray-200 text-base font-poppins-regular">
               {user.bio}
             </Text>
           </View>
 
           {/* Interests */}
           {user.interests?.length > 0 && (
-            <View className="px-6 py-5 mt-2 bg-[#1c1c1e] rounded-3xl">
+            <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
               <Text className="text-white text-sm font-poppins-semibold mb-4">
                 Interests
               </Text>
@@ -131,7 +131,7 @@ const UserProfile = () => {
                     key={index}
                     className="border-[1.5px] border-[#E94057] px-3 py-1 rounded-full mr-2 mb-2"
                   >
-                    <Text className="text-gray-200 text-base font-poppins-medium">
+                    <Text className="text-gray-200 text-base font-poppins-regular">
                       {interest}
                     </Text>
                   </View>
@@ -141,65 +141,65 @@ const UserProfile = () => {
           )}
 
           {/* Occupation / Education */}
-          <View className="px-6 py-5 mt-2 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Career & Education
             </Text>
-            <Text className="text-gray-200 text-base font-poppins-medium">
+            <Text className="text-gray-200 text-base font-poppins-regular">
               💼 {user.occupation}
             </Text>
-            <Text className="text-gray-200 text-base font-poppins-medium mt-1">
+            <Text className="text-gray-200 text-base font-poppins-regular mt-1">
               🎓 {user.education}
             </Text>
           </View>
 
           {/* Location */}
-          <View className="px-6 py-5 mt-2 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Location
             </Text>
-            <Text className="text-gray-300 font-poppins-medium mb-2">
+            <Text className="text-gray-300 font-poppins-regular mb-2">
               📍{user.location.distance}
             </Text>
-            <Text className="text-gray-300 font-poppins-medium mb-2">
+            <Text className="text-gray-300 font-poppins-regular mb-2">
               🌍{user.location.place}
             </Text>
           </View>
 
           {/* Essentials Section */}
-          <View className="px-6 py-5 mt-2 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Essentials
             </Text>
 
             {user.dob && (
-              <Text className="text-gray-200 text-base font-poppins-medium mb-2">
+              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
                 🎂 {user.dob}
               </Text>
             )}
             {user.height && (
-              <Text className="text-gray-200 text-base font-poppins-medium mb-2">
+              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
                 📏 {user.height}
               </Text>
             )}
             {user.gender && (
-              <Text className="text-gray-200 text-base font-poppins-medium mb-2">
+              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
                 🚻 {user.gender}
               </Text>
             )}
             {user.zodiac && (
-              <Text className="text-gray-200 text-base font-poppins-medium mb-2">
+              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
                 ♌ {user.zodiac}
               </Text>
             )}
           </View>
 
           {/* About / Me */}
-          <View className="px-6 py-5 mt-2 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Send a love note
             </Text>
-            <Text className="text-gray-200 text-sm font-poppins-medium mb-2">
+            <Text className="text-gray-200 text-sm font-poppins-regular mb-2">
               👉💖 Send a special message before matching to stand out.
             </Text>
             <TouchableOpacity className="border-[1.5px] border-[#E94057] px-3 py-1 rounded-full mr-2 mb-2">
@@ -208,22 +208,22 @@ const UserProfile = () => {
           </View>
 
           {/* Share / Block / Report Section */}
-          <TouchableOpacity className="px-6 py-5 mt-2 bg-[#333333] rounded-3xl">
-            <Text className="text-gray-200 text-base text-center font-poppins-medium mt-1">
+          <TouchableOpacity className="px-6 py-2 mt-1 bg-[#333333] rounded-3xl">
+            <Text className="text-gray-200 text-base text-center font-poppins-regular mt-1">
               Share {user.name}
             </Text>
           </TouchableOpacity>
 
           {/* Share / Block / Report Section */}
-          <TouchableOpacity className="px-6 py-5 mt-2 bg-[#333333] rounded-3xl">
-            <Text className="text-gray-200 text-base text-center font-poppins-medium mt-1">
+          <TouchableOpacity className="px-6 py-2 mt-1 bg-[#333333] rounded-3xl">
+            <Text className="text-gray-200 text-base text-center font-poppins-regular mt-1">
               Block {user.name}
             </Text>
           </TouchableOpacity>
 
           {/* Share / Block / Report Section */}
-          <TouchableOpacity className="px-6 py-5 mt-2 mb-8 bg-[#333333] rounded-3xl">
-            <Text className="text-red-600 text-base text-center font-poppins-semibold mt-1">
+          <TouchableOpacity className="px-6 py-2 mt-1 mb-8 bg-[#333333] rounded-3xl">
+            <Text className="text-red-600 text-base text-center font-poppins-regular mt-1">
               Report {user.name}
             </Text>
           </TouchableOpacity>

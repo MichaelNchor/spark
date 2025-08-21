@@ -17,7 +17,7 @@ const CustomButtonWithIcon = ({
 }) => {
   return (
     <TouchableOpacity
-      className={`${isOutline ? `border border-${backgroundColor ?? "primary"} bg-transparent` : `bg-${backgroundColor ?? "primary"}`} rounded-2xl flex-row justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}
+      className={`${isOutline ? `border border-${backgroundColor ?? "primary"} bg-transparent` : `bg-${backgroundColor ?? "primary"}`} rounded-full flex-row justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}
       onPress={handlePress}
       activeOpacity={0.7}
       disabled={isLoading}

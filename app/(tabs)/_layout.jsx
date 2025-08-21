@@ -54,7 +54,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="home"
           options={{
-            title: "Home",
+            text: "Home",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
@@ -67,16 +67,16 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="discover"
+          name="events"
           options={{
-            title: "Discover",
+            text: "Events",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.discoverOutline}
+                icon={icons.events}
                 color={color}
                 focused={focused}
-                name="Discover"
+                name="Events"
               />
             ),
           }}
@@ -84,7 +84,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="likes"
           options={{
-            title: "Likes",
+            text: "Likes",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
@@ -99,7 +99,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="chat"
           options={{
-            title: "Chat",
+            text: "Chat",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
@@ -114,7 +114,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="profile"
           options={{
-            title: "Profile",
+            text: "Profile",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon

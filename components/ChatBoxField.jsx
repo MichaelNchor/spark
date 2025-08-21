@@ -18,15 +18,16 @@ const ChatBoxField = ({
   return (
     <View className={`space-y-2 ${otherStyles}`}>
       <View
-        className={`flex-row w-full justify-center items-center h-12 px-2 rounded-2xl border ${
+        className={`flex-row w-full justify-center items-center h-12 px-2 rounded-full border ${
           isFocused ? "border-primary" : "border-[#cccccc]"
         }`}
       >
         <TextInput
-          className="flex-1 font-poppins-medium text-base h-full py-2"
+          className="flex-1 font-poppins-regular text-base h-full py-2"
           value={value}
           placeholder={placeholder}
           placeholderTextColor="#6b7280"
+          pointerEvents="auto"
           onChangeText={handleChangeText}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

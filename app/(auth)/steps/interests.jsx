@@ -67,9 +67,9 @@ const Interests = () => {
           </View>
 
           <CustomButton
-            title="Confirm"
+            text="Confirm"
             handlePress={() => router.push("/steps/friends")}
-            containerStyles="w-full h-[64px]"
+            containerStyles="w-full h-[48px]"
           />
         </View>
       </ScrollView>

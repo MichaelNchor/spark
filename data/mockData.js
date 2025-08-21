@@ -216,15 +216,15 @@ const InterestsOptions = [
   },
   {
     id: "2",
-    label: "Shopping",
-    value: "Shopping",
+    label: "Movies",
+    value: "Movies",
     active: false,
     icon: "checkmark-sharp",
   },
   {
     id: "3",
-    label: "Karaoke",
-    value: "Karaoke",
+    label: "Art",
+    value: "Art",
     active: true,
     icon: "checkmark-sharp",
   },
@@ -234,6 +234,17 @@ const InterestsOptions = [
     value: "Yoga",
     active: false,
     icon: "checkmark-sharp",
+  },
+];
+
+const ProfileTabs = [
+  { id: 1, label: "Profile", value: "Profile", icon: "person" },
+  { id: 2, label: "Plans", value: "Plans", icon: "wallet" },
+  {
+    id: 3,
+    label: "Safety and Wellbeing",
+    value: "Safety and Wellbeing",
+    icon: "shield",
   },
 ];
 
@@ -284,4 +295,5 @@ export {
   LikeFilterOptions,
   GenderOptions,
   InterestsOptions,
+  ProfileTabs
 };

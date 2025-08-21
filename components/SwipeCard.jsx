@@ -65,7 +65,7 @@ const SwipeCard = ({ user }) => {
           {/* Location Badge */}
           <View className="bg-[#E94057] px-3 py-1 rounded-full flex-row items-center mb-2 self-start">
             <Ionicons name="location-sharp" color="#fff" size={18} />
-            <Text className="text-white text-sm ml-1">{user.location.distance}</Text>
+            <Text className="text-white font-poppins-regular text-sm ml-1">{user.location.distance}</Text>
           </View>
 
           <View className="flex-row gap-2">

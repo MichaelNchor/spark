@@ -9,7 +9,7 @@ import React from "react";
 import { router } from "expo-router";
 import icons from "../../../assets/constants";
 import { Image } from "expo-image";
-import CustomButton from "../../../components/CustomButtonWithIcon";
+import CustomButton from "../../../components/CustomButton";
 
 const friends = () => {
   return (
@@ -60,7 +60,7 @@ const friends = () => {
         <CustomButton
           text="Access to your contact list"
           handlePress={() => router.push("/steps/notifications")}
-          containerStyles="w-full h-[64px]"
+          containerStyles="w-full h-[48px]"
         />
       </ScrollView>
     </SafeAreaView>

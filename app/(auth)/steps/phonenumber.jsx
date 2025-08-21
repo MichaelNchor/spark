@@ -27,7 +27,7 @@ const PhoneNumber = () => {
 
           <View className="w-full mb-12">
             <InputField
-              title=""
+              text=""
               value={form.PhoneNumber}
               handleChangeText={(e) =>
                 setPhoneNumber({ ...form, PhoneNumber: e })
@@ -38,9 +38,9 @@ const PhoneNumber = () => {
           </View>
 
           <CustomButton
-            title="Continue"
-            handlePress={() => router.push("/verify-code")}
-            containerStyles="w-full h-[64px] mt-96"
+            text="Continue"
+            handlePress={() => router.push("/steps/verify-code")}
+            containerStyles="w-full h-[48px] mt-96"
           />
         </View>
       </ScrollView>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, TextInput, View } from "react-native";
 
 const InputField = ({
-  title,
+  text,
   value,
   placeholder,
   handleChangeText,
@@ -15,11 +15,11 @@ const InputField = ({
   return (
     <View className={`space-y-2 ${otherStyles}`}>
       <Text className="absolute top-1 left-4 text-xs text-gray-400 font-poppins-medium z-10">
-        {title}
+        {text}
       </Text>
 
       <View
-        className={`w-full h-12 px-2 rounded-2xl border ${
+        className={`w-full h-12 px-2 rounded-full border ${
           isFocused ? "border-primary" : "border-[#cccccc]"
         }`}
       >

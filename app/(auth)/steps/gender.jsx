@@ -60,9 +60,9 @@ const Gender = () => {
           </View>
 
           <CustomButton
-            title="Continue"
+            text="Continue"
             handlePress={() => router.push("/steps/interests")}
-            containerStyles="w-full h-[64px] mt-96"
+            containerStyles="w-full h-[48px] mt-96"
           />
         </View>
       </ScrollView>

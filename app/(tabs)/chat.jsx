@@ -14,7 +14,7 @@ import ChatStatusCard from "../../components/ChatStatusCard";
 import ChatProfileCard from "../../components/ChatProfileCard";
 
 const Chat = () => {
-  const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+  // const [isSettingsVisible, setIsSettingsVisible] = useState(false);
 
   return (
     <SafeAreaView>
@@ -33,7 +33,7 @@ const Chat = () => {
             iconWidth={24}
             iconHeight={24}
             iconColor="#777777"
-            handlePress={() => setIsSettingsVisible(true)}
+            // handlePress={() => setIsSettingsVisible(true)}
             containerStyles="w-[50px] h-[50px] items-start"
             isOutline={true}
           />
@@ -70,7 +70,7 @@ const Chat = () => {
             contentContainerStyle={{
               justifyContent: "center",
               alignItems: "center",
-              gap: 15,
+              gap: 10,
               paddingVertical: 10,
               marginHorizontal: 10,
               paddingRight: 20,
@@ -95,17 +95,6 @@ const Chat = () => {
         {/* Bottom Gap */}
         <View className="h-32 w-full" />
       </ScrollView>
-
-      {/* Bottom Sheet */}
-      <Portal>
-        <BottomSheetModal
-          visible={isSettingsVisible}
-          onClose={() => setIsSettingsVisible(false)}
-          header="Filter"
-        >
-          <SwipeFilter />
-        </BottomSheetModal>
-      </Portal>
     </SafeAreaView>
   );
 };
