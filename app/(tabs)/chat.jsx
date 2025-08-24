@@ -57,7 +57,7 @@ const Chat = () => {
       >
         <View className="mt-6">
           {/* Activities */}
-          <Text className="px-6 font-poppins-medium text-sm text-gray-300">
+          <Text className="px-6 font-poppins-regular text-base text-gray-400">
             Activities
           </Text>
 
@@ -82,9 +82,9 @@ const Chat = () => {
           </ScrollView>
         </View>
 
-        <View className="px-6 mt-6">
+        <View className="px-6 mt-3">
           {/* Activities */}
-          <Text className="font-poppins-medium text-sm mb-6 text-gray-300">
+          <Text className="font-poppins-regular text-base mb-6 text-gray-400">
             Messages
           </Text>
           {dummyUsers.map((user) => (

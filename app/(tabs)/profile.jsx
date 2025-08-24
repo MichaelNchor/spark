@@ -1,4 +1,10 @@
-import { View, SafeAreaView, Text, ScrollView } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Image, ImageBackground } from "expo-image";
 import Svg, { Circle } from "react-native-svg";
@@ -15,18 +21,19 @@ import { dummyUsers } from "../../data/mockData";
 import TabButtonSection from "../../components/TabButtonSection";
 import { runOnJS } from "react-native-reanimated";
 import { ProfileTabs } from "../../data/mockData";
+import { Ionicons } from "@expo/vector-icons";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const Profile = () => {
   const profileCompletion = 70; // Example percentage
   const size = 170;
-  const strokeWidth = 3;
+  const strokeWidth = 5;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
 
   // Tabs
-  const [activeTab, setActiveTab] = useState("Profile");
+  const [activeTab, setActiveTab] = useState("Account");
 
   // Shared values
   const animatedOffset = useSharedValue(circumference);
@@ -60,11 +67,6 @@ const Profile = () => {
     };
   }, []);
 
-  // // Derived value for percentage
-  // const animatedValue = useDerivedValue(() =>
-  //   Math.round(animatedPercent.value)
-  // );
-
   // Dynamic color
   const progressColor = profileCompletion >= 80 ? "#4CAF50" : "#ff3366";
 
@@ -87,123 +89,214 @@ const Profile = () => {
         />
       </View>
 
-      {/* Avatar + Animated Progress Circle */}
-      <View className="flex justify-center items-center mt-4">
-        <View className="justify-center items-center relative">
-          <View
-            style={{
-              width: size,
-              height: size,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {/* Circular Progress */}
-            <Svg width={size} height={size} style={{ position: "absolute" }}>
-              <Circle
-                stroke="#333"
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                strokeWidth={strokeWidth}
-              />
-              <AnimatedCircle
-                stroke={progressColor}
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                strokeWidth={strokeWidth}
-                strokeDasharray={circumference}
-                animatedProps={animatedProps}
-                strokeLinecap="round"
-                rotation="-90"
-                origin={`${size / 2}, ${size / 2}`}
-              />
-            </Svg>
-
-            {/* Avatar */}
-            <ImageBackground
-              source={{ uri: dummyUsers[0].media[0].uri }}
-              contentFit="cover"
-              style={{
-                width: size - strokeWidth * 4,
-                height: size - strokeWidth * 4,
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-              imageStyle={{ borderRadius: (size - strokeWidth * 4) / 2 }}
-            >
-              {/* Percentage pill */}
-              <Animated.View
-                style={{
-                  backgroundColor: progressColor,
-                  paddingHorizontal: 12,
-                  paddingVertical: 4,
-                  borderRadius: 16,
-                  marginBottom: -15,
-                }}
-              >
-                <Animated.Text
-                  className="font-poppins-semibold pt-1"
-                  style={{
-                    color: "white",
-                    fontSize: 12,
-                    fontWeight: "600",
-                  }}
-                >
-                  {progress}% Complete
-                </Animated.Text>
-              </Animated.View>
-            </ImageBackground>
-          </View>
-
-          {/* Name + Verified */}
-          <View className="flex-row gap-1 mt-6 justify-center">
-            <Text className="text-xl text-white font-poppins-medium">
-              {`${dummyUsers[0].name}, ${dummyUsers[0].age}`}
-            </Text>
-            {dummyUsers[0].isVerified && (
-              <Image
-                source={icons.verified}
-                style={{ width: 22, height: 22 }}
-                contentFit="contain"
-              />
-            )}
-          </View>
-        </View>
-      </View>
-
-      {/* ✅ Tabs with TabButtonSection */}
-      <TabButtonSection
-        selectedValue={activeTab}
-        options={ProfileTabs}
-        onChange={setActiveTab}
-      />
-
       {/* Tab Content */}
       <ScrollView
         bounces={false}
         overScrollMode="never"
         showsVerticalScrollIndicator={true}
-        contentContainerStyle={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          paddingHorizontal: 10,
-          paddingBottom: 20,
-          marginTop: 30,
-        }}
+        contentContainerStyle={{ paddingBottom: 120 }}
       >
-        {activeTab === "Profile" && (
-          <View className="space-y-4">
-            <Text className="text-lg text-white font-poppins-medium">
-              Your Subscription Plan
+        {/* Avatar + Animated Progress Circle */}
+        <View className="flex justify-center items-center mt-4">
+          <View className="justify-center items-center relative">
+            <View
+              style={{
+                width: size,
+                height: size,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {/* Circular Progress */}
+              <Svg width={size} height={size} style={{ position: "absolute" }}>
+                <Circle
+                  stroke="#333"
+                  cx={size / 2}
+                  cy={size / 2}
+                  r={radius}
+                  strokeWidth={strokeWidth}
+                />
+                <AnimatedCircle
+                  stroke={progressColor}
+                  cx={size / 2}
+                  cy={size / 2}
+                  r={radius}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={circumference}
+                  animatedProps={animatedProps}
+                  strokeLinecap="round"
+                  rotation="-90"
+                  origin={`${size / 2}, ${size / 2}`}
+                />
+              </Svg>
+
+              {/* Avatar */}
+              <ImageBackground
+                source={{ uri: dummyUsers[0].media[0].uri }}
+                contentFit="cover"
+                style={{
+                  width: size - strokeWidth * 4,
+                  height: size - strokeWidth * 4,
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+                imageStyle={{ borderRadius: (size - strokeWidth * 4) / 2 }}
+              >
+                {/* Percentage pill */}
+                <Animated.View
+                  style={{
+                    backgroundColor: progressColor,
+                    paddingHorizontal: 12,
+                    paddingVertical: 4,
+                    borderRadius: 16,
+                    marginBottom: -15,
+                  }}
+                >
+                  <Animated.Text
+                    className="font-poppins-semibold pt-1"
+                    style={{
+                      color: "white",
+                      fontSize: 12,
+                      fontWeight: "600",
+                    }}
+                  >
+                    {progress}% Complete
+                  </Animated.Text>
+                </Animated.View>
+              </ImageBackground>
+            </View>
+
+            {/* Name + Verified */}
+            <View className="flex-row gap-1 mt-6 justify-center">
+              <Text className="text-xl text-white font-poppins-medium">
+                {`${dummyUsers[0].name}, ${dummyUsers[0].age}`}
+              </Text>
+              {dummyUsers[0].isVerified && (
+                <Image
+                  source={icons.verified}
+                  style={{ width: 22, height: 22 }}
+                  contentFit="contain"
+                />
+              )}
+            </View>
+          </View>
+        </View>
+
+        {/* ✅ Tabs with TabButtonSection */}
+        <TabButtonSection
+          selectedValue={activeTab}
+          options={ProfileTabs}
+          onChange={setActiveTab}
+        />
+
+        {activeTab === "Account" && (
+          <View className="w-full px-4">
+            {/* Section 1 */}
+            <Text className="text-gray-400 text-base mb-3 font-poppins-regular">
+              Account settings
             </Text>
-            <Text className="text-gray-400">
-              You are currently on the{" "}
-              <Text className="text-pink-500">Free Plan</Text>. Upgrade to
-              unlock premium features like unlimited swipes and video calls.
+            <View className="bg-[#1c1c1e] px-4 rounded-3xl mb-6">
+              {/* Personal Info */}
+              <TouchableOpacity className="flex-row justify-between items-center py-5 border-b border-[#2a2a2d]">
+                <View className="flex-row items-center space-x-3">
+                  <Ionicons name="person-outline" size={20} color="#777777" />
+                  <Text className="ml-3 text-white text-base font-poppins-medium">
+                    Personal information
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#777777" />
+              </TouchableOpacity>
+
+              {/* Notifications */}
+              <TouchableOpacity className="flex-row justify-between items-center py-5 border-b border-[#2a2a2d]">
+                <View className="flex-row items-center space-x-3">
+                  <Ionicons
+                    name="notifications-outline"
+                    size={20}
+                    color="#777777"
+                  />
+                  <Text className="ml-3 text-white text-base font-poppins-medium">
+                    Notifications
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#777777" />
+              </TouchableOpacity>
+
+              {/* Time Spent */}
+              <TouchableOpacity className="flex-row justify-between items-center py-5">
+                <View className="flex-row items-center space-x-3">
+                  <Ionicons name="time-outline" size={20} color="#777777" />
+                  <Text className="ml-3 text-white text-base font-poppins-medium">
+                    Time Spent
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#777777" />
+              </TouchableOpacity>
+            </View>
+
+            {/* Section 2 */}
+            <Text className="text-gray-400 text-base mb-3 font-poppins-regular">
+              Help & Support
             </Text>
+            <View className="bg-[#1c1c1e] px-4 rounded-3xl mb-6">
+              {/* Privacy Policy */}
+              <TouchableOpacity className="flex-row justify-between items-center py-5 border-b border-[#2a2a2d]">
+                <View className="flex-row items-center space-x-3">
+                  <Ionicons
+                    name="lock-closed-outline"
+                    size={20}
+                    color="#777777"
+                  />
+                  <Text className="ml-3 text-white text-base font-poppins-medium">
+                    Privacy Policy
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#777777" />
+              </TouchableOpacity>
+
+              {/* Terms & Conditions */}
+              <TouchableOpacity className="flex-row justify-between items-center py-5 border-b border-[#2a2a2d]">
+                <View className="flex-row items-center space-x-3">
+                  <Ionicons
+                    name="document-text-outline"
+                    size={20}
+                    color="#777777"
+                  />
+                  <Text className="ml-3 text-white text-base font-poppins-medium">
+                    Terms & Conditions
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#777777" />
+              </TouchableOpacity>
+
+              {/* FAQ */}
+              <TouchableOpacity className="flex-row justify-between items-center py-5">
+                <View className="flex-row items-center space-x-3">
+                  <Ionicons
+                    name="help-circle-outline"
+                    size={20}
+                    color="#777777"
+                  />
+                  <Text className="ml-3 text-white text-base font-poppins-medium">
+                    FAQ & Help
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#777777" />
+              </TouchableOpacity>
+            </View>
+
+            {/* Logout */}
+            <TouchableOpacity className="bg-[#1c1c1e] px-4 rounded-3xl">
+              <View className="flex-row justify-between items-center py-5">
+                <View className="flex-row items-center space-x-3">
+                  <Ionicons name="log-out-outline" size={20} color="#ef4444" />
+                  <Text className="ml-3 text-red-500 text-base font-poppins-medium">
+                    Log out
+                  </Text>
+                </View>
+                <Ionicons name="chevron-forward" size={20} color="#ef4444" />
+              </View>
+            </TouchableOpacity>
           </View>
         )}
 
@@ -219,7 +312,6 @@ const Profile = () => {
             <Text className="text-gray-400">• Face ID: Not set up</Text>
           </View>
         )}
-
         {activeTab === "Safety and Wellbeing" && (
           <View className="space-y-4">
             <Text className="text-lg text-white font-poppins-medium">

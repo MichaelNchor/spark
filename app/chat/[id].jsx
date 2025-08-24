@@ -45,7 +45,7 @@ const ChatRoom = () => {
           />
 
           {/* User avatar + name */}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push(`user/${id}`)}>
             <View className="flex-col ml-12 items-center">
               <ImageBackground
                 source={{ uri: dummyUsers[0].media[0].uri }}

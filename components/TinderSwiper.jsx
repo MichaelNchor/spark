@@ -126,7 +126,9 @@ const TinderSwiper = ({ users }) => {
     <SafeAreaView className="bg-[#121212] w-full h-full">
       {currentUserIndex >= users.length ? (
         <View className="flex-1 items-center justify-center h-full">
-          <Text className="font-poppins-bold text-2xl text-black">No more users</Text>
+          <Text className="font-poppins-light text-xl text-white">
+            No more users
+          </Text>
         </View>
       ) : (
         <>
@@ -152,26 +154,72 @@ const TinderSwiper = ({ users }) => {
 
               {/* LIKE Badge */}
               <Animated.View
-                style={[likeStyle]}
-                className="absolute top-6 left-5 bg-green-500 px-4 py-2 rounded-full"
+                style={[
+                  {
+                    position: "absolute",
+                    top: 40,
+                    left: 20,
+                    borderWidth: 3,
+                    borderColor: "#4DED30",
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderRadius: 5,
+                    transform: [{ rotate: "-20deg" }],
+                  },
+                  likeStyle,
+                ]}
               >
-                <Text className="text-white font-bold text-base">LIKE</Text>
+                <Text
+                  style={{ color: "#4DED30", fontSize: 32, fontWeight: "bold" }}
+                >
+                  LIKE
+                </Text>
               </Animated.View>
 
               {/* PASS Badge */}
               <Animated.View
-                style={[passStyle]}
-                className="absolute top-6 right-5 bg-red-500 px-4 py-2 rounded-full"
+                style={[
+                  {
+                    position: "absolute",
+                    top: 40,
+                    right: 20,
+                    borderWidth: 3,
+                    borderColor: "#E94057",
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderRadius: 5,
+                    transform: [{ rotate: "20deg" }],
+                  },
+                  passStyle,
+                ]}
               >
-                <Text className="text-white font-bold text-base">PASS</Text>
+                <Text
+                  style={{ color: "#E94057", fontSize: 32, fontWeight: "bold" }}
+                >
+                  PASS
+                </Text>
               </Animated.View>
 
               {/* SUPER LIKE Badge */}
               <Animated.View
-                style={[superLikeStyle]}
-                className="absolute top-6 self-center bg-blue-500 px-5 py-2 rounded-full"
+                style={[
+                  {
+                    position: "absolute",
+                    bottom: 300,
+                    alignSelf: "center",
+                    borderWidth: 3,
+                    borderColor: "#3b82f6",
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderRadius: 5,
+                    transform: [{ rotate: "0deg" }],
+                  },
+                  superLikeStyle,
+                ]}
               >
-                <Text className="text-white text-base font-bold">
+                <Text
+                  style={{ color: "#3b82f6", fontSize: 32, fontWeight: "bold" }}
+                >
                   SUPER LIKE
                 </Text>
               </Animated.View>

@@ -238,7 +238,7 @@ const InterestsOptions = [
 ];
 
 const ProfileTabs = [
-  { id: 1, label: "Profile", value: "Profile", icon: "person" },
+  { id: 1, label: "Account", value: "Account", icon: "person" },
   { id: 2, label: "Plans", value: "Plans", icon: "wallet" },
   {
     id: 3,
@@ -289,11 +289,79 @@ const dummyGifts = [
   { id: "10", name: "Ring", icon: "💍", price: 500 },
 ];
 
+const EventBanners = [
+  {
+    id: "2",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200", // people dancing
+    title: "Singles Mixer",
+    subtitle: "Meet new people and make connections",
+    buttonText: "Get Ticket",
+  },
+  {
+    id: "3",
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200", // couple laughing
+    title: "Speed Dating",
+    subtitle: "Fast-paced fun with exciting matches",
+    buttonText: "Book Spot",
+  },
+];
+
+const EventTabs = [
+  { id: 1, label: "Today", value: "Today" },
+  { id: 2, label: "Trending", value: "Trending" },
+  { id: 3, label: "Near By", value: "Near By" },
+  { id: 4, label: "Top Rated", value: "Top Rated" },
+];
+
+const mockEvents = [
+  {
+    id: 1,
+    title: "Blackpink Live Concert",
+    members: "150k",
+    location: "Accra",
+    spotsLeft: 12,
+    date: "31 January, 2023",
+    time: "08:30pm",
+    host: "Jennie",
+    price: 350,
+    image: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg",
+  },
+  {
+    id: 2,
+    title: "Slim Shady Performing Live",
+    members: "250k",
+    location: "Kumasi",
+    spotsLeft: 8,
+    date: "08 February, 2023",
+    time: "07:30pm",
+    host: "Ariana",
+    price: 500,
+    image: "https://images.pexels.com/photos/11963103/pexels-photo-11963103.jpeg",
+  },
+  {
+    id: 3,
+    title: "Drake Performing Live",
+    members: "300k",
+    location: "Taiwan",
+    spotsLeft: 15,
+    date: "15 March, 2023",
+    time: "09:00pm",
+    host: "Drake",
+    price: 450,
+    image: "https://images.pexels.com/photos/164938/pexels-photo-164938.jpeg",
+  },
+];
+
 export {
   dummyGifts,
   dummyUsers,
   LikeFilterOptions,
   GenderOptions,
   InterestsOptions,
-  ProfileTabs
+  ProfileTabs,
+  EventBanners,
+  EventTabs,
+  mockEvents
 };

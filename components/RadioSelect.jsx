@@ -10,7 +10,7 @@ const RadioSelect = ({ options, isLoading, checkedValue, onChange }) => {
         return (
           <TouchableOpacity
             key={option.id}
-            className={`${active ? 'bg-primary': 'border-gray-300'} border w-full justify-between h-[64px] mt-8 flex-row rounded-2xl items-center ${isLoading ? "opacity-50" : ""}`}
+            className={`${active ? 'bg-primary': 'border-gray-300'} border w-full justify-between h-[48px] mt-2 flex-row rounded-full items-center ${isLoading ? "opacity-50" : ""}`}
             onPress={() => {
               onChange(option.value);
             }}
