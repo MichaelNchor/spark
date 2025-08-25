@@ -10,8 +10,11 @@ import { router } from "expo-router";
 import icons from "../../../assets/constants";
 import { Image } from "expo-image";
 import CustomButton from "../../../components/CustomButton";
+import { useStep } from "../../../state/StepContext";
 
 const friends = () => {
+  const { setStep } = useStep();
+
   return (
     <SafeAreaView className="bg-white">
       <ScrollView
@@ -59,7 +62,10 @@ const friends = () => {
         </View>
         <CustomButton
           text="Access to your contact list"
-          handlePress={() => router.push("/steps/notifications")}
+          handlePress={() => {
+            setStep(7);
+            router.push("/steps/notifications");
+          }}
           containerStyles="w-full h-[48px]"
         />
       </ScrollView>

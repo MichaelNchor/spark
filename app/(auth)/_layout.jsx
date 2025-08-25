@@ -11,9 +11,8 @@ export default function AuthLayout() {
       <Stack.Screen name="steps" />
       <Stack.Screen name="signup" />
       <Stack.Screen name="welcome" />
-      <Stack.Screen name="birthday" />
-      <Stack.Screen name="email" />
       <Stack.Screen name="oops" />
+      <Stack.Screen name="[...unmatched]" />
     </Stack>
   );
 }

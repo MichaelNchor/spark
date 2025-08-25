@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import CustomButton from "../../../components/CustomButton";
 import InputField from "../../../components/InputField";
+import { useStep } from "../../../state/StepContext";
 
 const PhoneNumber = () => {
+  const { setStep } = useStep();
   const [form, setPhoneNumber] = useState({
     PhoneNumber: "",
   });
@@ -14,7 +16,7 @@ const PhoneNumber = () => {
       <ScrollView
         contentContainerStyle={{
           height: "100%",
-          paddingTop: 160,
+          paddingTop: 90,
           paddingHorizontal: 30,
         }}
       >
@@ -29,9 +31,10 @@ const PhoneNumber = () => {
             <InputField
               text=""
               value={form.PhoneNumber}
-              handleChangeText={(e) =>
-                setPhoneNumber({ ...form, PhoneNumber: e })
-              }
+              handleChangeText={(e) => {
+                setStep(2);
+                setPhoneNumber({ ...form, PhoneNumber: e });
+              }}
               otherStyles=""
               keyboardType="phone-pad"
             />

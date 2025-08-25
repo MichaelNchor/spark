@@ -11,10 +11,11 @@ import CustomButtonWithIcon from "../../../components/CustomButtonWithIcon";
 import MultiSelect from "../../../components/MultiSelect";
 import { router } from "expo-router";
 import { InterestsOptions } from "../../../data/mockData";
-import icons from "../../../assets/constants"
+import icons from "../../../assets/constants";
+import { useStep } from "../../../state/StepContext";
 
 const Interests = () => {
-
+  const { setStep } = useStep();
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   // todo: implement logic to select and deselect active options
@@ -68,7 +69,10 @@ const Interests = () => {
 
           <CustomButton
             text="Confirm"
-            handlePress={() => router.push("/steps/friends")}
+            handlePress={() => {
+              setStep(6);
+              router.push("/steps/friends");
+            }}
             containerStyles="w-full h-[48px]"
           />
         </View>

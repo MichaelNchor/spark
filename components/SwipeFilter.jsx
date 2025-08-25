@@ -14,8 +14,8 @@ const SwipeFilter = () => {
 
       {/* Location */}
       <View className="flex flex-row justify-between">
-        <Text className="text-base font-poppins-bold text-white">Location</Text>
-        <Text className="text-base font-poppins-medium text-white">
+        <Text className="text-base font-poppins-medium text-white">Location</Text>
+        <Text className="text-base font-poppins-regular text-white">
           Accra, Ghana
         </Text>
       </View>
@@ -25,8 +25,8 @@ const SwipeFilter = () => {
 
       {/* Distance */}
       <View className="flex flex-row justify-between">
-        <Text className="text-base font-poppins-bold text-white">Distance</Text>
-        <Text className="text-base font-poppins-medium text-white">
+        <Text className="text-base font-poppins-medium text-white">Distance</Text>
+        <Text className="text-base font-poppins-regular text-white">
           {distance}km
         </Text>
       </View>
@@ -53,8 +53,8 @@ const SwipeFilter = () => {
 
       {/* Age */}
       <View className="flex flex-row justify-between">
-        <Text className="text-base font-poppins-bold text-white">Age</Text>
-        <Text className="text-base font-poppins-medium text-white">
+        <Text className="text-base font-poppins-medium text-white">Age</Text>
+        <Text className="text-base font-poppins-regular text-white">
           {ageRange[0]}-{ageRange[1]}
           {"yrs"}
         </Text>
@@ -82,7 +82,7 @@ const SwipeFilter = () => {
 
       {/* Interests */}
       <View className="flex">
-        <Text className="text-base font-poppins-bold text-white">
+        <Text className="text-base font-poppins-medium text-white">
           Interests
         </Text>
       </View>

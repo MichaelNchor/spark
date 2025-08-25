@@ -12,6 +12,7 @@ import { Image } from "expo-image";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import CustomButton from "../../../components/CustomButton";
 import InputField from "../../../components/InputField";
+import { useStep } from "../../../state/StepContext";
 
 const DATA = [
   {
@@ -22,6 +23,7 @@ const DATA = [
 ];
 
 const ProfileDetails = () => {
+  const { setStep } = useStep();
   const [firstName, setFirstName] = useState("David");
   const [lastName, setLastName] = useState("Peterson");
   const [birthDate, setBirthDate] = useState(null);
@@ -97,7 +99,10 @@ const ProfileDetails = () => {
 
           <CustomButton
             text="Confirm"
-            handlePress={() => router.push("/steps/gender")}
+            handlePress={() => {
+              setStep(4);
+              router.push("/steps/gender");
+            }}
             containerStyles="w-full h-[48px] mt-14"
           />
         </View>
@@ -108,10 +113,9 @@ const ProfileDetails = () => {
         mode="date"
         onConfirm={handleConfirmDate}
         onCancel={() => setDatePickerVisibility(false)}
-        minimumDate={new Date('1980-01-01')}
-        maximumDate={new Date('2008-01-01')}        
+        minimumDate={new Date("1980-01-01")}
+        maximumDate={new Date("2008-01-01")}
       />
-
     </SafeAreaView>
   );
 };

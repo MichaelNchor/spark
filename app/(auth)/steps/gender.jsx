@@ -12,8 +12,10 @@ import { router } from "expo-router";
 import RadioSelect from "../../../components/RadioSelect";
 import CustomButton from "../../../components/CustomButton";
 import { GenderOptions } from "../../../data/mockData";
-const Gender = () => {
+import { useStep } from "../../../state/StepContext";
 
+const Gender = () => {
+  const { setStep } = useStep();
   const [gender, setGender] = useState("Female");
 
   return (
@@ -61,7 +63,10 @@ const Gender = () => {
 
           <CustomButton
             text="Continue"
-            handlePress={() => router.push("/steps/interests")}
+            handlePress={() => {
+              setStep(5);
+              router.push("/steps/interests");
+            }}
             containerStyles="w-full h-[48px] mt-96"
           />
         </View>
