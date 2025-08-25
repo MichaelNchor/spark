@@ -1,12 +1,13 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import icons from "../../assets/constants";
-import CustomButtonWithIcon from "../../components/CustomButtonWithImage";
-import VerificationInput from "../../components/VerificationInput";
+import icons from "../../../assets/constants";
+import CustomButtonWithIcon from "../../../components/CustomButtonWithIcon";
+import VerificationInput from "../../../components/VerificationInput";
+import { useStep } from "../../../state/StepContext";
 
 const VerifyCode = () => {
-
+  const { setStep } = useStep();
   const [verifyCode, setVerifyCode] = useState("");
 
   return (
@@ -37,7 +38,12 @@ const VerifyCode = () => {
           </Text>
 
           <View className="w-full flex-row">
-            <VerificationInput onComplete={(code)=> setVerifyCode(code)} />
+            <VerificationInput
+              onComplete={(code) => {
+                setStep(3);
+                setVerifyCode(code);
+              }}
+            />
           </View>
         </View>
       </ScrollView>

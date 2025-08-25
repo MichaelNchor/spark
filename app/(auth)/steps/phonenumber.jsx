@@ -1,10 +1,12 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import CustomButton from "../../components/CustomButton";
-import FormField from "../../components/FormField";
+import CustomButton from "../../../components/CustomButton";
+import InputField from "../../../components/InputField";
+import { useStep } from "../../../state/StepContext";
 
 const PhoneNumber = () => {
+  const { setStep } = useStep();
   const [form, setPhoneNumber] = useState({
     PhoneNumber: "",
   });
@@ -14,7 +16,7 @@ const PhoneNumber = () => {
       <ScrollView
         contentContainerStyle={{
           height: "100%",
-          paddingTop: 160,
+          paddingTop: 90,
           paddingHorizontal: 30,
         }}
       >
@@ -26,21 +28,22 @@ const PhoneNumber = () => {
           </Text>
 
           <View className="w-full mb-12">
-            <FormField
-              title=""
+            <InputField
+              text=""
               value={form.PhoneNumber}
-              handleChangeText={(e) =>
-                setPhoneNumber({ ...form, PhoneNumber: e })
-              }
+              handleChangeText={(e) => {
+                setStep(2);
+                setPhoneNumber({ ...form, PhoneNumber: e });
+              }}
               otherStyles=""
               keyboardType="phone-pad"
             />
           </View>
 
           <CustomButton
-            title="Continue"
-            handlePress={() => router.push("/verify-code")}
-            containerStyles="w-full h-[64px] mt-96"
+            text="Continue"
+            handlePress={() => router.push("/steps/verify-code")}
+            containerStyles="w-full h-[48px] mt-96"
           />
         </View>
       </ScrollView>

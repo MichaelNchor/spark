@@ -6,18 +6,16 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
-import CustomButtonWithIcon from "../../components/CustomButtonWithImage";
-import icons from "../../assets/constants";
+import CustomButtonWithIcon from "../../../components/CustomButtonWithIcon";
+import icons from "../../../assets/constants";
 import { router } from "expo-router";
-import RadioSelect from "../../components/RadioSelect";
-import CustomButton from "../../components/CustomButton";
+import RadioSelect from "../../../components/RadioSelect";
+import CustomButton from "../../../components/CustomButton";
+import { GenderOptions } from "../../../data/mockData";
+import { useStep } from "../../../state/StepContext";
 
 const Gender = () => {
-  const OPTIONS = [
-    { id: "1", label: "Female", value: "Female", icon: "checkmark-sharp" },
-    { id: "2", label: "Male", value: "Male", icon: "checkmark-sharp" }
-  ];
-
+  const { setStep } = useStep();
   const [gender, setGender] = useState("Female");
 
   return (
@@ -57,16 +55,19 @@ const Gender = () => {
 
           <View className="w-full flex-row">
             <RadioSelect
-              options={OPTIONS}
+              options={GenderOptions}
               checkedValue={gender}
               onChange={setGender}
             />
           </View>
 
           <CustomButton
-            title="Continue"
-            handlePress={() => router.push("/interests")}
-            containerStyles="w-full h-[64px] mt-96"
+            text="Continue"
+            handlePress={() => {
+              setStep(5);
+              router.push("/steps/interests");
+            }}
+            containerStyles="w-full h-[48px] mt-96"
           />
         </View>
       </ScrollView>

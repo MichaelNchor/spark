@@ -15,14 +15,14 @@ export default function App() {
         <View className="w-full h-full justify-center items-center">
           <CarouselSlider />
           <CustomButton
-            title="Create an account"
-            handlePress={() => router.push("/phonenumber")}
-            containerStyles="w-full h-[64px] my-6"
+            text="Create an account"
+            handlePress={() => router.push("/steps/phonenumber")}
+            containerStyles="w-full h-[48px] my-6"
           />
           <Text className="text-base font-poppins-medium text-gray-500">
             Already have an account?
             <Link
-              href={"/signup"}
+              href={"/steps/friends"}
               className="text-primary font-poppins-medium text-lg"
             >
               Sign In

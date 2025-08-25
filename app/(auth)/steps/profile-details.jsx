@@ -10,18 +10,20 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import CustomButton from "../../components/CustomButton";
-import FormField from "../../components/FormField";
+import CustomButton from "../../../components/CustomButton";
+import InputField from "../../../components/InputField";
+import { useStep } from "../../../state/StepContext";
 
 const DATA = [
   {
     id: "1",
-    title: "Male",
-    image: require("../../assets/images/profile-image-man.jpg"),
+    text: "Male",
+    image: require("../../../assets/images/profile-image-man.jpg"),
   },
 ];
 
 const ProfileDetails = () => {
+  const { setStep } = useStep();
   const [firstName, setFirstName] = useState("David");
   const [lastName, setLastName] = useState("Peterson");
   const [birthDate, setBirthDate] = useState(null);
@@ -73,21 +75,21 @@ const ProfileDetails = () => {
             </View>
           </View>
 
-          <FormField
-            title="First name"
+          <InputField
+            text="First name"
             value={firstName}
             handleChangeText={setFirstName}
           />
 
-          <FormField
-            title="Last name"
+          <InputField
+            text="Last name"
             value={lastName}
             handleChangeText={setLastName}
           />
 
           <TouchableOpacity
             onPress={() => setDatePickerVisibility(true)}
-            className="flex-row items-center gap-2 bg-pink-50 border-pink-200 rounded-xl px-4 py-3 h-16"
+            className="flex-row items-center gap-2 bg-pink-50 border-pink-200 rounded-full px-4 py-3 h-16"
           >
             <Ionicons name="calendar-outline" size={20} color="#E94057" />
             <Text className="text-primary font-poppins-regular">
@@ -96,9 +98,12 @@ const ProfileDetails = () => {
           </TouchableOpacity>
 
           <CustomButton
-            title="Confirm"
-            handlePress={() => router.push("/gender")}
-            containerStyles="w-full h-[64px] mt-14"
+            text="Confirm"
+            handlePress={() => {
+              setStep(4);
+              router.push("/steps/gender");
+            }}
+            containerStyles="w-full h-[48px] mt-14"
           />
         </View>
       </ScrollView>
@@ -108,10 +113,9 @@ const ProfileDetails = () => {
         mode="date"
         onConfirm={handleConfirmDate}
         onCancel={() => setDatePickerVisibility(false)}
-        minimumDate={new Date('1980-01-01')}
-        maximumDate={new Date('2008-01-01')}        
+        minimumDate={new Date("1980-01-01")}
+        maximumDate={new Date("2008-01-01")}
       />
-
     </SafeAreaView>
   );
 };

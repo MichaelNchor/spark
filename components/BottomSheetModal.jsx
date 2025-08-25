@@ -1,37 +1,109 @@
-import React from "react";
-import { View, Pressable, Dimensions } from "react-native";
-import Animated, { FadeInUp, FadeOutDown } from "react-native-reanimated";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Pressable,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  runOnJS,
+} from "react-native-reanimated";
 import { BlurView } from "expo-blur";
-import CustomButton from "./CustomButton";
+import { Ionicons } from "@expo/vector-icons";
 
 const { height } = Dimensions.get("window");
 
-const BottomSheetModal = ({ visible, onClose, children }) => {
-  if (!visible) return null;
+const BottomSheetModal = ({ visible, onClose, header, children }) => {
+  const translateY = useSharedValue(height);
+  const overlayOpacity = useSharedValue(0);
+  const [isMounted, setIsMounted] = useState(visible);
+  const [sheetHeight, setSheetHeight] = useState(0);
+
+  useEffect(() => {
+    if (visible) {
+      setIsMounted(true);
+      overlayOpacity.value = withTiming(1, { duration: 200 });
+      translateY.value = withSpring(0, {
+        damping: 20,
+        stiffness: 150,
+        mass: 0.4,
+      });
+    } else {
+      overlayOpacity.value = withTiming(0, { duration: 200 });
+      translateY.value = withTiming(
+        sheetHeight || height,
+        { duration: 200 },
+        () => {
+          runOnJS(setIsMounted)(false);
+        }
+      );
+    }
+  }, [visible, sheetHeight]);
+
+  const sheetStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  const overlayStyle = useAnimatedStyle(() => ({
+    opacity: overlayOpacity.value,
+  }));
+
+  if (!isMounted) return null;
 
   return (
     <Animated.View
-      entering={FadeInUp}
-      exiting={FadeOutDown}
-      className="absolute inset-0 justify-end"
+      style={[{ position: "absolute", inset: 0, zIndex: 30 }, overlayStyle]}
     >
-      <BlurView intensity={50} tint="dark" className="absolute inset-0">
-        <Pressable className="flex-1" onPress={onClose} />
+      {/* Background overlay */}
+      <BlurView intensity={40} tint="dark" style={{ flex: 1 }}>
+        <Pressable style={{ flex: 1 }} onPress={onClose} />
       </BlurView>
 
-      <View
-        style={{ height: height * 0.6 }}
-        className="bg-white rounded-t-3xl p-4 px-8"
+      {/* Bottom Sheet */}
+      <Animated.View
+        style={[
+          {
+            backgroundColor: "#1c1c1c",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            paddingTop: 15,
+            paddingHorizontal: 20,
+            paddingBottom: 30,
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+          },
+          sheetStyle,
+        ]}
+        onLayout={(e) => setSheetHeight(e.nativeEvent.layout.height)}
       >
+        {/* Header (optional) */}
+        {header && (
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: 15
+            }}
+          >
+            <Text className="font-poppins-regular text-gray-400 text-base">
+              {header}
+            </Text>
+            <TouchableOpacity onPress={onClose}>
+              <Ionicons name="close" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Children content */}
         {children}
-        <Pressable onPress={onClose}>
-        <CustomButton
-            title="Save"
-            handlePress={onClose}
-            containerStyles="w-full h-[64px] mt-14"
-          />
-        </Pressable>
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 };

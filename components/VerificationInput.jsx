@@ -100,7 +100,7 @@ const VerificationInput = ({ length = 4, onComplete }) => {
         </View>
       </View>
       <View>
-        <TouchableOpacity onPress={() => router.push("/profile-details")}>
+        <TouchableOpacity onPress={() => router.push("/steps/profile-details")}>
           <Text className="font-poppins-semibold text-primary text-base text-center mt-12">
             Send again
           </Text>

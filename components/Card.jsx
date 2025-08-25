@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const friends = () => {
+const Card = () => {
   return (
     <View>
-      <Text>friends</Text>
+      <Text>Card</Text>
     </View>
   )
 }
 
-export default friends
+export default Card

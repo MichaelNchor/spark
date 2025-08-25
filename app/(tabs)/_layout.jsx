@@ -3,6 +3,7 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import icons from "../../assets/constants";
+import { Provider as PaperProvider } from "react-native-paper";
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -13,7 +14,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
         style={{ width: 24, height: 24, tintColor: color }}
       />
       <Text
-        className={`${focused ? "font-poppins-bold" : "font-poppins-semibold"} text-xs`}
+        className={`${focused ? "font-poppins-semibold" : "font-poppins-medium"} text-[0.6rem]`}
         style={{ color }}
         numberOfLines={1}
         ellipsizeMode="tail"
@@ -24,26 +25,40 @@ const TabIcon = ({ icon, color, name, focused }) => {
   );
 };
 
-const TabLayout = () => {
+export default function TabLayout() {
+  const TAB_COLORS = "#777777";
+
   return (
-    <>
+    <PaperProvider>
       <Tabs
         screenOptions={{
+          tabBarIconStyle: {
+            color: TAB_COLORS,
+            backgroundColor: "#121212",
+          },
           tabBarShowLabel: false,
-          tabBarActiveTintColor: "#8E44ADAA",
+          tabBarActiveTintColor: "#E94057",
           tabBarStyle: {
             height: 84,
-          }
+            paddingHorizontal: 20,
+            paddingTop: 10,
+            backgroundColor: "#121212",
+            borderTopWidth: 0,
+            elevation: 0,
+          },
+          sceneStyle: {
+            backgroundColor: "#121212",
+          },
         }}
       >
         <Tabs.Screen
           name="home"
           options={{
-            title: "Home",
+            text: "Home",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.home}
+                icon={icons.homeOutline}
                 color={color}
                 focused={focused}
                 name="Home"
@@ -52,16 +67,16 @@ const TabLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="discover"
+          name="events"
           options={{
-            title: "Discover",
+            text: "Events",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.discover}
+                icon={icons.events}
                 color={color}
                 focused={focused}
-                name="Discover"
+                name="Events"
               />
             ),
           }}
@@ -69,11 +84,11 @@ const TabLayout = () => {
         <Tabs.Screen
           name="likes"
           options={{
-            title: "Likes",
+            text: "Likes",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.heart}
+                icon={icons.heartOutline}
                 color={color}
                 focused={focused}
                 name="Likes"
@@ -84,11 +99,11 @@ const TabLayout = () => {
         <Tabs.Screen
           name="chat"
           options={{
-            title: "Chat",
+            text: "Chat",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.chat}
+                icon={icons.chatOutline}
                 color={color}
                 focused={focused}
                 name="Chat"
@@ -99,11 +114,11 @@ const TabLayout = () => {
         <Tabs.Screen
           name="profile"
           options={{
-            title: "Profile",
+            text: "Profile",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.profile}
+                icon={icons.profileOutline}
                 color={color}
                 focused={focused}
                 name="Profile"
@@ -112,8 +127,6 @@ const TabLayout = () => {
           }}
         />
       </Tabs>
-    </>
+    </PaperProvider>
   );
-};
-
-export default TabLayout;
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
 const CustomButton = ({
-  title,
+  text,
   handlePress,
   containerStyles,
   textStyles,
@@ -11,7 +11,7 @@ const CustomButton = ({
 }) => {
   return (
     <TouchableOpacity
-      className={`${isOutline ? "border border-primary bg-transparent" : "bg-primary"} rounded-2xl justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}
+      className={`${isOutline ? "border border-primary bg-transparent" : "bg-primary"} rounded-full justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}
       onPress={handlePress}
       activeOpacity={0.7}
       disabled={isLoading}
@@ -25,9 +25,9 @@ const CustomButton = ({
       }
     >
       <Text
-        className={`${isOutline ? "text-primary" : "text-white"}  font-poppins-bold text-lg ${textStyles}`}
+        className={`${isOutline ? "text-primary" : "text-white"}  font-poppins-medium text-lg ${textStyles}`}
       >
-        {title}
+        {text}
       </Text>
     </TouchableOpacity>
   );

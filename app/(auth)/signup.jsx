@@ -4,7 +4,7 @@ import React from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import icons from "../../assets/constants";
 import CustomButton from "../../components/CustomButton";
-import CustomButtonWithIcon from "../../components/CustomButtonWithImage";
+import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 
 const SignUp = () => {
   return (
@@ -27,15 +27,15 @@ const SignUp = () => {
           <View className="w-full items-center gap-3">
 
             <CustomButton
-              title="Continue with email"
+              text="Continue with email"
               handlePress={() => router.push("/phonenumber")}
-              containerStyles="w-full h-[64px]"
+              containerStyles="w-full h-[48px]"
             />
 
             <CustomButton
-              title="Use phone number"
+              text="Use phone number"
               handlePress={() => router.push("/phonenumber")}
-              containerStyles="w-full h-[64px]"
+              containerStyles="w-full h-[48px]"
               isOutline={true}
             />
 
