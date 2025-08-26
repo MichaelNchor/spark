@@ -20,7 +20,7 @@ const Likes = () => {
           {/* Logo on the left */}
           <Image
             source={icons.logo}
-            style={{ width: 120, height: 50 }}
+            style={{ width: 80, height: 30 }}
             contentFit="cover"
           />
         </View>

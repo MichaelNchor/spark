@@ -1,5 +1,12 @@
 import React from "react";
-import { Image, Text, TouchableOpacity } from "react-native";
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CustomButtonWithIcon = ({
   text,
@@ -13,39 +20,66 @@ const CustomButtonWithIcon = ({
   isLoading,
   isOutline = false,
   iconStyles = "",
-  backgroundColor
+  backgroundColor,
 }) => {
   return (
     <TouchableOpacity
-      className={`${isOutline ? `border border-${backgroundColor ?? "primary"} bg-transparent` : `bg-${backgroundColor ?? "primary"}`} rounded-full flex-row justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}
-      onPress={handlePress}
       activeOpacity={0.7}
+      onPress={handlePress}
       disabled={isLoading}
-      style={
-        isOutline
-          ? {
-              borderWidth: 0,
-              borderColor: "#cccccc",
-            }
-          : {}
-      }
+      className={`rounded-full overflow-hidden ${containerStyles} ${
+        isLoading ? "opacity-50" : ""
+      }`}
     >
-      <Image
-        source={icon}
-        style={{
-          width: iconWidth,
-          height: iconHeight,
-          tintColor: iconColor,
-        }}
-        className={iconStyles}
-      />
-
-      {text != null && (
-        <Text
-          className={`${isOutline ? "text-primary" : "text-white"} font-poppins-bold text-lg ${textStyles}`}
+      {isOutline ? (
+        <View className="flex-row justify-center items-center p-4 rounded-full">
+          <Image
+            source={icon}
+            style={{
+              width: iconWidth,
+              height: iconHeight,
+              tintColor: iconColor,
+            }}
+            className={`mr-2 ${iconStyles}`}
+          />
+          {text && (
+            <Text
+              className={`text-primary font-poppins-bold text-lg ${textStyles}`}
+            >
+              {text}
+            </Text>
+          )}
+        </View>
+      ) : (
+        <LinearGradient
+          colors={["#fd297b", "#ff5864", "#ff655b"]} // Tinder gradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          className="rounded-full flex-row justify-center items-center p-4"
         >
-          {text}
-        </Text>
+          {isLoading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <>
+              <Image
+                source={icon}
+                style={{
+                  width: iconWidth,
+                  height: iconHeight,
+                  tintColor: iconColor,
+                }}
+                className={`mr-2 ${iconStyles}`}
+              />
+              {text && (
+                <Text
+                  className={`text-white font-poppins-bold text-lg ${textStyles}`}
+                >
+                  {text}
+                </Text>
+              )}
+            </>
+          )}
+        </LinearGradient>
       )}
     </TouchableOpacity>
   );

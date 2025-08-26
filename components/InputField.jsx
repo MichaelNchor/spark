@@ -19,7 +19,7 @@ const InputField = ({
       </Text>
 
       <View
-        className={`w-full h-12 px-2 rounded-full border ${
+        className={`w-full h-14 px-2 rounded-full border ${
           isFocused ? "border-primary" : "border-[#cccccc]"
         }`}
       >

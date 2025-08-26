@@ -29,7 +29,7 @@ const ProgressBar = ({ step, totalSteps }) => {
     >
       <Animated.View style={{ height: "100%", width }}>
         <LinearGradient
-          colors={["#E94057", "#FF5DA2", "#F6E8FF"]}
+          colors={["#fd297b", "#ff5864", "#ff655b"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{ flex: 1 }}

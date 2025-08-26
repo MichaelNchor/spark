@@ -15,7 +15,7 @@ const VerifyCode = () => {
       <ScrollView
         contentContainerStyle={{
           height: "100%",
-          paddingTop: 90,
+          paddingTop: 20,
           paddingHorizontal: 30,
         }}
       >
@@ -30,7 +30,7 @@ const VerifyCode = () => {
             isOutline={true}
           />
 
-          <Text className="font-poppins-bold text-4xl mb-4 text-center">
+          <Text className="font-poppins-medium text-4xl mb-2 text-center">
             00:42
           </Text>
           <Text className="font-poppins-regular text-gray-500 mb-8 text-center">
@@ -40,7 +40,7 @@ const VerifyCode = () => {
           <View className="w-full flex-row">
             <VerificationInput
               onComplete={(code) => {
-                setStep(3);
+                setStep(2);
                 setVerifyCode(code);
               }}
             />

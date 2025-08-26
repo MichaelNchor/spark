@@ -30,7 +30,7 @@ const Events = () => {
       <View className="w-full flex-row items-center justify-between px-4 pt-4 my-2">
         <Image
           source={icons.logo}
-          style={{ width: 120, height: 50 }}
+          style={{ width: 80, height: 30 }}
           contentFit="cover"
         />
         <CustomButtonWithIcon

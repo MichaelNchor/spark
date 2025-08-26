@@ -18,18 +18,17 @@ const Interests = () => {
   const { setStep } = useStep();
   const [selectedOptions, setSelectedOptions] = useState([]);
 
-  // todo: implement logic to select and deselect active options
   return (
-    <SafeAreaView className="bg-white">
-      <ScrollView
-        contentContainerStyle={{
-          height: "100%",
-          paddingTop: 90,
-          paddingHorizontal: 30,
-        }}
-      >
-        <View className="w-full gap-4">
-          <View className="w-full flex-row items-center justify-between">
+    <SafeAreaView className="bg-white flex-1">
+      <View className="flex-1 px-6 pt-6">
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: 20,
+          }}
+          showsVerticalScrollIndicator={false}
+        >
+          {/* Header */}
+          <View className="w-full flex-row items-center justify-between mb-6">
             <CustomButtonWithIcon
               icon={icons.back}
               iconWidth={24}
@@ -50,7 +49,8 @@ const Interests = () => {
             </TouchableOpacity>
           </View>
 
-          <Text className="font-poppins-bold text-4xl text-left">
+          {/* Title */}
+          <Text className="font-poppins-medium text-4xl mb-2">
             Your Interests
           </Text>
 
@@ -59,24 +59,28 @@ const Interests = () => {
             passionate about.
           </Text>
 
-          <View className="w-full flex-row">
+          {/* MultiSelect */}
+          <View className="w-full flex-row mt-6">
             <MultiSelect
               options={InterestsOptions}
               selectedOptions={selectedOptions}
               onChange={setSelectedOptions}
             />
           </View>
+        </ScrollView>
 
+        {/* Confirm Button (stuck at bottom) */}
+        <View className="pb-12">
           <CustomButton
             text="Confirm"
             handlePress={() => {
-              setStep(6);
+              setStep(5);
               router.push("/steps/friends");
             }}
             containerStyles="w-full h-[48px]"
           />
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

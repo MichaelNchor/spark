@@ -33,7 +33,8 @@ import gallery from "./icons/gallery-100.png";
 import gift from "./icons/gift-100.png";
 import settings from "./icons/settings-100.png";
 import events from "./icons/events-100.png";
-import location from "./icons/location-100.png"
+import location from "./icons/location-100.png";
+import phoneCall from "./icons/call-100.png";
 
 export default {
   audioRecord,
@@ -70,5 +71,6 @@ export default {
   gift,
   settings,
   events,
-  location
+  location,
+  phoneCall
 };

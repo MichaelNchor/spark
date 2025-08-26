@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
@@ -19,14 +19,17 @@ const Gender = () => {
   const [gender, setGender] = useState("Female");
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="bg-white flex-1">
       <ScrollView
         contentContainerStyle={{
-          height: "100%",
-          paddingTop: 90,
+          flexGrow: 1,
+          paddingTop: 20,
           paddingHorizontal: 30,
+          paddingBottom: 48, // same as pb-12
+          justifyContent: "space-between",
         }}
       >
+        {/* Content */}
         <View className="w-full gap-4">
           <View className="w-full flex-row items-center justify-between">
             <CustomButtonWithIcon
@@ -49,7 +52,7 @@ const Gender = () => {
             </TouchableOpacity>
           </View>
 
-          <Text className="font-poppins-bold text-4xl mb-4 text-left">
+          <Text className="font-poppins-medium text-4xl mb-4 text-center">
             I am a
           </Text>
 
@@ -60,14 +63,17 @@ const Gender = () => {
               onChange={setGender}
             />
           </View>
+        </View>
 
+        {/* Fixed bottom button */}
+        <View className="w-full">
           <CustomButton
             text="Continue"
             handlePress={() => {
-              setStep(5);
+              setStep(4);
               router.push("/steps/interests");
             }}
-            containerStyles="w-full h-[48px] mt-96"
+            containerStyles="w-full h-[48px]"
           />
         </View>
       </ScrollView>

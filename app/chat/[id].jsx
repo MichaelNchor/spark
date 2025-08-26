@@ -79,10 +79,14 @@ const ChatRoom = () => {
               containerStyles="w-[50px] h-[50px] items-center justify-center"
               isOutline
             />
-            <Ionicons
-              size={24}
-              style={{ color: "#777777", paddingRight: 20 }}
-              name="ellipsis-vertical"
+            <CustomButtonWithIcon
+              icon={icons.phoneCall}
+              iconWidth={24}
+              iconHeight={24}
+              iconColor="#777777"
+              handlePress={() => {}}
+              containerStyles="w-[50px] h-[50px] items-center justify-center"
+              isOutline
             />
           </View>
         </View>

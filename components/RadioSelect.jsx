@@ -1,44 +1,61 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { act } from "react";
+import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 const RadioSelect = ({ options, isLoading, checkedValue, onChange }) => {
   return (
     <View className="w-full">
       {options.map((option) => {
-        let active = checkedValue == option.value;
-        return (
-          <TouchableOpacity
-            key={option.id}
-            className={`${active ? 'bg-primary': 'border-gray-300'} border w-full justify-between h-[48px] mt-2 flex-row rounded-full items-center ${isLoading ? "opacity-50" : ""}`}
-            onPress={() => {
-              onChange(option.value);
-            }}
-            activeOpacity={0.7}
-            disabled={isLoading}
-            style={
-              active
-                ? {
-                    borderWidth: 1,
-                    borderColor: "#E94057",
-                  }
-                : {
-                    borderWidth: 1,
-                    borderColor: "#cccccc",
-                  }
-            }
+        let active = checkedValue === option.value;
+
+        const ButtonContent = (
+          <View
+            className={`w-full h-[48px] flex-row justify-between items-center rounded-full px-4 ${
+              active ? "" : "bg-white"
+            }`}
           >
             <Text
-              className={`mx-4 font-poppins-medium text-lg ${active ? "text-white" : "text-gray-500"}`}
+              className={`font-poppins-medium text-lg ${
+                active ? "text-white" : "text-gray-500"
+              }`}
             >
               {option.label}
             </Text>
-            <Ionicons
-              className="mx-4"
-              name={option.icon}
-              size={20}
-              color={active ? "#ffffff" : "#d1d5db"}
-            />
+
+            {active && (
+              <Ionicons name="checkmark" size={20} color="#fff" />
+            )}
+          </View>
+        );
+
+        return (
+          <TouchableOpacity
+            key={option.id}
+            className={`w-full mt-2 rounded-full overflow-hidden ${
+              isLoading ? "opacity-50" : ""
+            }`}
+            onPress={() => onChange(option.value)}
+            activeOpacity={0.8}
+            disabled={isLoading}
+          >
+            {active ? (
+              <LinearGradient
+                colors={["#fd297b", "#ff5864", "#ff655b"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{ borderRadius: 999 }}
+              >
+                {ButtonContent}
+              </LinearGradient>
+            ) : (
+              <View
+                className="border border-gray-300 rounded-full"
+                style={{ borderRadius: 999 }}
+              >
+                {ButtonContent}
+              </View>
+            )}
           </TouchableOpacity>
         );
       })}
