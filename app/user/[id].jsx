@@ -26,7 +26,7 @@ const UserProfile = () => {
 
   if (!user) {
     return (
-      <View className="flex-1 items-center justify-center bg-black">
+      <View className="flex-1 items-center justify-center">
         <Text className="text-white">User not found</Text>
       </View>
     );
@@ -45,7 +45,7 @@ const UserProfile = () => {
   });
 
   return (
-    <SafeAreaView className="flex-1 bg-[#121212]">
+    <SafeAreaView className="flex-1">
       <View className="flex-1">
         {/* Scrollable content */}
         <Animated.ScrollView
@@ -72,10 +72,20 @@ const UserProfile = () => {
           </Animated.View>
 
           {/* User Info Section */}
-          <View className="px-6 py-5  bg-[#1c1c1e] rounded-3xl mt-[-10px]">
+          <View
+            className="px-6 py-5  bg-white rounded-3xl mt-[-10px]"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000"
+            }}
+          >
             <View className="flex-row items-center justify-between my-2 mb-6">
               <View className="flex-row items-center justify-between">
-                <Text className="text-white text-3xl font-poppins-medium">
+                <Text className="text-black text-3xl font-poppins-medium">
                   {`${user.name}, ${user.age}`}
                 </Text>
                 {/* Verified */}
@@ -101,27 +111,27 @@ const UserProfile = () => {
                 </Text>
               </View>
             </View>
-            <Text className="text-gray-300 text-sm mt-2 font-poppins-medium">
+            <Text className="text-black text-sm mt-2 font-poppins-medium">
               🔎 {"Looking for"}
             </Text>
-            <Text className="text-gray-300 text-base mt-4 font-poppins-regular">
+            <Text className="text-black text-base mt-4 font-poppins-regular">
               {user.lookingFor}
             </Text>
           </View>
 
           {/* About / Me */}
-          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
-            <Text className="text-white text-sm font-poppins-semibold mb-4">
+          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
+            <Text className="text-black text-sm font-poppins-semibold mb-4">
               {"About me"}
             </Text>
-            <Text className="text-gray-200 text-base font-poppins-regular">
+            <Text className="text-black text-base font-poppins-regular">
               {user.bio}
             </Text>
           </View>
 
           {/* Interests */}
           {user.interests?.length > 0 && (
-            <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
+            <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
               <Text className="text-white text-sm font-poppins-semibold mb-4">
                 Interests
               </Text>
@@ -141,7 +151,7 @@ const UserProfile = () => {
           )}
 
           {/* Occupation / Education */}
-          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Career & Education
             </Text>
@@ -154,7 +164,7 @@ const UserProfile = () => {
           </View>
 
           {/* Location */}
-          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Location
             </Text>
@@ -167,7 +177,7 @@ const UserProfile = () => {
           </View>
 
           {/* Essentials Section */}
-          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Essentials
             </Text>
@@ -195,7 +205,7 @@ const UserProfile = () => {
           </View>
 
           {/* About / Me */}
-          <View className="px-6 py-5 mt-1 bg-[#1c1c1e] rounded-3xl">
+          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
             <Text className="text-white text-sm font-poppins-semibold mb-4">
               Send a love note
             </Text>
@@ -203,7 +213,9 @@ const UserProfile = () => {
               👉💖 Send a special message before matching to stand out.
             </Text>
             <TouchableOpacity className="border-[1.5px] border-[#E94057] px-3 py-1 rounded-full mr-2 mb-2">
-              <Text className="text-white py-1 font-poppins-medium text-base">Your message</Text>
+              <Text className="text-white py-1 font-poppins-medium text-base">
+                Your message
+              </Text>
             </TouchableOpacity>
           </View>
 

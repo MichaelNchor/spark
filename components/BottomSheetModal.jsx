@@ -68,7 +68,7 @@ const BottomSheetModal = ({ visible, onClose, header, children }) => {
       <Animated.View
         style={[
           {
-            backgroundColor: "#1c1c1c",
+            backgroundColor: "white",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             paddingTop: 15,
@@ -92,7 +92,7 @@ const BottomSheetModal = ({ visible, onClose, header, children }) => {
               padding: 15
             }}
           >
-            <Text className="font-poppins-regular text-gray-400 text-base">
+            <Text className="font-poppins-regular text-black text-base">
               {header}
             </Text>
             <TouchableOpacity onPress={onClose}>

@@ -1,5 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, Dimensions, Pressable, Text } from "react-native";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import { View, SafeAreaView, Dimensions, Text } from "react-native";
 import SwipeCard from "./SwipeCard";
 import Animated, {
   useSharedValue,
@@ -12,7 +17,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
-const TinderSwiper = ({ users }) => {
+const TinderSwiper = forwardRef(({ users }, ref) => {
   const maxRotateAngle = 60;
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const { width, height } = Dimensions.get("window");
@@ -52,11 +57,10 @@ const TinderSwiper = ({ users }) => {
   const nextCardStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       Math.abs(translateX.value),
-      [0, width * 0.3],
-      [0.9, 1],
+      [0, width * 0.4],
+      [0.95, 1],
       Extrapolation.CLAMP
     );
-
     return {
       transform: [{ scale }],
     };
@@ -95,6 +99,24 @@ const TinderSwiper = ({ users }) => {
     }
   };
 
+  // Programmatic swipe
+  const swipe = (direction) => {
+    if (direction === "left") {
+      translateX.value = withSpring(-width, {}, () => runOnJS(setNextCard)());
+    } else if (direction === "right") {
+      translateX.value = withSpring(width, {}, () => runOnJS(setNextCard)());
+    } else if (direction === "up") {
+      translateY.value = withSpring(-height, {}, () => runOnJS(setNextCard)());
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    swipeLeft: () => swipe("left"),
+    swipeRight: () => swipe("right"),
+    swipeUp: () => swipe("up"),
+  }));
+
+  // Gesture for finger swipes
   const gestureHandler = Gesture.Pan()
     .onUpdate((e) => {
       translateX.value = e.translationX;
@@ -123,7 +145,7 @@ const TinderSwiper = ({ users }) => {
     });
 
   return (
-    <SafeAreaView className="bg-[#121212] w-full h-full">
+    <SafeAreaView className="w-full h-full">
       {currentUserIndex >= users.length ? (
         <View className="flex-1 items-center justify-center h-full">
           <Text className="font-poppins-light text-xl text-white">
@@ -134,7 +156,7 @@ const TinderSwiper = ({ users }) => {
         <>
           {/* Next card */}
           {nextProfile && (
-            <View className="absolute z-0 justify-center w-full h-[70vh]">
+            <View className="absolute z-0 justify-center w-full h-[78vh]">
               <Animated.View
                 style={[nextCardStyle]}
                 className="w-full h-full bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
@@ -148,7 +170,7 @@ const TinderSwiper = ({ users }) => {
           <GestureDetector gesture={gestureHandler}>
             <Animated.View
               style={[currentCardStyle]}
-              className="absolute z-1 justify-center w-full h-[70vh] bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
+              className="absolute z-1 justify-center w-full h-[78vh] bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
             >
               <SwipeCard user={currentProfile} />
 
@@ -229,6 +251,6 @@ const TinderSwiper = ({ users }) => {
       )}
     </SafeAreaView>
   );
-};
+});
 
 export default TinderSwiper;

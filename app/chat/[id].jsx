@@ -38,7 +38,7 @@ const ChatRoom = () => {
             icon={icons.back}
             iconWidth={24}
             iconHeight={24}
-            iconColor="#777777"
+            iconColor="black"
             handlePress={() => router.back()}
             containerStyles="w-[50px] h-[50px] items-center justify-center"
             isOutline
@@ -74,7 +74,7 @@ const ChatRoom = () => {
               icon={icons.videoCall}
               iconWidth={24}
               iconHeight={24}
-              iconColor="#777777"
+              iconColor="black"
               handlePress={() => {}}
               containerStyles="w-[50px] h-[50px] items-center justify-center"
               isOutline
@@ -83,7 +83,7 @@ const ChatRoom = () => {
               icon={icons.phoneCall}
               iconWidth={24}
               iconHeight={24}
-              iconColor="#777777"
+              iconColor="black"
               handlePress={() => {}}
               containerStyles="w-[50px] h-[50px] items-center justify-center"
               isOutline

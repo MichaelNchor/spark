@@ -40,7 +40,7 @@ const Likes = () => {
         {/* Divider */}
         <View
           style={{
-            borderBottomColor: "#777777",
+            borderBottomColor: "black",
             borderBottomWidth: 0.5,
             marginHorizontal: 10,
           }}

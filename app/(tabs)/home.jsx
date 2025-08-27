@@ -6,18 +6,20 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import TinderSwiper from "../../components/TinderSwiper";
 import { dummyUsers } from "../../data/mockData";
 import { Image } from "expo-image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import BottomSheetModal from "../../components/BottomSheetModal";
 import { Portal } from "react-native-paper";
-import SwipeButtons from "../../components/SwipeButtons";
+import SwipeButton from "../../components/SwipeButton";
 import SwipeFilter from "../../components/SwipeFilter";
+import MainSwipeButton from "../../components/MainSwipeButton";
 
 const Home = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const swiperRef = useRef();
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1, marginTop: 20 }}>
+      <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
         {/* Top bar with logo left, icons right */}
         <View className="w-full flex-row items-center justify-between px-4 pt-4 my-2">
           {/* Logo on the left */}
@@ -29,10 +31,10 @@ const Home = () => {
           {/* Right icons */}
           <View className="flex-row items-center gap-3">
             <CustomButtonWithIcon
-              icon={icons.notification}
+              icon={icons.undo}
               iconWidth={24}
               iconHeight={24}
-              iconColor="#777777"
+              iconColor="black"
               handlePress={() => router.back()}
               containerStyles="w-[50px] h-[50px] items-start"
               isOutline={true}
@@ -41,7 +43,7 @@ const Home = () => {
               icon={icons.filter}
               iconWidth={24}
               iconHeight={24}
-              iconColor="#777777"
+              iconColor="black"
               handlePress={() => setIsModalVisible(true)}
               containerStyles="w-[50px] h-[50px] items-start"
               isOutline={true}
@@ -50,50 +52,37 @@ const Home = () => {
         </View>
 
         {/* Swiper in the center */}
-        <View style={{ flex: 1 }}>
-          <TinderSwiper users={dummyUsers} />
+        <View style={{ flex: 1, marginHorizontal: 5 }}>
+          <TinderSwiper ref={swiperRef} users={dummyUsers} />
         </View>
 
         {/* Bottom action buttons */}
-        <View className="flex-row justify-center items-center gap-4 pb-6">
-          <SwipeButtons
-            icon={icons.previousMain}
+        <View className="absolute bottom-32 left-0 right-0 flex-row justify-center items-center gap-4">
+          <SwipeButton
+            icon={icons.cross}
             iconWidth={28}
             iconHeight={28}
-            handlePress={() => console.log("Undo")}
-            containerStyles="w-[45px] h-[45px]"
-            isOutline={true}
-          />
-          <SwipeButtons
-            icon={icons.passMain}
-            iconWidth={36}
-            iconHeight={36}
-            handlePress={() => console.log("Pass")}
-            containerStyles="w-[60px] h-[60px]"
-            isOutline={true}
-          />
-          <SwipeButtons
-            icon={icons.superlikeMain}
-            iconWidth={28}
-            iconHeight={28}
-            handlePress={() => console.log("Superlike")}
+            iconColor={"white"}
+            handlePress={() => swiperRef.current.swipeLeft()}
             containerStyles="w-[50px] h-[50px]"
             isOutline={true}
           />
-          <SwipeButtons
-            icon={icons.likeMain}
+          <MainSwipeButton
+            icon={icons.star}
             iconWidth={36}
             iconHeight={36}
-            handlePress={() => console.log("Like")}
+            iconColor={"white"}
+            handlePress={() => swiperRef.current.swipeUp()}
             containerStyles="w-[60px] h-[60px]"
             isOutline={true}
           />
-          <SwipeButtons
-            icon={icons.sendMessageMain}
+          <SwipeButton
+            icon={icons.heart}
             iconWidth={28}
             iconHeight={28}
-            handlePress={() => console.log("Message")}
-            containerStyles="w-[45px] h-[45px] "
+            iconColor={"white"}
+            handlePress={() => swiperRef.current.swipeRight()}
+            containerStyles="w-[50px] h-[50px]"
             isOutline={true}
           />
         </View>
@@ -103,7 +92,6 @@ const Home = () => {
           <BottomSheetModal
             visible={isModalVisible}
             onClose={() => setIsModalVisible(false)}
-            header="Filter"
           >
             {/* You can put your filter options here */}
             <SwipeFilter />

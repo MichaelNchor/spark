@@ -29,6 +29,12 @@ const dummyUsers = [
         uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80",
       },
     ],
+    premiumPackage: {
+      isActive: true,
+      type: "Gold",
+      expiresAt: "2025-12-31",
+      perks: ["See who liked you", "Unlimited swipes", "Boost profile"],
+    },
   },
   {
     id: "2",
@@ -60,6 +66,12 @@ const dummyUsers = [
         uri: "https://images.unsplash.com/photo-1603415526960-f7e0328f4b1c?auto=format&fit=crop&w=800&q=80",
       },
     ],
+    premiumPackage: {
+      isActive: false,
+      type: null,
+      expiresAt: null,
+      perks: [],
+    },
   },
   {
     id: "3",
@@ -91,6 +103,12 @@ const dummyUsers = [
         uri: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80",
       },
     ],
+    premiumPackage: {
+      isActive: true,
+      type: "Silver",
+      expiresAt: "2025-06-30",
+      perks: ["Unlimited swipes", "See who liked you"],
+    },
   },
   {
     id: "4",
@@ -115,13 +133,19 @@ const dummyUsers = [
       },
       {
         type: "image",
-        uri: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80",
+        uri: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&w=800&q=80",
       },
       {
         type: "video",
         uri: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       },
     ],
+    premiumPackage: {
+      isActive: false,
+      type: null,
+      expiresAt: null,
+      perks: [],
+    },
   },
   {
     id: "5",
@@ -142,13 +166,24 @@ const dummyUsers = [
     media: [
       {
         type: "image",
-        uri: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=80",
+        uri: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&w=800&q=80",
       },
       {
         type: "image",
-        uri: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+        uri: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&w=800&q=80",
       },
     ],
+    premiumPackage: {
+      isActive: true,
+      type: "Platinum",
+      expiresAt: "2026-01-15",
+      perks: [
+        "See who liked you",
+        "Unlimited swipes",
+        "Boost profile",
+        "Priority support",
+      ],
+    },
   },
   {
     id: "6",
@@ -169,13 +204,19 @@ const dummyUsers = [
     media: [
       {
         type: "image",
-        uri: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        uri: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&w=800&q=80",
       },
       {
         type: "image",
-        uri: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80",
+        uri: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&w=800&q=80",
       },
     ],
+    premiumPackage: {
+      isActive: false,
+      type: null,
+      expiresAt: null,
+      perks: [],
+    },
   },
   {
     id: "7",
@@ -196,13 +237,19 @@ const dummyUsers = [
     media: [
       {
         type: "image",
-        uri: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
+        uri: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&w=800&q=80",
       },
       {
         type: "image",
-        uri: "https://images.unsplash.com/photo-1517256064527-09c73fc73e52?auto=format&fit=crop&w=800&q=80",
+        uri: "https://images.unsplash.com/photo-1517256064527-09c73fc73e52?auto=format&w=800&q=80",
       },
     ],
+    premiumPackage: {
+      isActive: true,
+      type: "Gold",
+      expiresAt: "2025-11-30",
+      perks: ["Unlimited swipes", "Boost profile"],
+    },
   },
 ];
 
@@ -338,7 +385,8 @@ const mockEvents = [
     time: "07:30pm",
     host: "Ariana",
     price: 500,
-    image: "https://images.pexels.com/photos/11963103/pexels-photo-11963103.jpeg",
+    image:
+      "https://images.pexels.com/photos/11963103/pexels-photo-11963103.jpeg",
   },
   {
     id: 3,
@@ -363,5 +411,5 @@ export {
   ProfileTabs,
   EventBanners,
   EventTabs,
-  mockEvents
+  mockEvents,
 };

@@ -37,7 +37,7 @@ const Events = () => {
           icon={icons.filter}
           iconWidth={24}
           iconHeight={24}
-          iconColor="#777777"
+          iconColor="black"
           containerStyles="w-[50px] h-[50px] items-start"
           isOutline={true}
         />

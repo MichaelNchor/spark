@@ -1,7 +1,7 @@
 import React from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity, Text } from "react-native";
 
-const SwipeButtons = ({
+const SwipeButton = ({
   icon,
   iconColor,
   iconWidth = 34,
@@ -9,11 +9,17 @@ const SwipeButtons = ({
   handlePress,
   isLoading,
   iconStyles,
-  containerStyles
+  containerStyles,
 }) => {
   return (
     <TouchableOpacity
-      className={`items-center justify-center bg-[#121212] rounded-full border-[1px] border-[#777777] flex-row ${containerStyles} ${isLoading ? "opacity-50" : ""}`}
+      className={`px-3 py-2 rounded-full mr-2 mb-2 items-center justify-center flex-row ${containerStyles} ${
+        isLoading ? "opacity-50" : ""
+      }`}
+      style={{
+        backgroundColor: "rgba(128,128,128,0.6)",
+        borderWidth: 0,
+      }}
       onPress={handlePress}
       activeOpacity={0.7}
       disabled={isLoading}
@@ -23,6 +29,7 @@ const SwipeButtons = ({
         style={{
           width: iconWidth,
           height: iconHeight,
+          tintColor: iconColor,
         }}
         className={iconStyles}
       />
@@ -30,4 +37,4 @@ const SwipeButtons = ({
   );
 };
 
-export default SwipeButtons;
+export default SwipeButton;

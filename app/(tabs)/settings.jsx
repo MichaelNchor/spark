@@ -25,7 +25,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-const Profile = () => {
+const Settings = () => {
   const profileCompletion = 70; // Example percentage
   const size = 170;
   const strokeWidth = 5;
@@ -319,4 +319,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Settings;
