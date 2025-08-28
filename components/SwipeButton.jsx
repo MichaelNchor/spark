@@ -1,5 +1,6 @@
 import React from "react";
-import { Image, TouchableOpacity, Text } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
+import { BlurView } from "expo-blur";
 
 const SwipeButton = ({
   icon,
@@ -13,26 +14,40 @@ const SwipeButton = ({
 }) => {
   return (
     <TouchableOpacity
-      className={`px-3 py-2 rounded-full mr-2 mb-2 items-center justify-center flex-row ${containerStyles} ${
+      onPress={handlePress}
+      disabled={isLoading}
+      activeOpacity={0.7}
+      className={`rounded-full overflow-hidden ${containerStyles} ${
         isLoading ? "opacity-50" : ""
       }`}
-      style={{
-        backgroundColor: "rgba(128,128,128,0.6)",
-        borderWidth: 0,
-      }}
-      onPress={handlePress}
-      activeOpacity={0.7}
-      disabled={isLoading}
+      style={{ borderRadius: 999 }}
     >
-      <Image
-        source={icon}
+      {/* Glass / blur effect */}
+      <BlurView
+        intensity={55} // controls strength of blur
+        tint="dark" // can be "light" | "dark" | "default"
         style={{
-          width: iconWidth,
-          height: iconHeight,
-          tintColor: iconColor,
+          paddingHorizontal: 14,
+          paddingVertical: 10,
+          borderRadius: 999,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(255,255,255,0.40)",
+          borderWidth: 1,
+          borderColor: "rgba(255,255,255,0.15)",
         }}
-        className={iconStyles}
-      />
+      >
+        <Image
+          source={icon}
+          style={{
+            width: iconWidth,
+            height: iconHeight,
+            tintColor: iconColor,
+          }}
+          className={iconStyles}
+        />
+      </BlurView>
     </TouchableOpacity>
   );
 };
