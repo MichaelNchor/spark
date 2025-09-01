@@ -1,6 +1,6 @@
 const dummyUsers = [
   {
-    id: "1",
+    id: "add",
     name: "Jessica",
     age: 20,
     bio: "Adventurer and foodie. Let's explore together!",
@@ -316,6 +316,11 @@ const LikeFilterOptions = [
     label: "Verified",
     value: "Verified",
   },
+  {
+    id: "4",
+    label: "Online",
+    value: "Online",
+  },
 ];
 
 const GenderOptions = [
@@ -374,6 +379,7 @@ const mockEvents = [
     host: "Jennie",
     price: 350,
     image: "https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg",
+    description: "Fast-paced fun with exciting matches",
   },
   {
     id: 2,
@@ -387,6 +393,7 @@ const mockEvents = [
     price: 500,
     image:
       "https://images.pexels.com/photos/11963103/pexels-photo-11963103.jpeg",
+    description: "Bring your dancing shoes",
   },
   {
     id: 3,
@@ -399,6 +406,7 @@ const mockEvents = [
     host: "Drake",
     price: 450,
     image: "https://images.pexels.com/photos/164938/pexels-photo-164938.jpeg",
+    description: "Bring your dancing shoes",
   },
 ];
 

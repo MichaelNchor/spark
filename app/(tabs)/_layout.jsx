@@ -11,6 +11,7 @@ import Animated, {
 import { Provider as PaperProvider } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import icons from "../../assets/constants";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
 const TAB_WIDTH = width / 5;
@@ -46,6 +47,7 @@ export default function TabLayout() {
   }));
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <PaperProvider>
       <Tabs
         screenOptions={{
@@ -100,11 +102,7 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.home}
-                color={color}
-                focused={focused}
-              />
+              <TabIcon icon={icons.home} color={color} focused={focused} />
             ),
           }}
         />
@@ -122,11 +120,7 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.heart}
-                color={color}
-                focused={focused}
-              />
+              <TabIcon icon={icons.heart} color={color} focused={focused} />
             ),
           }}
         />
@@ -135,11 +129,7 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.chat2}
-                color={color}
-                focused={focused}
-              />
+              <TabIcon icon={icons.chat2} color={color} focused={focused} />
             ),
           }}
         />
@@ -148,15 +138,12 @@ export default function TabLayout() {
           options={{
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.settings}
-                color={color}
-                focused={focused}
-              />
+              <TabIcon icon={icons.settings} color={color} focused={focused} />
             ),
           }}
         />
       </Tabs>
     </PaperProvider>
+    </GestureHandlerRootView>
   );
 }

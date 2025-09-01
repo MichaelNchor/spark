@@ -20,6 +20,9 @@ import { mockEvents } from "../../data/mockData";
 import EventCard from "../../components/EventCard";
 import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
+import { RotateInDownRight } from "react-native-reanimated";
+import SearchBox from "../../components/SearchBox";
+import { SearchBar } from "react-native-screens";
 
 const { width } = Dimensions.get("window");
 
@@ -30,11 +33,9 @@ const Events = () => {
     <SafeAreaView style={{ marginTop: 20, flex: 1 }}>
       {/* Top bar */}
       <View className="w-full flex-row items-center justify-between px-4 pt-4 my-2">
-        <Image
-          source={icons.logo}
-          style={{ width: 80, height: 30 }}
-          contentFit="cover"
-        />
+        <Text className="font-poppins-semibold text-3xl text-gray-900">
+          Events
+        </Text>
         <CustomButtonWithIcon
           icon={icons.notification}
           iconWidth={24}
@@ -45,6 +46,11 @@ const Events = () => {
         />
       </View>
 
+      {/* Search */}
+      <View className="w-full px-2 mb-4">
+        <SearchBox placeholder="Search Events" isDarkMode />
+      </View>
+
       {/* Banner Carousel */}
       <ScrollView
         bounces={false}
@@ -53,9 +59,13 @@ const Events = () => {
         contentContainerStyle={{
           justifyContent: "center",
           alignItems: "flex-center",
+          paddingBottom: 300,
         }}
       >
-        <View>
+        <View className="">
+          <Text className="mx-4 my-3 font-poppins-bold text-2xl text-gray-900">
+            Top Picks 🔥
+          </Text>
           <Carousel
             loop
             width={width}
@@ -67,13 +77,20 @@ const Events = () => {
             // onSnapToItem={(index) => setCurrentIndex(index)}
             renderItem={({ item }) => (
               <View className="px-2">
-                <View className="rounded-2xl overflow-hidden shadow-lg">
+                <View
+                  className="overflow-hidden shadow-lg"
+                  style={{
+                    borderRadius: 40,
+                    borderWidth: 1,
+                    borderColor: "white",
+                  }}
+                >
                   {/* Image Background */}
                   <ImageBackground
                     source={{ uri: item.image }}
                     contentFit="cover"
                     style={{ width: "100%", height: 200 }}
-                    imageStyle={{ borderRadius: 25 }}
+                    imageStyle={{ borderRadius: 40 }}
                   >
                     <LinearGradient
                       colors={[
@@ -107,7 +124,7 @@ const Events = () => {
                         intensity={55} // increase for more blur (e.g., 70–90)
                         tint="dark" // "light" | "dark" | "default"
                         style={{
-                          borderRadius: 16,
+                          borderRadius: 40,
                           overflow: "hidden",
                           paddingHorizontal: 14,
                           paddingVertical: 10,
@@ -143,7 +160,7 @@ const Events = () => {
                             borderRadius: 18,
                             alignItems: "center",
                             justifyContent: "center",
-                            backgroundColor: "rgba(255,255,255,0.18)", // frosted circle
+                            backgroundColor: "rgba(255,255,255,0.2)", // frosted circle
                             borderWidth: 1,
                             borderColor: "rgba(255,255,255,0.25)",
                           }}
@@ -152,6 +169,7 @@ const Events = () => {
                             name="arrow-forward"
                             size={18}
                             color="#fff"
+                            className="rotate-[320deg]"
                           />
                         </TouchableOpacity>
                       </BlurView>
@@ -161,11 +179,6 @@ const Events = () => {
               </View>
             )}
           />
-        </View>
-
-        {/* Search */}
-        <View className="w-full px-2 mt-4">
-          <InputField placeholder="Search Events" isDarkMode />
         </View>
 
         {/* ✅ Tabs with TabButtonSection */}
@@ -178,7 +191,7 @@ const Events = () => {
         {/* Event List */}
         <View>
           {mockEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <EventCard key={event.id} event={event} onPress={() => {}} />
           ))}
         </View>
       </ScrollView>

@@ -15,24 +15,32 @@ import LikeCard from "./LikeCard";
 const { width } = Dimensions.get("window");
 const SWIPE_THRESHOLD = 0.25 * width;
 
-const SwipeLikeCard = ({ user, onSwipeLeft, onSwipeRight }) => {
+const SwipeLikeCard = ({
+  user,
+  onSwipeLeft,
+  onSwipeRight,
+  onDragStart,
+  onDragEnd,
+}) => {
   const translateX = useSharedValue(0);
   const rotate = useSharedValue(0);
   const isDragging = useSharedValue(0);
 
-  // Card transform
-  const cardStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateX: translateX.value },
-        { rotate: `${rotate.value}deg` },
-        { scale: isDragging.value ? 1.05 : 1 }, // scale up while dragging
-      ],
-      zIndex: isDragging.value ? 100 : 0, // bring on top while dragging
-    };
-  });
+  const cardStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: translateX.value },
+      { rotate: `${rotate.value}deg` },
+      { scale: isDragging.value ? 1.05 : 1 },
+    ],
+    // These help, but parent still must raise its own zIndex/elevation:
+    zIndex: isDragging.value ? 999 : 0,
+    elevation: isDragging.value ? 1000 : 4,
+    shadowColor: "#000",
+    shadowOpacity: isDragging.value ? 0.25 : 0.15,
+    shadowRadius: isDragging.value ? 10 : 8,
+    shadowOffset: { width: 0, height: isDragging.value ? 6 : 4 },
+  }));
 
-  // "LIKE" opacity (when swiping right)
   const likeStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       translateX.value,
@@ -43,7 +51,6 @@ const SwipeLikeCard = ({ user, onSwipeLeft, onSwipeRight }) => {
     return { opacity };
   });
 
-  // "PASS" opacity (when swiping left)
   const passStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       translateX.value,
@@ -54,42 +61,50 @@ const SwipeLikeCard = ({ user, onSwipeLeft, onSwipeRight }) => {
     return { opacity };
   });
 
-  const panGesture = Gesture.Pan()
+  const pan = Gesture.Pan()
     .onBegin(() => {
-      isDragging.value = 1; // start dragging
+      "worklet";
+      isDragging.value = 1;
+      if (onDragStart) runOnJS(onDragStart)(user);
     })
-    .onUpdate((event) => {
-      translateX.value = event.translationX;
-      rotate.value = (event.translationX / width) * 15; // tilt card
+    .onChange((e) => {
+      "worklet";
+      translateX.value = e.translationX;
+      rotate.value = (e.translationX / width) * 15;
     })
-    .onEnd((event) => {
-      if (Math.abs(event.translationX) > SWIPE_THRESHOLD) {
-        if (event.translationX > 0) {
-          // Swiped Right
-          translateX.value = withTiming(width * 1.5, {}, () => {
-            runOnJS(onSwipeRight)(user);
+    .onEnd((e) => {
+      "worklet";
+      const dist = e.translationX;
+
+      if (Math.abs(dist) > SWIPE_THRESHOLD) {
+        if (dist > 0) {
+          translateX.value = withTiming(width * 1.5, { duration: 180 }, () => {
+            if (onSwipeRight) runOnJS(onSwipeRight)(user);
           });
         } else {
-          // Swiped Left
-          translateX.value = withTiming(-width * 1.5, {}, () => {
-            runOnJS(onSwipeLeft)(user);
+          translateX.value = withTiming(-width * 1.5, { duration: 180 }, () => {
+            if (onSwipeLeft) runOnJS(onSwipeLeft)(user);
           });
         }
       } else {
-        // Reset
         translateX.value = withSpring(0);
         rotate.value = withSpring(0);
+        isDragging.value = 0;
+        if (onDragEnd) runOnJS(onDragEnd)();
       }
-      isDragging.value = 0; // reset drag state
+    })
+    .onFinalize(() => {
+      "worklet";
     });
 
   return (
-    <GestureDetector gesture={panGesture}>
-      <Animated.View style={[{ marginVertical: 10 }, cardStyle]}>
+    <GestureDetector gesture={pan}>
+      <Animated.View style={[{ marginVertical: 0 }, cardStyle]}>
         <LikeCard user={user} />
 
-        {/* Overlay labels */}
+        {/* MATCH */}
         <Animated.View
+          pointerEvents="none"
           style={[
             {
               position: "absolute",
@@ -110,7 +125,9 @@ const SwipeLikeCard = ({ user, onSwipeLeft, onSwipeRight }) => {
           </Text>
         </Animated.View>
 
+        {/* PASS */}
         <Animated.View
+          pointerEvents="none"
           style={[
             {
               position: "absolute",

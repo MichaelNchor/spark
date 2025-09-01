@@ -44,6 +44,8 @@ import binoculars from "./icons/binoculars-100.png";
 import cross from "./icons/cross-100.png";
 import star from "./icons/star-100.png";
 import up from "./icons/up-100.png";
+import shield from "./icons/shield-100.png";
+import paperClip from "./icons/paper-clip-100.png";
 
 export default {
   audioRecord,
@@ -91,5 +93,7 @@ export default {
   cross,
   star,
   chat2,
-  up
+  up,
+  shield,
+  paperClip
 };

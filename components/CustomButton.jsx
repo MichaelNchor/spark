@@ -1,12 +1,12 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const CustomButton = ({
   text,
   handlePress,
-  containerStyles,
-  textStyles,
+  containerStyles = "",
+  textStyles = "",
   isLoading,
   isOutline = false,
 }) => {
@@ -15,24 +15,24 @@ const CustomButton = ({
       activeOpacity={0.7}
       onPress={handlePress}
       disabled={isLoading}
-      className={`rounded-full overflow-hidden ${containerStyles} ${
+      className={`h-12 rounded-full overflow-hidden ${containerStyles} ${
         isLoading ? "opacity-50" : ""
       }`}
     >
       {isOutline ? (
-        // Outline Button
-        <Text
-          className={`text-primary font-poppins-medium text-lg text-center p-3 ${textStyles}`}
-        >
-          {text}
-        </Text>
+        <View className="flex-1 flex-row items-center justify-center">
+          <Text
+            className={`text-primary font-poppins-medium text-lg ${textStyles}`}
+          >
+            {text}
+          </Text>
+        </View>
       ) : (
-        // Gradient Button
         <LinearGradient
           colors={["#fd297b", "#ff5864", "#ff655b"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          className="rounded-full justify-center items-center p-4"
+          className="flex-1 flex-row items-center justify-center rounded-full"
         >
           <Text
             className={`text-white font-poppins-medium text-lg ${textStyles}`}
