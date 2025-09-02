@@ -105,7 +105,7 @@ const ProfileDetails = () => {
         <CustomButton
           text="Confirm"
           handlePress={() => {
-            setStep(3);
+            setStep(1);
             router.push("/steps/gender");
           }}
           containerStyles="w-full h-[48px]"

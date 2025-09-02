@@ -35,7 +35,6 @@ const PhoneNumber = () => {
             <InputField
               value={form.PhoneNumber}
               handleChangeText={(e) => {
-                setStep(1);
                 setPhoneNumber({ ...form, PhoneNumber: e });
               }}
               keyboardType="phone-pad"
@@ -47,7 +46,10 @@ const PhoneNumber = () => {
         <View className="w-full">
           <CustomButton
             text="Continue"
-            handlePress={() => router.push("/steps/verify-code")}
+            handlePress={() => {
+              setStep(4);
+              router.push("/steps/verify-code");
+            }}
             containerStyles="w-full h-[48px]"
           />
         </View>

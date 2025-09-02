@@ -34,14 +34,15 @@ const VerifyCode = () => {
             00:42
           </Text>
           <Text className="font-poppins-regular text-gray-500 mb-8 text-center">
-            Type the verification code we've sent you.
+            {"Type the verification code we've sent you."}
           </Text>
 
           <View className="w-full flex-row">
             <VerificationInput
               onComplete={(code) => {
-                setStep(2);
+                setStep(5);
                 setVerifyCode(code);
+                router.push("/steps/friends");
               }}
             />
           </View>

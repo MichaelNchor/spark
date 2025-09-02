@@ -67,14 +67,14 @@ const Gender = () => {
 
         {/* Fixed bottom button */}
         <View className="w-full">
-          <CustomButton
-            text="Continue"
-            handlePress={() => {
-              setStep(4);
-              router.push("/steps/interests");
-            }}
-            containerStyles="w-full h-[48px]"
-          />
+        <CustomButton
+          text="Continue"
+          handlePress={() => {
+            setStep(2);
+            router.push("/steps/interests");
+          }}
+          containerStyles="w-full h-[48px]"
+        />
         </View>
       </ScrollView>
     </SafeAreaView>

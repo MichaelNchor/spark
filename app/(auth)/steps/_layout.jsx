@@ -12,13 +12,13 @@ const StepsContent = () => {
       <Stack
         screenOptions={{ headerShown: false, animation: "slide_from_right" }}
       >
-        <Stack.Screen name="friends" />
+        <Stack.Screen name="profile-details" />
         <Stack.Screen name="gender" />
         <Stack.Screen name="interests" />
-        <Stack.Screen name="notifications" />
         <Stack.Screen name="phonenumber" />
-        <Stack.Screen name="profile-details" />
         <Stack.Screen name="verify-code" />
+        <Stack.Screen name="friends" />
+        <Stack.Screen name="notifications" />
       </Stack>
     </SafeAreaView>
   );

@@ -17,6 +17,7 @@ import checkMark from "./icons/check-100.png";
 import notifications from "./images/notifications.png";
 import people from "./images/people.png";
 import filter from "./icons/filter-100.png";
+import filter2 from "./icons/filter2-100.png";
 import filterOutline from "./icons/filter-outline-100.png";
 import undo from "./icons/undo-100.png";
 import notification from "./icons/notification-100.png";
@@ -95,5 +96,6 @@ export default {
   chat2,
   up,
   shield,
-  paperClip
+  paperClip,
+  filter2
 };

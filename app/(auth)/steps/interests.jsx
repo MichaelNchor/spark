@@ -55,8 +55,7 @@ const Interests = () => {
           </Text>
 
           <Text className="font-poppins-regular text-gray-500">
-            Select a few of your interests and let everyone know what you're
-            passionate about.
+            {"Select a few of your interests and let everyone know what you're passionate about."}
           </Text>
 
           {/* MultiSelect */}
@@ -71,14 +70,14 @@ const Interests = () => {
 
         {/* Confirm Button (stuck at bottom) */}
         <View className="pb-12">
-          <CustomButton
-            text="Confirm"
-            handlePress={() => {
-              setStep(5);
-              router.push("/steps/friends");
-            }}
-            containerStyles="w-full h-[48px]"
-          />
+        <CustomButton
+          text="Confirm"
+          handlePress={() => {
+            setStep(3);
+            router.push("/steps/phonenumber");
+          }}
+          containerStyles="w-full h-[48px]"
+        />
         </View>
       </View>
     </SafeAreaView>

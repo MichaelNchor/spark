@@ -52,9 +52,9 @@ const Home = () => {
             isOutline={true}
           />
           <CustomButtonWithIcon
-            icon={icons.filter}
-            iconWidth={20}
-            iconHeight={20}
+            icon={icons.filter2}
+            iconWidth={24}
+            iconHeight={24}
             iconColor="black"
             handlePress={openSheet}
             containerStyles="w-[45px] h-[45px] items-start"

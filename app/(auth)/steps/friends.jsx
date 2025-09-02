@@ -64,14 +64,14 @@ const Friends = () => {
 
         {/* Sticky bottom button with pb-12 */}
         <View className="px-6 pb-12">
-          <CustomButton
-            text="Access to your contact list"
-            handlePress={() => {
-              setStep(7);
-              router.push("/steps/notifications");
-            }}
-            containerStyles="w-full h-[48px]"
-          />
+        <CustomButton
+          text="Access to your contact list"
+          handlePress={() => {
+            setStep(6);
+            router.push("/steps/notifications");
+          }}
+          containerStyles="w-full h-[48px]"
+        />
         </View>
       </View>
     </SafeAreaView>
