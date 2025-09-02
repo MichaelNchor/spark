@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Dimensions, Pressable } from "react-native";
 import { ImageBackground } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
@@ -10,6 +10,11 @@ const screenWidth = Dimensions.get("window").width;
 
 const SwipeCard = ({ user }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // Reset activeIndex to 0 when user changes to prevent flickering
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [user.id]);
   return (
     <Pressable
       className="flex-1"

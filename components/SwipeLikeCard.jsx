@@ -13,7 +13,8 @@ import Animated, {
 import LikeCard from "./LikeCard";
 
 const { width } = Dimensions.get("window");
-const SWIPE_THRESHOLD = 0.25 * width;
+const SWIPE_THRESHOLD = 0.3 * width; // Reasonable threshold for swipes
+const MIN_SWIPE_VELOCITY = 500; // Minimum velocity for swipe recognition
 
 const SwipeLikeCard = ({
   user,
@@ -69,15 +70,35 @@ const SwipeLikeCard = ({
     })
     .onChange((e) => {
       "worklet";
-      translateX.value = e.translationX;
-      rotate.value = (e.translationX / width) * 15;
+      // Allow horizontal movement but with some resistance for vertical gestures
+      const absX = Math.abs(e.translationX);
+      const absY = Math.abs(e.translationY);
+
+      if (absX > absY * 0.3) {
+        // Allow horizontal movement if X movement is at least 30% of Y movement
+        translateX.value = e.translationX;
+        rotate.value = (e.translationX / width) * 15;
+      } else if (absY > absX) {
+        // If predominantly vertical, allow some small horizontal movement but reduce it
+        translateX.value = e.translationX * 0.3;
+        rotate.value = (e.translationX * 0.3 / width) * 15;
+      }
     })
     .onEnd((e) => {
       "worklet";
-      const dist = e.translationX;
+      const distX = e.translationX;
+      const distY = e.translationY;
+      const absX = Math.abs(distX);
+      const absY = Math.abs(distY);
+      const velocityX = Math.abs(e.velocityX);
+      const velocityY = Math.abs(e.velocityY);
 
-      if (Math.abs(dist) > SWIPE_THRESHOLD) {
-        if (dist > 0) {
+      // Trigger swipe if: significant horizontal movement + high velocity OR distance threshold
+      const shouldSwipe = (absX > SWIPE_THRESHOLD && velocityX > MIN_SWIPE_VELOCITY) ||
+                         (absX > SWIPE_THRESHOLD * 0.8 && absX > absY * 2);
+
+      if (shouldSwipe) {
+        if (distX > 0) {
           translateX.value = withTiming(width * 1.5, { duration: 180 }, () => {
             if (onSwipeRight) runOnJS(onSwipeRight)(user);
           });
@@ -92,9 +113,6 @@ const SwipeLikeCard = ({
         isDragging.value = 0;
         if (onDragEnd) runOnJS(onDragEnd)();
       }
-    })
-    .onFinalize(() => {
-      "worklet";
     });
 
   return (

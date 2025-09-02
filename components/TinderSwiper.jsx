@@ -106,14 +106,19 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     }
   }, [currentUserIndex, users.length]);
 
-  // Programmatic swipe - memoized for performance
+  // Programmatic swipe - memoized for performance with smooth spring config
   const swipe = useCallback((direction) => {
+    const springConfig = {
+      damping: 20,
+      stiffness: 100,
+      mass: 0.5,
+    };
     if (direction === "left") {
-      translateX.value = withSpring(-width, {}, () => runOnJS(setNextCard)());
+      translateX.value = withSpring(-width, springConfig, () => runOnJS(setNextCard)());
     } else if (direction === "right") {
-      translateX.value = withSpring(width, {}, () => runOnJS(setNextCard)());
+      translateX.value = withSpring(width, springConfig, () => runOnJS(setNextCard)());
     } else if (direction === "up") {
-      translateY.value = withSpring(-height, {}, () => runOnJS(setNextCard)());
+      translateY.value = withSpring(-height, springConfig, () => runOnJS(setNextCard)());
     }
   }, [width, height, setNextCard]);
 
@@ -123,7 +128,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     swipeUp: () => swipe("up"),
   }));
 
-  // Gesture for finger swipes
+  // Gesture for finger swipes with consistent spring config
   const gestureHandler = Gesture.Pan()
     .onUpdate((e) => {
       translateX.value = e.translationX;
@@ -137,17 +142,22 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
       const superLiked =
         translateY.value < -150 || e.velocityY < -velocityThreshold;
 
+      const springConfig = {
+        damping: 20,
+        stiffness: 100,
+        mass: 0.5,
+      };
+
       if (superLiked) {
-        translateY.value = withSpring(-height, { velocity: e.velocityY });
-        runOnJS(setNextCard)();
+        translateY.value = withSpring(-height, { ...springConfig, velocity: e.velocityY }, () => runOnJS(setNextCard)());
       } else if (swipedRight || swipedLeft) {
         translateX.value = withSpring(swipedRight ? width : -width, {
+          ...springConfig,
           velocity: e.velocityX,
-        });
-        runOnJS(setNextCard)();
+        }, () => runOnJS(setNextCard)());
       } else {
-        translateX.value = withSpring(0);
-        translateY.value = withSpring(0);
+        translateX.value = withSpring(0, springConfig);
+        translateY.value = withSpring(0, springConfig);
       }
     });
 
