@@ -153,7 +153,10 @@ const ChatRoom = () => {
             iconWidth={24}
             iconHeight={24}
             containerStyles="w-[50px] h-[50px]"
-            handlePress={() => setSendOptionsIsVisible(true)}
+            handlePress={() => {
+              setGiftOptionsIsVisible(false); // Close gift modal if open
+              setSendOptionsIsVisible(true);
+            }}
             isOutline
           />
 
@@ -163,7 +166,10 @@ const ChatRoom = () => {
               value={message}
               handleChangeText={setMessage}
               placeholder="Type a message ..."
-              onGiftPress={() => setGiftOptionsIsVisible(true)}
+              onGiftPress={() => {
+                setSendOptionsIsVisible(false); // Close send modal if open
+                setGiftOptionsIsVisible(true);
+              }}
               isDarkMode={false}
             />
           </View>

@@ -5,8 +5,7 @@ import {
   Dimensions,
   Text,
   TouchableOpacity,
-  BackHandler,
-  Platform,
+  BackHandler
 } from "react-native";
 import Animated, {
   useSharedValue,
@@ -19,7 +18,7 @@ import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { Portal } from "react-native-paper"; // ⬅️ self-handling portal
+import { Portal } from "react-native-paper";
 
 const { height } = Dimensions.get("window");
 const FOOTER_HEIGHT = 64;
@@ -41,6 +40,7 @@ const BottomSheetModal = ({
   const sheetH = useSharedValue(0);
 
   const [isMounted, setIsMounted] = useState(visible);
+  const [modalKey, setModalKey] = useState(0);
 
   // unified close animation used by backdrop press & swipe down
   const closeWithAnimation = useCallback(() => {
@@ -55,12 +55,17 @@ const BottomSheetModal = ({
         }
       }
     );
-  }, [onClose, overlayOpacity, translateY, sheetH]);
+  }, [onClose]);
 
   // mount/unmount & open/close animations
   useEffect(() => {
     if (visible) {
       setIsMounted(true);
+      setModalKey(prev => prev + 1); // Increment key to force fresh component instance
+      // Reset shared values to initial state before opening
+      translateY.value = height;
+      overlayOpacity.value = 0;
+      // Start opening animation
       overlayOpacity.value = withTiming(1, { duration: 200 });
       translateY.value = withSpring(0, {
         damping: 20,
@@ -72,6 +77,15 @@ const BottomSheetModal = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
+
+  // Cleanup animations when component unmounts
+  useEffect(() => {
+    return () => {
+      // Cancel any ongoing animations
+      translateY.value = height;
+      overlayOpacity.value = 0;
+    };
+  }, []);
 
   // Android back button closes the sheet while visible
   useEffect(() => {
@@ -90,7 +104,7 @@ const BottomSheetModal = ({
     transform: [{ translateY: translateY.value }],
   }));
 
-  const overlayStyle = useAnimatedStyle(() => ({
+  const backdropStyle = useAnimatedStyle(() => ({
     opacity: overlayOpacity.value,
   }));
 
@@ -132,46 +146,48 @@ const BottomSheetModal = ({
 
   return (
     <Portal>
-      <Animated.View
-        style={[{ position: "absolute", inset: 0, zIndex: 9999 }, overlayStyle]}
-        // make sure we always sit above other views
-        pointerEvents="box-none"
-      >
-        {/* Backdrop */}
-        <BlurView intensity={40} tint="dark" style={{ flex: 1 }}>
-          <Pressable style={{ flex: 1 }} onPress={closeWithAnimation} />
-        </BlurView>
-
-        {/* Bottom Sheet */}
-        <Animated.View
-          style={[
-            {
-              backgroundColor: "white",
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
-              paddingTop: 0,
-              paddingHorizontal: 20,
-              paddingBottom: 0,
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              maxHeight: Math.floor(height * 0.9),
-              // nice shadow
-              shadowColor: "#000",
-              shadowOpacity: 0.18,
-              shadowRadius: 12,
-              shadowOffset: { width: 0, height: -4 },
-              elevation: 16,
-            },
-            sheetStyle,
-          ]}
-          onLayout={(e) => {
-            const h = e.nativeEvent.layout.height;
-            sheetH.value = h;
-          }}
+      <GestureDetector gesture={drag}>
+        <View
+          style={{ position: "absolute", inset: 0, zIndex: 9999 }}
+          // make sure we always sit above other views
+          pointerEvents="box-none"
         >
-          {/* Drag handle */}
-          <GestureDetector gesture={drag}>
+          {/* Backdrop */}
+          <Animated.View style={[{ position: "absolute", inset: 0 }, backdropStyle]}>
+            <BlurView intensity={20} tint="dark" style={{ flex: 1 }}>
+              <Pressable style={{ flex: 1 }} onPress={closeWithAnimation} />
+            </BlurView>
+          </Animated.View>
+
+          {/* Bottom Sheet */}
+          <Animated.View
+            style={[
+              {
+                backgroundColor: "white",
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                paddingTop: 0,
+                paddingHorizontal: 20,
+                paddingBottom: 0,
+                position: "absolute",
+                bottom: 0,
+                width: "100%",
+                maxHeight: Math.floor(height * 0.9),
+                // nice shadow
+                shadowColor: "#000",
+                shadowOpacity: 0.18,
+                shadowRadius: 12,
+                shadowOffset: { width: 0, height: -4 },
+                elevation: 16,
+              },
+              sheetStyle,
+            ]}
+            onLayout={(e) => {
+              const h = e.nativeEvent.layout.height;
+              sheetH.value = h;
+            }}
+          >
+            {/* Drag handle */}
             <View style={{ paddingTop: 8, paddingBottom: 6 }}>
               <View
                 style={{
@@ -183,11 +199,9 @@ const BottomSheetModal = ({
                 }}
               />
             </View>
-          </GestureDetector>
 
-          {/* Header */}
-          {header && (
-            <GestureDetector gesture={drag}>
+            {/* Header */}
+            {header && (
               <View
                 style={{
                   flexDirection: "row",
@@ -201,108 +215,108 @@ const BottomSheetModal = ({
                   {header}
                 </Text>
               </View>
-            </GestureDetector>
-          )}
+            )}
 
-          {/* Content */}
-          <View
-            style={{
-              paddingBottom:
-                (hasBuiltInFooter || footer ? FOOTER_HEIGHT : 16) +
-                insets.bottom +
-                8,
-            }}
-          >
-            {children}
-          </View>
-
-          {/* Footer area */}
-          {footer ? (
+            {/* Content */}
             <View
               style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                paddingHorizontal: 20,
-                paddingBottom: insets.bottom + 12,
-                paddingTop: 10,
-                backgroundColor: "white",
-                borderTopWidth: 1,
-                borderTopColor: "rgba(0,0,0,0.06)",
+                paddingBottom:
+                  (hasBuiltInFooter || footer ? FOOTER_HEIGHT : 16) +
+                  insets.bottom +
+                  8,
               }}
             >
-              {footer}
+              {children}
             </View>
-          ) : hasBuiltInFooter ? (
-            <View
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                paddingHorizontal: 20,
-                paddingBottom: insets.bottom + 12,
-                paddingTop: 10,
-                backgroundColor: "white",
-                borderTopWidth: 1,
-                borderTopColor: "rgba(0,0,0,0.06)",
-                flexDirection: "row",
-                gap: 12,
-              }}
-            >
-              {secondaryAction && (
-                <TouchableOpacity
-                  onPress={secondaryAction.onPress}
-                  activeOpacity={0.9}
-                  style={{
-                    flex: 1,
-                    height: 48,
-                    borderRadius: 999,
-                    borderWidth: 1,
-                    borderColor: "#E5E7EB",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: "#fff",
-                  }}
-                >
-                  <Text className="font-poppins-medium text-[#111827]">
-                    {secondaryAction.label}
-                  </Text>
-                </TouchableOpacity>
-              )}
-              {primaryAction && (
-                <TouchableOpacity
-                  onPress={primaryAction.onPress}
-                  activeOpacity={0.9}
-                  style={{
-                    flex: 1,
-                    height: 48,
-                    borderRadius: 999,
-                    overflow: "hidden",
-                  }}
-                >
-                  <LinearGradient
-                    colors={["#fd297b", "#ff5864", "#ff655b"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
+
+            {/* Footer area */}
+            {footer ? (
+              <View
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  paddingHorizontal: 20,
+                  paddingBottom: insets.bottom + 12,
+                  paddingTop: 10,
+                  backgroundColor: "white",
+                  borderTopWidth: 1,
+                  borderTopColor: "rgba(0,0,0,0.06)",
+                }}
+              >
+                {footer}
+              </View>
+            ) : hasBuiltInFooter ? (
+              <View
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  paddingHorizontal: 20,
+                  paddingBottom: insets.bottom + 12,
+                  paddingTop: 10,
+                  backgroundColor: "white",
+                  borderTopWidth: 1,
+                  borderTopColor: "rgba(0,0,0,0.06)",
+                  flexDirection: "row",
+                  gap: 12,
+                }}
+              >
+                {secondaryAction && (
+                  <TouchableOpacity
+                    onPress={secondaryAction.onPress}
+                    activeOpacity={0.9}
                     style={{
                       flex: 1,
+                      height: 48,
+                      borderRadius: 999,
+                      borderWidth: 1,
+                      borderColor: "#E5E7EB",
                       alignItems: "center",
                       justifyContent: "center",
-                      borderRadius: 999,
+                      backgroundColor: "#fff",
                     }}
                   >
-                    <Text className="font-poppins-semibold text-white">
-                      {primaryAction.label}
+                    <Text className="font-poppins-medium text-[#111827]">
+                      {secondaryAction.label}
                     </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              )}
-            </View>
-          ) : null}
-        </Animated.View>
-      </Animated.View>
+                  </TouchableOpacity>
+                )}
+                {primaryAction && (
+                  <TouchableOpacity
+                    onPress={primaryAction.onPress}
+                    activeOpacity={0.9}
+                    style={{
+                      flex: 1,
+                      height: 48,
+                      borderRadius: 999,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <LinearGradient
+                      colors={["#fd297b", "#ff5864", "#ff655b"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={{
+                        flex: 1,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: 999,
+                      }}
+                    >
+                      <Text className="font-poppins-semibold text-white">
+                        {primaryAction.label}
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ) : null}
+          </Animated.View>
+        </View>
+      </GestureDetector>
     </Portal>
   );
 };
