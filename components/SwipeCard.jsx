@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Dimensions, Pressable } from "react-native";
-import { ImageBackground } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import icons from "../assets/constants";
-import { Image } from "expo-image";
+import { Image,ImageBackground } from "expo-image";
 import { router } from "expo-router";
 
 const screenWidth = Dimensions.get("window").width;

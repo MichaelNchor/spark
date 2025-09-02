@@ -7,7 +7,6 @@ import ChatStatusCard from "../../components/ChatStatusCard";
 import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 import SearchBox from "../../components/SearchBox";
 import { dummyUsers } from "../../data/mockData";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { router } from "expo-router";
 
 const Chat = () => {

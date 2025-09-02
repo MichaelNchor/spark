@@ -1,7 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { Text, View, SafeAreaView, FlatList } from "react-native";
-import { Image } from "expo-image";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, {
   LinearTransition,
   FadeIn,
@@ -9,7 +7,6 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-import icons from "../../assets/constants";
 import SwipeLikeCard from "../../components/SwipeLikeCard";
 import { dummyUsers, LikeFilterOptions } from "../../data/mockData";
 import TabButtonSection from "../../components/TabButtonSection";
@@ -21,7 +18,7 @@ const Likes = () => {
 
   const data = useMemo(() => {
     return users;
-  }, [users, selectedFilter]);
+  }, [users]);
 
   const removeUser = (u) => {
     setUsers((prev) => prev.filter((x) => x.id !== u.id));

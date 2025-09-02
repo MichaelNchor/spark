@@ -43,7 +43,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
       translateX.value = 0;
       translateY.value = 0;
     }
-  }, [currentProfile]);
+  }, [currentProfile, currentUserIndex, translateX, translateY, users.length]);
 
   const rotateDeg = useDerivedValue(() => {
     return `${interpolate(
@@ -120,7 +120,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     } else if (direction === "up") {
       translateY.value = withSpring(-height, springConfig, () => runOnJS(setNextCard)());
     }
-  }, [width, height, setNextCard]);
+  }, [translateX, width, setNextCard, translateY, height]);
 
   useImperativeHandle(ref, () => ({
     swipeLeft: () => swipe("left"),
