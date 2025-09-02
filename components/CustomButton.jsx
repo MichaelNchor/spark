@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const CustomButton = ({
+const CustomButton = memo(({
   text,
   handlePress,
   containerStyles = "",
@@ -10,10 +10,15 @@ const CustomButton = ({
   isLoading,
   isOutline = false,
 }) => {
+  const onPress = useCallback(() => {
+    if (!isLoading && handlePress) {
+      handlePress();
+    }
+  }, [isLoading, handlePress]);
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      onPress={handlePress}
+      onPress={onPress}
       disabled={isLoading}
       className={`h-12 rounded-full overflow-hidden ${containerStyles} ${
         isLoading ? "opacity-50" : ""
@@ -43,6 +48,8 @@ const CustomButton = ({
       )}
     </TouchableOpacity>
   );
-};
+});
+
+CustomButton.displayName = 'CustomButton';
 
 export default CustomButton;

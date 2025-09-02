@@ -3,6 +3,8 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useMemo,
+  useCallback,
 } from "react";
 import { View, SafeAreaView, Dimensions, Text } from "react-native";
 import SwipeCard from "./SwipeCard";
@@ -18,12 +20,17 @@ import Animated, {
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 
 const TinderSwiper = forwardRef(({ users }, ref) => {
+  // Memoize window dimensions to avoid recalculation
+  const windowDimensions = useMemo(() => Dimensions.get("window"), []);
+  const { width, height } = windowDimensions;
+
+  // Memoize constants
   const maxRotateAngle = 60;
-  const [currentUserIndex, setCurrentUserIndex] = useState(0);
-  const { width, height } = Dimensions.get("window");
   const hiddenTranslateX = width * 2;
   const velocityThreshold = 1000;
   const swipeThreshold = width * 0.3;
+
+  const [currentUserIndex, setCurrentUserIndex] = useState(0);
 
   const currentProfile = users[currentUserIndex];
   const nextProfile = users[currentUserIndex + 1];
@@ -93,14 +100,14 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     ),
   }));
 
-  const setNextCard = () => {
+  const setNextCard = useCallback(() => {
     if (currentUserIndex < users.length - 1) {
       setCurrentUserIndex((prev) => prev + 1);
     }
-  };
+  }, [currentUserIndex, users.length]);
 
-  // Programmatic swipe
-  const swipe = (direction) => {
+  // Programmatic swipe - memoized for performance
+  const swipe = useCallback((direction) => {
     if (direction === "left") {
       translateX.value = withSpring(-width, {}, () => runOnJS(setNextCard)());
     } else if (direction === "right") {
@@ -108,7 +115,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     } else if (direction === "up") {
       translateY.value = withSpring(-height, {}, () => runOnJS(setNextCard)());
     }
-  };
+  }, [width, height, setNextCard]);
 
   useImperativeHandle(ref, () => ({
     swipeLeft: () => swipe("left"),
@@ -252,5 +259,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     </SafeAreaView>
   );
 });
+
+TinderSwiper.displayName = 'TinderSwiper';
 
 export default TinderSwiper;
