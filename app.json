@@ -17,12 +17,13 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "pan",
+      "navigationBar": {
+        "backgroundColor": "#000000",
+        "barStyle": "light-content",
+        "translucent": false
+      },
       "package": "com.anonymous.spark"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": ""
     },
     "plugins": [
       "expo-router",

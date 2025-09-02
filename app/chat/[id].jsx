@@ -10,6 +10,7 @@ import {
   Platform,
 } from "react-native";
 import { ImageBackground, Image } from "expo-image";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 import icons from "../../assets/constants";
 import { dummyUsers } from "../../data/mockData";
@@ -30,6 +31,7 @@ const COLORS = {
 
 const ChatRoom = () => {
   const { id } = useLocalSearchParams();
+  const insets = useSafeAreaInsets();
   const [isSendOptionsVisible, setSendOptionsIsVisible] = useState(false);
   const [isGiftsOptionsVisible, setGiftOptionsIsVisible] = useState(false);
   const [message, setMessage] = useState("");
@@ -97,56 +99,66 @@ const ChatRoom = () => {
         </View>
       </View>
 
-      {/* Chat messages */}
-      <ScrollView
-        bounces={false}
-        overScrollMode="never"
-        className="flex-1 px-4"
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ paddingTop: 8, paddingBottom: 96 }} // extra room above home indicator
-      >
-        {/* incoming */}
-        <View
-          className="rounded-xl rounded-tl-none p-3 my-2 self-start"
-          style={{
-            backgroundColor: COLORS.inBubbleBg,
-            shadowColor: "#000",
-            shadowOpacity: 0.04,
-            shadowRadius: 6,
-            shadowOffset: { width: 0, height: 2 },
-            elevation: 1,
-          }}
-        >
-          <Text className="font-poppins-regular" style={{ color: COLORS.inBubbleText }}>
-            Hey there 👋
-          </Text>
-        </View>
-
-        {/* outgoing */}
-        <View
-          className="rounded-xl rounded-tr-none p-3 my-2 self-end"
-          style={{
-            backgroundColor: COLORS.outBubbleBg,
-            shadowColor: "#000",
-            shadowOpacity: 0.04,
-            shadowRadius: 6,
-            shadowOffset: { width: 0, height: 2 },
-            elevation: 1,
-          }}
-        >
-          <Text className="font-poppins-regular" style={{ color: COLORS.outBubbleText }}>
-            Hello!
-          </Text>
-        </View>
-      </ScrollView>
-
-      {/* Bottom bar */}
+      {/* Chat messages and input wrapped in KeyboardAvoidingView */}
       <KeyboardAvoidingView
+        style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={70}
+        keyboardVerticalOffset={84} // ≈ header height; tweak for your device
       >
-        <View className="flex-row w-full items-center mb-4 justify-between px-2 py-3">
+        {/* Chat messages */}
+        <ScrollView
+          bounces={false}
+          overScrollMode="never"
+          className="flex-1 px-4"
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            paddingTop: 8,
+            paddingBottom: 12,        // ⬅️ was 96
+            flexGrow: 1,
+            justifyContent: "flex-end", // ⬅️ pins bubbles to bottom
+          }}
+        >
+          {/* incoming */}
+          <View
+            className="rounded-xl rounded-tl-none p-3 my-2 self-start"
+            style={{
+              backgroundColor: COLORS.inBubbleBg,
+              shadowColor: "#000",
+              shadowOpacity: 0.04,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 2 },
+              elevation: 1,
+            }}
+          >
+            <Text className="font-poppins-regular" style={{ color: COLORS.inBubbleText }}>
+              Hey there 👋
+            </Text>
+          </View>
+
+          {/* outgoing */}
+          <View
+            className="rounded-xl rounded-tr-none p-3 my-2 self-end"
+            style={{
+              backgroundColor: COLORS.outBubbleBg,
+              shadowColor: "#000",
+              shadowOpacity: 0.04,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 2 },
+              elevation: 1,
+            }}
+          >
+            <Text className="font-poppins-regular" style={{ color: COLORS.outBubbleText }}>
+              Hello!
+            </Text>
+          </View>
+        </ScrollView>
+
+        {/* Bottom bar */}
+        <View
+          className="flex-row w-full justify-between px-2 py-3"
+          style={{ paddingBottom: insets.bottom || 8 }} // ⬅️ safe bottom
+        >
           {/* Plus button */}
           <CustomButtonWithIcon
             icon={icons.paperClip}
@@ -154,7 +166,7 @@ const ChatRoom = () => {
             iconHeight={24}
             containerStyles="w-[50px] h-[50px]"
             handlePress={() => {
-              setGiftOptionsIsVisible(false); // Close gift modal if open
+              setGiftOptionsIsVisible(false);
               setSendOptionsIsVisible(true);
             }}
             isOutline
@@ -167,7 +179,7 @@ const ChatRoom = () => {
               handleChangeText={setMessage}
               placeholder="Type a message ..."
               onGiftPress={() => {
-                setSendOptionsIsVisible(false); // Close send modal if open
+                setSendOptionsIsVisible(false);
                 setGiftOptionsIsVisible(true);
               }}
               isDarkMode={false}
