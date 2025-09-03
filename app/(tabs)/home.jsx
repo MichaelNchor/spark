@@ -1,4 +1,4 @@
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, Dimensions } from "react-native";
 import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 import icons from "../../assets/constants";
 import { router } from "expo-router";
@@ -11,11 +11,14 @@ import SwipeButton from "../../components/SwipeButton";
 import MainSwipeButton from "../../components/MainSwipeButton";
 import SwipeFilter, { DEFAULT_FILTERS } from "../../components/SwipeFilter";
 import FilterFooter from "../../components/FilterFooter";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
-const Home = () => {
+const Home = () => {  
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [draft, setDraft] = useState(DEFAULT_FILTERS);
+  const BOTTONBOTTOM_SPACE = 46;
+  const tabBarH = useBottomTabBarHeight();
 
   const openSheet = () => {
     setDraft(filters);
@@ -31,7 +34,9 @@ const Home = () => {
   const swiperRef = useRef();
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: 20 }}>
+    <SafeAreaView
+      style={{ flex: 1, paddingTop: 20 }}
+    >
       {/* Top bar with logo left, icons right */}
       <View className="w-full flex-row items-center justify-between px-4 pt-4 my-2">
         {/* Logo on the left */}
@@ -69,7 +74,15 @@ const Home = () => {
       </View>
 
       {/* Bottom action buttons */}
-      <View className="absolute bottom-32 left-0 right-0 flex-row justify-center items-center gap-4">
+      <View
+        style={{
+          position: "absolute",
+          bottom: tabBarH + BOTTONBOTTOM_SPACE,
+          left: 0,
+          right: 0
+        }}
+        className="flex-row justify-center items-center gap-4"
+      >
         <SwipeButton
           icon={icons.cross}
           iconWidth={28}
