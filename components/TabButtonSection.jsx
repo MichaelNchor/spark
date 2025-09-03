@@ -102,7 +102,7 @@ const TabButtonSection = ({
   selectedValue,
   onChange,
   isLoading = false,
-  containerClassName = "mt-2 mb-3",
+  containerClassName = "mt-2",
 }) => {
   return (
     <View
