@@ -18,12 +18,16 @@ import Animated, {
   Extrapolation,
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const TinderSwiper = forwardRef(({ users }, ref) => {
   // Memoize window dimensions to avoid recalculation
   const windowDimensions = useMemo(() => Dimensions.get("window"), []);
   const { width, height } = windowDimensions;
-
+  const insets = useSafeAreaInsets();
+  const tabBarH = useBottomTabBarHeight();
+  const BOTTONBOTTOM_SPACE = 46;
   // Memoize constants
   const maxRotateAngle = 60;
   const hiddenTranslateX = width * 2;
@@ -107,20 +111,29 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
   }, [currentUserIndex, users.length]);
 
   // Programmatic swipe - memoized for performance with smooth spring config
-  const swipe = useCallback((direction) => {
-    const springConfig = {
-      damping: 20,
-      stiffness: 100,
-      mass: 0.5,
-    };
-    if (direction === "left") {
-      translateX.value = withSpring(-width, springConfig, () => runOnJS(setNextCard)());
-    } else if (direction === "right") {
-      translateX.value = withSpring(width, springConfig, () => runOnJS(setNextCard)());
-    } else if (direction === "up") {
-      translateY.value = withSpring(-height, springConfig, () => runOnJS(setNextCard)());
-    }
-  }, [translateX, width, setNextCard, translateY, height]);
+  const swipe = useCallback(
+    (direction) => {
+      const springConfig = {
+        damping: 20,
+        stiffness: 100,
+        mass: 0.5,
+      };
+      if (direction === "left") {
+        translateX.value = withSpring(-width, springConfig, () =>
+          runOnJS(setNextCard)()
+        );
+      } else if (direction === "right") {
+        translateX.value = withSpring(width, springConfig, () =>
+          runOnJS(setNextCard)()
+        );
+      } else if (direction === "up") {
+        translateY.value = withSpring(-height, springConfig, () =>
+          runOnJS(setNextCard)()
+        );
+      }
+    },
+    [translateX, width, setNextCard, translateY, height]
+  );
 
   useImperativeHandle(ref, () => ({
     swipeLeft: () => swipe("left"),
@@ -149,12 +162,20 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
       };
 
       if (superLiked) {
-        translateY.value = withSpring(-height, { ...springConfig, velocity: e.velocityY }, () => runOnJS(setNextCard)());
+        translateY.value = withSpring(
+          -height,
+          { ...springConfig, velocity: e.velocityY },
+          () => runOnJS(setNextCard)()
+        );
       } else if (swipedRight || swipedLeft) {
-        translateX.value = withSpring(swipedRight ? width : -width, {
-          ...springConfig,
-          velocity: e.velocityX,
-        }, () => runOnJS(setNextCard)());
+        translateX.value = withSpring(
+          swipedRight ? width : -width,
+          {
+            ...springConfig,
+            velocity: e.velocityX,
+          },
+          () => runOnJS(setNextCard)()
+        );
       } else {
         translateX.value = withSpring(0, springConfig);
         translateY.value = withSpring(0, springConfig);
@@ -173,7 +194,12 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
         <>
           {/* Next card */}
           {nextProfile && (
-            <View className="absolute z-0 justify-center w-full h-[78vh]">
+            <View
+              className="absolute z-0 justify-center w-full"
+              style={{
+                height: height - 2.9 * (tabBarH + BOTTONBOTTOM_SPACE - insets.bottom * 2) + 15,
+              }}
+            >
               <Animated.View
                 style={[nextCardStyle]}
                 className="w-full h-full bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
@@ -186,8 +212,11 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
           {/* Current card */}
           <GestureDetector gesture={gestureHandler}>
             <Animated.View
-              style={[currentCardStyle]}
-              className="absolute z-1 justify-center w-full h-[78vh] bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
+              style={[
+                currentCardStyle,
+                { height: height - 2.9 * (tabBarH + BOTTONBOTTOM_SPACE - insets.bottom * 2) + 15 },
+              ]}
+              className="absolute z-1 justify-center w-full bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
             >
               <SwipeCard user={currentProfile} />
 
@@ -270,6 +299,6 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
   );
 });
 
-TinderSwiper.displayName = 'TinderSwiper';
+TinderSwiper.displayName = "TinderSwiper";
 
 export default TinderSwiper;
