@@ -103,7 +103,7 @@ const ChatRoom = () => {
       >
         <FlatList
           ref={listRef}
-          data={[...messages].reverse()}
+          data={[...messages]}
           keyExtractor={(m) => m.id}
           contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 8 }}
           renderItem={({ item }) => (
