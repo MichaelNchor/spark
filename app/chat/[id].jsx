@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   FlatList,
+  Keyboard,
 } from "react-native";
 import { ImageBackground, Image } from "expo-image";
 import { useLocalSearchParams, router } from "expo-router";
@@ -127,7 +128,11 @@ const ChatRoom = () => {
             iconWidth={24}
             iconHeight={24}
             containerStyles="w-[50px] h-[50px]"
-            handlePress={() => { setGiftOptionsIsVisible(false); setSendOptionsIsVisible(true); }}
+            handlePress={() => {
+              Keyboard.dismiss();
+              setGiftOptionsIsVisible(false);
+              setSendOptionsIsVisible(true);
+            }}
             isOutline
           />
 
@@ -136,7 +141,11 @@ const ChatRoom = () => {
               value={message}
               handleChangeText={setMessage}
               placeholder="Type a message ..."
-              onGiftPress={() => { setSendOptionsIsVisible(false); setGiftOptionsIsVisible(true); }}
+              onGiftPress={() => {
+                Keyboard.dismiss();
+                setSendOptionsIsVisible(false);
+                setGiftOptionsIsVisible(true);
+              }}
               isDarkMode={false}
             />
           </View>
