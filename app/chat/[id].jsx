@@ -156,7 +156,7 @@ const ChatRoom = () => {
 
         {/* Bottom bar */}
         <View
-          className="flex-row w-full justify-between px-2 py-3"
+          className="flex-row w-full justify-between px-2 py-3 items-center"
           style={{ paddingBottom: insets.bottom || 8 }} // ⬅️ safe bottom
         >
           {/* Plus button */}
