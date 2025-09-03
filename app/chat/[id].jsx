@@ -48,13 +48,11 @@ const ChatRoom = () => {
     if (!message.trim()) return;
     setMessages(prev => [...prev, { id: Date.now().toString(), fromMe: true, text: message.trim() }]);
     setMessage("");
-    // scroll to "bottom" (offset 0 on inverted list)
     requestAnimationFrame(() => listRef.current?.scrollToOffset({ offset: 0, animated: true }));
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }} edges={['top','bottom']}>
-      {/* Header (measured for iOS keyboard offset) */}
       <View
         onLayout={e => setHeaderH(e.nativeEvent.layout.height)}
         className="w-full flex-row items-center my-2"
@@ -99,7 +97,7 @@ const ChatRoom = () => {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? headerH : 0}
+        keyboardVerticalOffset={Platform.OS === "ios" ? headerH : -10}
       >
         <FlatList
           ref={listRef}
@@ -122,7 +120,6 @@ const ChatRoom = () => {
         {/* Input bar */}
         <View
           className="flex-row w-full justify-between px-2 items-center"
-          // keep this small; KAV already lifts on iOS; Android resize handles the rest
           style={{ paddingBottom: Platform.OS === "ios" ? (insets.bottom || 8) : 8 }}
         >
           <CustomButtonWithIcon
