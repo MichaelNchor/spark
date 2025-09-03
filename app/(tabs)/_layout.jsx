@@ -1,132 +1,153 @@
 import { Image } from "expo-image";
 import { Tabs } from "expo-router";
-import React from "react";
-import { Text, View } from "react-native";
-import icons from "../../assets/constants";
+import { View, Dimensions } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+  useSharedValue,
+  useDerivedValue,
+} from "react-native-reanimated";
 import { Provider as PaperProvider } from "react-native-paper";
+import { LinearGradient } from "expo-linear-gradient";
+import icons from "../../assets/constants";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const TabIcon = ({ icon, color, name, focused }) => {
-  return (
-    <View className="gap-1 items-center w-[60px]">
-      <Image
-        source={icon}
-        contentFit="contain"
-        style={{ width: 24, height: 24, tintColor: color }}
-      />
-      <Text
-        className={`${focused ? "font-poppins-semibold" : "font-poppins-medium"} text-[0.6rem]`}
-        style={{ color }}
-        numberOfLines={1}
-        ellipsizeMode="tail"
-      >
-        {name}
-      </Text>
-    </View>
-  );
-};
+const { width: SCREEN_W } = Dimensions.get("window");
+
+// Layout constants
+const PADDING_H = 30;       // inner horizontal padding (left + right applied via paddingHorizontal)
+const BASE_BAR_H = 52;      // visual height (without bottom safe area)
+const CIRCLE = 46;          // highlight circle size
+const TABS_COUNT = 5;
+
+const TabIcon = ({ icon, color, focused }) => (
+  <View className="items-center justify-center w-[56px] h-[56px]">
+    <Image
+      source={icon}
+      contentFit="contain"
+      style={{ width: 24, height: 24, tintColor: focused ? "white" : color }}
+    />
+  </View>
+);
 
 export default function TabLayout() {
-  const TAB_COLORS = "#777777";
+  const insets = useSafeAreaInsets();
+
+  const INNER_W = SCREEN_W - PADDING_H * 2;
+  const TAB_WIDTH = INNER_W / TABS_COUNT;
+
+  const activeIndex = useSharedValue(0);
+
+  const translateXCore = useDerivedValue(() =>
+    withSpring(activeIndex.value * TAB_WIDTH, { damping: 12, stiffness: 100 })
+  );
+
+  const animatedCircleStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: translateXCore.value + PADDING_H },
+    ],
+  }));
+
+  const barHeight = BASE_BAR_H + insets.bottom;
 
   return (
-    <PaperProvider>
-      <Tabs
-        screenOptions={{
-          tabBarIconStyle: {
-            color: TAB_COLORS,
-            backgroundColor: "#121212",
-          },
-          tabBarShowLabel: false,
-          tabBarActiveTintColor: "#E94057",
-          tabBarStyle: {
-            height: 84,
-            paddingHorizontal: 20,
-            paddingTop: 10,
-            backgroundColor: "#121212",
-            borderTopWidth: 0,
-            elevation: 0,
-          },
-          sceneStyle: {
-            backgroundColor: "#121212",
-          },
-        }}
-      >
-        <Tabs.Screen
-          name="home"
-          options={{
-            text: "Home",
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PaperProvider>
+        <Tabs
+          screenOptions={{
             headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.homeOutline}
-                color={color}
-                focused={focused}
-                name="Home"
-              />
+            tabBarShowLabel: false,
+            tabBarActiveTintColor: "#E94057",
+            tabBarInactiveTintColor: "#777777",
+            tabBarHideOnKeyboard: true,
+            tabBarStyle: {
+              height: barHeight,
+              paddingBottom: insets.bottom,
+              paddingTop: 8,
+              paddingHorizontal: PADDING_H, // 👈 inner padding (what you asked for)
+              position: "absolute",
+              borderTopRightRadius: 24,
+              borderTopLeftRadius: 24,
+              backgroundColor: "white",
+              borderTopWidth: 0,
+              elevation: 5,
+            },
+            tabBarBackground: () => (
+              <View style={{ flex: 1 }}>
+                {/* Moving highlight circle */}
+                <Animated.View
+                  style={[
+                    {
+                      position: "absolute",
+                      top: (BASE_BAR_H - CIRCLE) / 2,     // center vertically in visual area
+                      left: TAB_WIDTH / 2 - CIRCLE / 2,   // start centered under first tab (pre-translate)
+                      width: CIRCLE,
+                      height: CIRCLE,
+                      borderRadius: CIRCLE / 2,
+                      overflow: "hidden",
+                    },
+                    animatedCircleStyle,
+                  ]}
+                >
+                  <LinearGradient
+                    colors={["#fd297b", "#ff5864", "#ff655b"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{ flex: 1 }}
+                  />
+                </Animated.View>
+              </View>
             ),
           }}
-        />
-        <Tabs.Screen
-          name="events"
-          options={{
-            text: "Events",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.events}
-                color={color}
-                focused={focused}
-                name="Events"
-              />
-            ),
+          screenListeners={{
+            state: (e) => {
+              activeIndex.value = e.data.state.index;
+            },
           }}
-        />
-        <Tabs.Screen
-          name="likes"
-          options={{
-            text: "Likes",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.heartOutline}
-                color={color}
-                focused={focused}
-                name="Likes"
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="chat"
-          options={{
-            text: "Chat",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.chatOutline}
-                color={color}
-                focused={focused}
-                name="Chat"
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="profile"
-          options={{
-            text: "Profile",
-            headerShown: false,
-            tabBarIcon: ({ color, focused }) => (
-              <TabIcon
-                icon={icons.profileOutline}
-                color={color}
-                focused={focused}
-                name="Profile"
-              />
-            ),
-          }}
-        />
-      </Tabs>
-    </PaperProvider>
+        >
+          <Tabs.Screen
+            name="home"
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <TabIcon icon={icons.home} color={color} focused={focused} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="events"
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <TabIcon icon={icons.events} color={color} focused={focused} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="likes"
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <TabIcon icon={icons.heart} color={color} focused={focused} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="chat"
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <TabIcon icon={icons.chat2} color={color} focused={focused} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="settings"
+            options={{
+              tabBarIcon: ({ color, focused }) => (
+                <TabIcon icon={icons.settings} color={color} focused={focused} />
+              ),
+            }}
+          />
+        </Tabs>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }

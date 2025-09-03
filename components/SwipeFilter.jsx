@@ -1,47 +1,116 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import MultiSelect from "./MultiSelect";
 import { InterestsOptions } from "../data/mockData";
+import { Ionicons } from "@expo/vector-icons";
+import SimpleRadioSelect from "./SimpleRadioSelect";
 
-const SwipeFilter = () => {
-  const [distance, setDistance] = useState([40]);
-  const [ageRange, setAgeRange] = useState([20, 28]);
-  const [selectedOptions, setSelectedOptions] = useState([]);
+const BRAND = ["#fd297b", "#ff5864", "#ff655b"];
+
+export const DEFAULT_FILTERS = {
+  location: "New York, USA",
+  gender: "Women",
+  sortBy: "Online",
+  distance: [15],
+  ageRange: [20, 28],
+  interests: [],
+};
+
+const SwipeFilter = ({ value, onChange }) => {
+  const width = Dimensions.get("window").width;
+  const sliderLength = Math.max(240, width - 56);
+
+  // use controlled values if provided, else fall back to defaults
+  const [location, setLocation] = useState(value?.location ?? DEFAULT_FILTERS.location);
+  const [gender, setGender] = useState(value?.gender ?? DEFAULT_FILTERS.gender);
+  const [sortBy, setSortBy] = useState(value?.sortBy ?? DEFAULT_FILTERS.sortBy);
+  const [distance, setDistance] = useState(value?.distance ?? DEFAULT_FILTERS.distance);
+  const [ageRange, setAgeRange] = useState(value?.ageRange ?? DEFAULT_FILTERS.ageRange);
+  const [selectedOptions, setSelectedOptions] = useState(
+    value?.interests ?? DEFAULT_FILTERS.interests
+  );
+
+  // emit to parent whenever something changes (if onChange provided)
+  useEffect(() => {
+    onChange?.({
+      location,
+      gender,
+      sortBy,
+      distance,
+      ageRange,
+      interests: selectedOptions,
+    });
+  }, [location, gender, sortBy, distance, ageRange, selectedOptions, onChange]);
+
+  const distTicks = useMemo(() => [0, 5, 10, 15, 20, 25], []);
+  const ageTicks = useMemo(() => [18, 28, 38, 48, 58], []);
 
   return (
-    <View className="m-4">
-
+    <View className="mx-1">
       {/* Location */}
-      <View className="flex flex-row justify-between">
-        <Text className="text-base font-poppins-medium text-white">Location</Text>
-        <Text className="text-base font-poppins-regular text-white">
-          Accra, Ghana
+      <Text className="text-base font-poppins-medium text-black">Location</Text>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        className="mt-2 mb-4 flex-row items-center justify-between px-4 h-11 rounded-xl bg-[#F3F4F6]"
+        onPress={() => {}}
+      >
+        <Text className="font-poppins-regular text-gray-600">
+          {location}
         </Text>
+        <Ionicons name="chevron-down" size={18} color="#9CA3AF" />
+      </TouchableOpacity>
+
+      {/* Interested In */}
+      <Text className="text-base font-poppins-medium text-black">
+        Interested In
+      </Text>
+      <View className="mt-3 mb-6">
+        <SimpleRadioSelect
+          options={["Women", "Men", "Both"]}
+          value={gender}
+          onChange={setGender}
+        />
       </View>
-      <View className="my-4">
-        {/* //todo: write location component */}
+
+      {/* Sort by */}
+      <Text className="text-base font-poppins-medium text-black">Sort by</Text>
+      <View className="mt-3 mb-6">
+        <SimpleRadioSelect
+          options={[
+            { label: "Online", value: "Online" },
+            { label: "Popular", value: "Popular" },
+            { label: "Highly Match", value: "Highly Match" },
+          ]}
+          value={sortBy}
+          onChange={setSortBy}
+        />
       </View>
 
       {/* Distance */}
-      <View className="flex flex-row justify-between">
-        <Text className="text-base font-poppins-medium text-white">Distance</Text>
-        <Text className="text-base font-poppins-regular text-white">
-          {distance}km
+      <View className="flex flex-row justify-between items-end">
+        <Text className="text-base font-poppins-medium text-black">
+          Distance
+        </Text>
+        <Text className="text-sm font-poppins-regular text-gray-600">
+          {distance[0]} km
         </Text>
       </View>
-      <View className="my-4">
+
+      <View className="mt-3">
         <MultiSlider
           values={distance}
-          sliderLength={320}
-          min={1}
-          max={100}
+          sliderLength={sliderLength}
+          min={0}
+          max={25}
           step={1}
-          onValuesChange={(values) => setDistance(values)}
-          selectedStyle={{ backgroundColor: "#ff4d5a" }}
-          unselectedStyle={{ backgroundColor: "#E0E0E0" }}
+          onValuesChange={(v) => setDistance(v)}
+          selectedStyle={{ backgroundColor: BRAND[1] }}
+          unselectedStyle={{ backgroundColor: "#E5E7EB" }}
+          containerStyle={{ height: 40 }}
+          trackStyle={{ height: 4, borderRadius: 999 }}
           markerStyle={{
-            backgroundColor: "#ff4d5a",
+            backgroundColor: BRAND[1],
             height: 24,
             width: 24,
             borderRadius: 12,
@@ -49,28 +118,41 @@ const SwipeFilter = () => {
             borderColor: "white",
           }}
         />
+
+        <View className="flex-row justify-between mt-2 px-1">
+          {distTicks.map((t) => (
+            <Text
+              key={`d-${t}`}
+              className="text-[11px] text-gray-400 font-poppins-regular"
+            >
+              {t} Km
+            </Text>
+          ))}
+        </View>
       </View>
 
       {/* Age */}
-      <View className="flex flex-row justify-between">
-        <Text className="text-base font-poppins-medium text-white">Age</Text>
-        <Text className="text-base font-poppins-regular text-white">
-          {ageRange[0]}-{ageRange[1]}
-          {"yrs"}
+      <View className="flex flex-row justify-between items-end mt-6">
+        <Text className="text-base font-poppins-medium text-black">Age</Text>
+        <Text className="text-sm font-poppins-regular text-gray-600">
+          {ageRange[0]}–{ageRange[1]}
         </Text>
       </View>
-      <View className="my-4">
+
+      <View className="mt-3">
         <MultiSlider
           values={ageRange}
-          sliderLength={320}
+          sliderLength={sliderLength}
           min={18}
           max={60}
           step={1}
-          onValuesChange={setAgeRange}
-          selectedStyle={{ backgroundColor: "#ff4d5a" }}
-          unselectedStyle={{ backgroundColor: "#E0E0E0" }}
+          onValuesChange={(v) => setAgeRange(v)}
+          selectedStyle={{ backgroundColor: BRAND[1] }}
+          unselectedStyle={{ backgroundColor: "#E5E7EB" }}
+          containerStyle={{ height: 40 }}
+          trackStyle={{ height: 4, borderRadius: 999 }}
           markerStyle={{
-            backgroundColor: "#ff4d5a",
+            backgroundColor: BRAND[1],
             height: 24,
             width: 24,
             borderRadius: 12,
@@ -78,16 +160,24 @@ const SwipeFilter = () => {
             borderColor: "white",
           }}
         />
+
+        <View className="flex-row justify-between mt-2 px-1">
+          {ageTicks.map((t) => (
+            <Text
+              key={`a-${t}`}
+              className="text-[11px] text-gray-400 font-poppins-regular"
+            >
+              {t}
+            </Text>
+          ))}
+        </View>
       </View>
 
       {/* Interests */}
-      <View className="flex">
-        <Text className="text-base font-poppins-medium text-white">
-          Interests
-        </Text>
-      </View>
-
-      <View className="w-full flex-row my-4">
+      <Text className="text-base font-poppins-medium text-black mt-6">
+        Interests
+      </Text>
+      <View className="w-full flex-row mt-3 mb-2">
         <MultiSelect
           options={InterestsOptions}
           selectedOptions={selectedOptions}

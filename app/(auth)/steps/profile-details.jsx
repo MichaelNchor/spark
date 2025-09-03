@@ -24,8 +24,8 @@ const DATA = [
 
 const ProfileDetails = () => {
   const { setStep } = useStep();
-  const [firstName, setFirstName] = useState("David");
-  const [lastName, setLastName] = useState("Peterson");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [birthDate, setBirthDate] = useState(null);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -35,15 +35,16 @@ const ProfileDetails = () => {
   };
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="bg-white flex-1">
       <ScrollView
         contentContainerStyle={{
-          height: "100%",
-          paddingTop: 90,
+          flexGrow: 1,
+          paddingTop: 20,
           paddingHorizontal: 30,
+          paddingBottom: 120, // space for button
         }}
       >
-        <View className="w-full gap-8">
+        <View className="w-full gap-6">
           <View className="w-full items-end">
             <TouchableOpacity
               className="px-4 py-2"
@@ -55,7 +56,7 @@ const ProfileDetails = () => {
             </TouchableOpacity>
           </View>
 
-          <Text className="font-poppins-bold text-4xl">Profile details</Text>
+          <Text className="font-poppins-medium text-4xl">Profile details</Text>
 
           <View className="items-center mt-16 mb-8">
             <View className="relative">
@@ -76,14 +77,14 @@ const ProfileDetails = () => {
           </View>
 
           <InputField
-            text="First name"
             value={firstName}
+            placeholder={"First Name"}
             handleChangeText={setFirstName}
           />
 
           <InputField
-            text="Last name"
             value={lastName}
+            placeholder={"Last Name"}
             handleChangeText={setLastName}
           />
 
@@ -96,17 +97,20 @@ const ProfileDetails = () => {
               {birthDate ? birthDate.toDateString() : "Choose birthday date"}
             </Text>
           </TouchableOpacity>
-
-          <CustomButton
-            text="Confirm"
-            handlePress={() => {
-              setStep(4);
-              router.push("/steps/gender");
-            }}
-            containerStyles="w-full h-[48px] mt-14"
-          />
         </View>
       </ScrollView>
+
+      {/* Sticky confirm button at bottom */}
+      <View className="absolute bottom-0 left-0 right-0 px-6 pb-12 bg-white">
+        <CustomButton
+          text="Confirm"
+          handlePress={() => {
+            setStep(1);
+            router.push("/steps/gender");
+          }}
+          containerStyles="w-full h-[48px]"
+        />
+      </View>
 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}

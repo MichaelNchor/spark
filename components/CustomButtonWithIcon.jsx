@@ -1,10 +1,17 @@
 import React from "react";
-import { Image, Text, TouchableOpacity } from "react-native";
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+  View,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CustomButtonWithIcon = ({
   text,
   icon,
-  iconColor = "#fff",
+  iconColor,
   iconWidth = 34,
   iconHeight = 34,
   handlePress,
@@ -13,39 +20,74 @@ const CustomButtonWithIcon = ({
   isLoading,
   isOutline = false,
   iconStyles = "",
-  backgroundColor
 }) => {
+  const onlyIcon = !text;
+
   return (
     <TouchableOpacity
-      className={`${isOutline ? `border border-${backgroundColor ?? "primary"} bg-transparent` : `bg-${backgroundColor ?? "primary"}`} rounded-full flex-row justify-center items-center ${containerStyles} ${isLoading ? "opacity-50" : ""}`}
-      onPress={handlePress}
       activeOpacity={0.7}
+      onPress={handlePress}
       disabled={isLoading}
-      style={
-        isOutline
-          ? {
-              borderWidth: 0,
-              borderColor: "#cccccc",
-            }
-          : {}
-      }
+      className={`rounded-full overflow-hidden ${containerStyles} ${
+        isLoading ? "opacity-50" : ""
+      }`}
     >
-      <Image
-        source={icon}
-        style={{
-          width: iconWidth,
-          height: iconHeight,
-          tintColor: iconColor,
-        }}
-        className={iconStyles}
-      />
-
-      {text != null && (
-        <Text
-          className={`${isOutline ? "text-primary" : "text-white"} font-poppins-bold text-lg ${textStyles}`}
+      {isOutline ? (
+        // ⬇️ Make the wrapper fill the container and center contents
+        <View
+          className="flex-row items-center justify-center rounded-full"
+          style={{ width: "100%", height: "100%" }}
         >
-          {text}
-        </Text>
+          <Image
+            source={icon}
+            style={{
+              width: iconWidth,
+              height: iconHeight,
+              tintColor: iconColor,
+            }}
+            className={`${onlyIcon ? "" : "mr-2"} ${iconStyles}`}
+          />
+          {!!text && (
+            <Text
+              className={`text-primary font-poppins-bold text-lg ${textStyles}`}
+            >
+              {text}
+            </Text>
+          )}
+        </View>
+      ) : (
+        <LinearGradient
+          colors={["#fd297b", "#ff5864", "#ff655b"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          // ⬇️ Fill parent so the icon is centered inside fixed-size circles
+          style={{ width: "100%", height: "100%", borderRadius: 9999 }}
+        >
+          <View className="flex-row items-center justify-center w-full h-full">
+            {isLoading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <>
+                <Image
+                  source={icon}
+                  style={{
+                    width: iconWidth,
+                    height: iconHeight,
+                    tintColor: iconColor,
+                  }}
+                  className={`${onlyIcon ? "" : "mr-2"} ${iconStyles}`}
+                />
+                {!!text && (
+                  <Text
+                    className={`text-white font-poppins-bold text-lg ${textStyles}`}
+                  >
+                    {text}
+                  </Text>
+                )}
+              </>
+            )}
+          </View>
+        </LinearGradient>
       )}
     </TouchableOpacity>
   );

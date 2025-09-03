@@ -1,15 +1,19 @@
-import React, { use, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Dimensions, Pressable } from "react-native";
-import { ImageBackground } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
 import icons from "../assets/constants";
-import { Image } from "expo-image";
+import { Image,ImageBackground } from "expo-image";
+import { router } from "expo-router";
 
 const screenWidth = Dimensions.get("window").width;
 
 const SwipeCard = ({ user }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  // Reset activeIndex to 0 when user changes to prevent flickering
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [user.id]);
   return (
     <Pressable
       className="flex-1"
@@ -54,45 +58,91 @@ const SwipeCard = ({ user }) => {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 200,
+            height: 350,
             borderBottomLeftRadius: 30,
             borderBottomRightRadius: 30,
           }}
         />
 
         {/* Bottom Text Area */}
-        <View className="h-full flex justify-end p-6">
-          {/* Location Badge */}
-          <View className="bg-[#E94057] px-3 py-1 rounded-full flex-row items-center mb-2 self-start">
-            <Image
-              source={icons.location}
-              style={{ width: 20, height: 25, tintColor: "white" }}
-              contentFit="contain"
-            />
-            <Text className="text-white font-poppins-medium text-sm ml-1">
-              {user.location.distance}
-            </Text>
-          </View>
+        <View className="h-full flex justify-end p-6 pb-24">
+          {/* {user.premiumPackage.isActive && (
+            <View className="">
+              <Text className="text-orange-300 font-poppins-medium uppercase">
+                {user.premiumPackage.type}
+              </Text>
+            </View>
+          )} */}
 
-          <View className="flex-row gap-2">
-            {/* User Info */}
-            <Text className="text-2xl text-white font-poppins-semibold">
-              {`${user.name}, ${user.age}`}
-            </Text>
+          <View className="flex-row items-center justify-between">
+            {/* Left: User info */}
+            <View className="flex-row gap-2 items-center">
+              <Text className="text-3xl text-white font-poppins-medium">
+                {user.name}
+              </Text>
+              <Text className="text-3xl text-white font-poppins-medium">
+                {user.age}
+              </Text>
 
-            {/* Verified */}
-            {user.isVerified && (
+              {user.isVerified && (
+                <Image
+                  source={icons.verified}
+                  style={{ width: 30, height: 30 }}
+                  contentFit="contain"
+                />
+              )}
+            </View>
+
+            {/* Right: Profile button */}
+            <Pressable
+              onPress={() => router.push(`/user/${user.id}`)}
+              className="p-2 rounded-full bg-white/20"
+            >
               <Image
-                source={icons.verified}
-                style={{ width: 25, height: 25 }}
+                source={icons.up}
+                style={{ width: 30, height: 30 }}
                 contentFit="contain"
               />
-            )}
+            </Pressable>
           </View>
 
-          <Text className="text-base text-white font-poppins-light">
+          {/* Location Badge */}
+          <View className="py-1 flex-row items-center mb-2 self-start">
+            <Image
+              source={icons.location}
+              style={{ width: 16, height: 25, tintColor: "white" }}
+              contentFit="contain"
+            />
+            <Text className="text-white font-poppins-regular text-base ml-1">
+              {user.location.place}
+            </Text>
+          </View>
+
+          {/* Interests */}
+          {user.interests?.length > 0 && (
+            <View className="">
+              <View className="flex-row flex-wrap">
+                {user.interests?.slice(0, 5).map((interest, index) => (
+                  <View
+                    key={index}
+                    className="px-2 rounded-full mr-2 mb-2 py-1"
+                    style={{ backgroundColor: "rgba(128,128,128,0.6)" }}
+                  >
+                    <Text
+                      className="text-gray-200 text-base font-poppins-regular"
+                      numberOfLines={1}
+                    >
+                      {interest}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          )}
+
+          {/* <Text className="text-base text-white font-poppins-light">
             {user.bio}
-          </Text>
+          </Text> */}
         </View>
       </ImageBackground>
     </Pressable>

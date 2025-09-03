@@ -12,38 +12,45 @@ const PhoneNumber = () => {
   });
 
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="bg-white flex-1">
       <ScrollView
         contentContainerStyle={{
-          height: "100%",
-          paddingTop: 90,
+          flexGrow: 1,
+          paddingTop: 60,
           paddingHorizontal: 30,
+          justifyContent: "space-between",
+          paddingBottom: 48, // same as pb-12
         }}
       >
+        {/* Content */}
         <View className="w-full gap-4">
-          <Text className="font-poppins-bold text-4xl mb-4">My mobile</Text>
+          <Text className="font-poppins-medium text-4xl mb-2">My mobile</Text>
+
           <Text className="font-poppins-regular text-gray-500">
             Please enter your valid phone number. We will send you a 4-digit
             code to verify your account.
           </Text>
 
-          <View className="w-full mb-12">
+          <View className="w-full">
             <InputField
-              text=""
               value={form.PhoneNumber}
               handleChangeText={(e) => {
-                setStep(2);
                 setPhoneNumber({ ...form, PhoneNumber: e });
               }}
-              otherStyles=""
               keyboardType="phone-pad"
             />
           </View>
+        </View>
 
+        {/* Fixed bottom button */}
+        <View className="w-full">
           <CustomButton
             text="Continue"
-            handlePress={() => router.push("/steps/verify-code")}
-            containerStyles="w-full h-[48px] mt-96"
+            handlePress={() => {
+              setStep(4);
+              router.push("/steps/verify-code");
+            }}
+            containerStyles="w-full h-[48px]"
           />
         </View>
       </ScrollView>

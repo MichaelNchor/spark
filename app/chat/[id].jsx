@@ -1,36 +1,43 @@
 import { useLocalSearchParams, router } from "expo-router";
+import React, { useState } from "react";
 import {
   View,
   Text,
   SafeAreaView,
   ScrollView,
-  TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
 import { ImageBackground, Image } from "expo-image";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 import icons from "../../assets/constants";
 import { dummyUsers } from "../../data/mockData";
-import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
 import ChatBoxField from "../../components/ChatBoxField";
 import BottomSheetModal from "../../components/BottomSheetModal";
 import ChatSendModal from "../../components/ChatSendModal";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import ChatGiftModal from "../../components/ChatGiftModal";
 
+const COLORS = {
+  bg: "#F5F6FA",
+  headerName: "#0F172A",
+  inBubbleBg: "#F3F4F6",
+  inBubbleText: "#111827",
+  outBubbleBg: "#E94057",
+  outBubbleText: "#FFFFFF",
+};
+
 const ChatRoom = () => {
   const { id } = useLocalSearchParams();
+  const insets = useSafeAreaInsets();
   const [isSendOptionsVisible, setSendOptionsIsVisible] = useState(false);
   const [isGiftsOptionsVisible, setGiftOptionsIsVisible] = useState(false);
   const [message, setMessage] = useState("");
 
   return (
-    <SafeAreaView
-      style={{ flex: 1, paddingTop: 20, backgroundColor: "#121212" }}
-    >
+    <SafeAreaView style={{ flex: 1, paddingTop: 20, backgroundColor: COLORS.bg }}>
       {/* Top bar */}
       <View className="w-full flex-row items-center pt-4 my-2">
         <View className="flex w-full flex-row items-center justify-between gap-3">
@@ -38,7 +45,7 @@ const ChatRoom = () => {
             icon={icons.back}
             iconWidth={24}
             iconHeight={24}
-            iconColor="#777777"
+            iconColor="black"
             handlePress={() => router.back()}
             containerStyles="w-[50px] h-[50px] items-center justify-center"
             isOutline
@@ -53,8 +60,8 @@ const ChatRoom = () => {
                 style={{ height: 60, width: 60 }}
                 imageStyle={{ borderRadius: 50 }}
               />
-              <View className="flex-row gap-1 mt-2 justify-center">
-                <Text className="text-xs text-white font-poppins-medium">
+              <View className="flex-row gap-1 mt-2 justify-center items-center">
+                <Text className="text-xs font-poppins-medium" style={{ color: COLORS.headerName }}>
                   {dummyUsers[0].name}
                 </Text>
                 {dummyUsers[0].isVerified && (
@@ -68,55 +75,100 @@ const ChatRoom = () => {
             </View>
           </TouchableOpacity>
 
-          {/* Call & menu */}
+          {/* Call buttons */}
           <View className="flex-row items-center">
             <CustomButtonWithIcon
               icon={icons.videoCall}
               iconWidth={24}
               iconHeight={24}
-              iconColor="#777777"
+              iconColor="black"
               handlePress={() => {}}
               containerStyles="w-[50px] h-[50px] items-center justify-center"
               isOutline
             />
-            <Ionicons
-              size={24}
-              style={{ color: "#777777", paddingRight: 20 }}
-              name="ellipsis-vertical"
+            <CustomButtonWithIcon
+              icon={icons.phoneCall}
+              iconWidth={24}
+              iconHeight={24}
+              iconColor="black"
+              handlePress={() => {}}
+              containerStyles="w-[50px] h-[50px] items-center justify-center"
+              isOutline
             />
           </View>
         </View>
       </View>
 
-      {/* Chat messages */}
-      <ScrollView
-        bounces={false}
-        overScrollMode="never"
-        className="flex-1 px-4"
-        showsVerticalScrollIndicator={false}
-      >
-        <View className="bg-[#1e1e1e] rounded-xl rounded-tl-none p-3 my-2 self-start">
-          <Text className="text-white font-poppins-regular">Hey there 👋</Text>
-        </View>
-        <View className="bg-[#E94057] rounded-xl rounded-tr-none p-3 my-2 self-end">
-          <Text className="text-white font-poppins-regular">Hello!</Text>
-        </View>
-      </ScrollView>
-
-      {/* Bottom bar */}
+      {/* Chat messages and input wrapped in KeyboardAvoidingView */}
       <KeyboardAvoidingView
+        style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={70}
+        keyboardVerticalOffset={84} // ≈ header height; tweak for your device
       >
-        <View className="flex-row w-full items-center mb-4 justify-between px-2 py-3">
+        {/* Chat messages */}
+        <ScrollView
+          bounces={false}
+          overScrollMode="never"
+          className="flex-1 px-4"
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{
+            paddingTop: 8,
+            paddingBottom: 12,        // ⬅️ was 96
+            flexGrow: 1,
+            justifyContent: "flex-end", // ⬅️ pins bubbles to bottom
+          }}
+        >
+          {/* incoming */}
+          <View
+            className="rounded-xl rounded-tl-none p-3 my-2 self-start"
+            style={{
+              backgroundColor: COLORS.inBubbleBg,
+              shadowColor: "#000",
+              shadowOpacity: 0.04,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 2 },
+              elevation: 1,
+            }}
+          >
+            <Text className="font-poppins-regular" style={{ color: COLORS.inBubbleText }}>
+              Hey there 👋
+            </Text>
+          </View>
+
+          {/* outgoing */}
+          <View
+            className="rounded-xl rounded-tr-none p-3 my-2 self-end"
+            style={{
+              backgroundColor: COLORS.outBubbleBg,
+              shadowColor: "#000",
+              shadowOpacity: 0.04,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 2 },
+              elevation: 1,
+            }}
+          >
+            <Text className="font-poppins-regular" style={{ color: COLORS.outBubbleText }}>
+              Hello!
+            </Text>
+          </View>
+        </ScrollView>
+
+        {/* Bottom bar */}
+        <View
+          className="flex-row w-full justify-between px-2 py-3 items-center"
+          style={{ paddingBottom: insets.bottom || 8 }} // ⬅️ safe bottom
+        >
           {/* Plus button */}
           <CustomButtonWithIcon
-            icon={icons.plus}
+            icon={icons.paperClip}
             iconWidth={24}
             iconHeight={24}
-            iconColor="#ffffff"
             containerStyles="w-[50px] h-[50px]"
-            handlePress={() => setSendOptionsIsVisible(true)}
+            handlePress={() => {
+              setGiftOptionsIsVisible(false);
+              setSendOptionsIsVisible(true);
+            }}
             isOutline
           />
 
@@ -126,8 +178,11 @@ const ChatRoom = () => {
               value={message}
               handleChangeText={setMessage}
               placeholder="Type a message ..."
-              onGiftPress={() => setGiftOptionsIsVisible(true)}
-              isDarkMode
+              onGiftPress={() => {
+                setSendOptionsIsVisible(false);
+                setGiftOptionsIsVisible(true);
+              }}
+              isDarkMode={false}
             />
           </View>
 
@@ -180,12 +235,7 @@ const ChatRoom = () => {
         onClose={() => setGiftOptionsIsVisible(false)}
         header="🎁 Send a Gift"
       >
-        <ChatGiftModal
-          // onSendGift={(gift) => {
-          //   console.log("Gift sent:", gift);
-          //   setGiftOptionsIsVisible(false);
-          // }}
-        />
+        <ChatGiftModal />
       </BottomSheetModal>
     </SafeAreaView>
   );

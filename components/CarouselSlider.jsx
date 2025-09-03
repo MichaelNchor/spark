@@ -35,7 +35,7 @@ const renderItem = ({ width, height, isRounded = true }) =>
           contentFit="contain"
           style={{ width: width, height: height * 0.82 }}
         />
-        <Text className="text-3xl font-poppins-bold text-primary text-center">
+        <Text className="text-3xl font-poppins-semibold text-primary text-center">
           {item.text}
         </Text>
         <Text className="text-lg justify-center mx-12 text-center font-poppins-medium text-gray-500">
@@ -45,7 +45,7 @@ const renderItem = ({ width, height, isRounded = true }) =>
     );
   };
 
-export default function OnboardingCarousel({
+export default function CarouselSlider({
   width = Dimensions.get("window").width,
   height = Dimensions.get("window").height - 250,
 }) {

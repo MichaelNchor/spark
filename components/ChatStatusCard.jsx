@@ -1,61 +1,74 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Dimensions,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
-import { ImageBackground } from "expo-image";
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import icons from "../assets/constants";
-import { Image } from "expo-image";
-import { router } from "expo-router";
 
-const screenWidth = Dimensions.get("window").width;
-const cardWidth = (screenWidth - 30) / 5;
+const ChatStatusCard = ({ user, isAdd = false }) => {
+  if (isAdd) {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={{ alignItems: "center", width: 64 }}
+        onPress={() => console.log("Add story")}
+      >
+        <View
+          style={{
+            width: 64,
+            height: 64,
+            borderRadius: 32,
+            backgroundColor: "#F3F4F6",
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 2,
+            borderStyle: "dashed",
+            borderColor: "#777777",
+          }}
+        >
+          <Ionicons name="add" size={24} color="#111827" />
+        </View>
+        <Text className="font-poppins-regular text-base text-gray-700">
+          Add
+        </Text>
+      </TouchableOpacity>
+    );
+  }
 
-const ChatStatusCard = ({ user }) => {
   return (
-    <Pressable
-      onPress={() => router.push(`user/${user.id}`)}
-      style={{ width: cardWidth, marginBottom: 12 }}
-    >
+    <View style={{ alignItems: "center", width: 64 }}>
       <LinearGradient
-        colors={["#feda75", "#fa7e1e", "#d62976", "#962fbf", "#4f5bd5"]}
+        colors={["#fd297b", "#ff5864", "#ff655b"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        style={{
-          padding: 2,
-          borderRadius: 20,
-        }}
+        style={{ padding: 2, borderRadius: 999 }}
       >
-        <View className="">
-          <ImageBackground
-            source={{ uri: user.media[0].uri }}
+        <View
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            overflow: "hidden",
+            backgroundColor: "#fff",
+            borderColor: "white",
+            borderWidth: 2
+          }}
+        >
+          <Image
+            source={{ uri: user?.media[0].uri }}
+            style={{ width: "100%", height: "100%" }}
             contentFit="cover"
-            style={{ height: 90, width: "100%" }}
-            imageStyle={{ borderRadius: 20 }}
           />
         </View>
       </LinearGradient>
-      {/* Bottom Text Area */}
-      <View className="flex-row gap-1 mt-4 justify-center">
-        {/* User Info */}
-        <Text className="text-xs text-white font-poppins-medium">
-          {user.name}
-        </Text>
-        {/* Verified */}
-        {user.isVerified && (
-          <Image
-            source={icons.verified}
-            style={{ width: 14, height: 14 }}
-            contentFit="contain"
-          />
-        )}
-      </View>
-    </Pressable>
+      <Text
+        className="font-poppins-regular text-base text-gray-700"
+        style={{
+          maxWidth: 64,
+        }}
+      >
+        {user?.name}
+      </Text>
+    </View>
   );
 };
 

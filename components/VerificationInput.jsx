@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 
 const VerificationInput = ({ length = 4, onComplete }) => {
   const [digits, setDigits] = useState([]);
@@ -26,26 +27,31 @@ const VerificationInput = ({ length = 4, onComplete }) => {
     const isFilled = index < digits.length;
     const isActive = index === digits.length;
 
-    let bg = "bg-transparent";
-    let border = "border-[#E5E7EB]";
-    let textColor = "text-black";
-
     if (isFilled) {
-      bg = "bg-[#F43F5E]";
-      border = "border-[#F43F5E]";
-      textColor = "text-white";
-    } else if (isActive) {
-      border = "border-[#F43F5E]";
+      return (
+        <View key={index} className="w-20 h-20 rounded-3xl overflow-hidden">
+          <LinearGradient
+            colors={["#fd297b", "#ff5864", "#ff655b"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            className="flex-1 justify-center items-center"
+          >
+            <Text className="text-2xl font-poppins-medium text-white">
+              {digits[index]}
+            </Text>
+          </LinearGradient>
+        </View>
+      );
     }
 
     return (
       <View
         key={index}
-        className={`w-20 h-20 rounded-3xl border ${border} ${bg} justify-center items-center`}
+        className={`w-20 h-20 rounded-3xl border justify-center items-center ${
+          isActive ? "border-[#fd297b]" : "border-gray-300"
+        }`}
       >
-        <Text className={`text-2xl font-poppins-medium ${textColor}`}>
-          {isFilled ? digits[index] : ""}
-        </Text>
+        <Text className="text-2xl font-poppins-medium text-black">{""}</Text>
       </View>
     );
   };
@@ -60,23 +66,40 @@ const VerificationInput = ({ length = 4, onComplete }) => {
         onPressOut={() => setPressed(false)}
         disabled={disabled}
         activeOpacity={0.7}
-        className={`w-20 h-20 justify-center items-center rounded-3xl ${
-          pressed ? "bg-gray-300" : "bg-transparent"
-        }`}
+        className="w-20 h-20 rounded-3xl overflow-hidden"
       >
-        <Text className="text-2xl text-black font-poppins-medium">{label}</Text>
+        {pressed ? (
+          <LinearGradient
+            colors={["#fd297b", "#ff5864", "#ff655b"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            className="flex-1 justify-center items-center"
+          >
+            <Text className="text-2xl text-white font-poppins-medium">
+              {label}
+            </Text>
+          </LinearGradient>
+        ) : (
+          <View className="flex-1 justify-center items-center bg-transparent">
+            <Text className="text-2xl text-black font-poppins-medium">
+              {label}
+            </Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   };
 
   return (
     <View className="w-full">
+      {/* Digit Boxes */}
       <View className="flex-row justify-between w-full mb-8">
         {Array.from({ length }).map((_, index) =>
           renderDigitBox(digits[index], index)
         )}
       </View>
 
+      {/* Keypad */}
       <View className="space-y-4 gap-4 mt-12">
         {[
           ["1", "2", "3"],
@@ -99,9 +122,11 @@ const VerificationInput = ({ length = 4, onComplete }) => {
           <KeypadButton label="⌫" onPress={handleDelete} />
         </View>
       </View>
+
+      {/* Resend */}
       <View>
         <TouchableOpacity onPress={() => router.push("/steps/profile-details")}>
-          <Text className="font-poppins-semibold text-primary text-base text-center mt-12">
+          <Text className="font-poppins-medium text-primary text-lg text-center mt-12">
             Send again
           </Text>
         </TouchableOpacity>
