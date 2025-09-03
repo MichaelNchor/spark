@@ -6,23 +6,18 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
-import { Image, ImageBackground } from "expo-image";
+import { ImageBackground } from "expo-image";
 import icons from "../../assets/constants";
 import Carousel from "react-native-reanimated-carousel";
-import { EventBanners } from "../../data/mockData";
+import { EventBanners , EventTabs , mockEvents } from "../../data/mockData";
 import { LinearGradient } from "expo-linear-gradient";
-import { EventTabs } from "../../data/mockData";
 import TabButtonSection from "../../components/TabButtonSection";
-import InputField from "../../components/InputField";
-import { mockEvents } from "../../data/mockData";
 import EventCard from "../../components/EventCard";
 import { BlurView } from "expo-blur";
 import { Ionicons } from "@expo/vector-icons";
-import { RotateInDownRight } from "react-native-reanimated";
 import SearchBox from "../../components/SearchBox";
-import { SearchBar } from "react-native-screens";
 
 const { width } = Dimensions.get("window");
 
@@ -47,7 +42,7 @@ const Events = () => {
       </View>
 
       {/* Search */}
-      <View className="w-full px-2 mb-4">
+      <View className="w-full px-2">
         <SearchBox placeholder="Search Events" isDarkMode />
       </View>
 

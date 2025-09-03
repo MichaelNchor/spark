@@ -1,6 +1,5 @@
 import { Image } from "expo-image";
 import { Tabs } from "expo-router";
-import React from "react";
 import { View, Dimensions } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -14,16 +13,16 @@ import icons from "../../assets/constants";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const { width } = Dimensions.get("window");
-const TAB_WIDTH = width / 5;
-const BASE_BAR_H = 52; // visual height (without safe area)
-const CIRCLE = 46;
+const { width: SCREEN_W } = Dimensions.get("window");
+
+// Layout constants
+const PADDING_H = 30;       // inner horizontal padding (left + right applied via paddingHorizontal)
+const BASE_BAR_H = 52;      // visual height (without bottom safe area)
+const CIRCLE = 46;          // highlight circle size
+const TABS_COUNT = 5;
 
 const TabIcon = ({ icon, color, focused }) => (
-  <View
-    // no big margins; keep the icon centered in the item box
-    className="items-center justify-center w-[56px] h-[56px]"
-  >
+  <View className="items-center justify-center w-[56px] h-[56px]">
     <Image
       source={icon}
       contentFit="contain"
@@ -35,12 +34,19 @@ const TabIcon = ({ icon, color, focused }) => (
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
 
+  const INNER_W = SCREEN_W - PADDING_H * 2;
+  const TAB_WIDTH = INNER_W / TABS_COUNT;
+
   const activeIndex = useSharedValue(0);
-  const translateX = useDerivedValue(() =>
+
+  const translateXCore = useDerivedValue(() =>
     withSpring(activeIndex.value * TAB_WIDTH, { damping: 12, stiffness: 100 })
   );
+
   const animatedCircleStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateX.value }],
+    transform: [
+      { translateX: translateXCore.value + PADDING_H },
+    ],
   }));
 
   const barHeight = BASE_BAR_H + insets.bottom;
@@ -54,11 +60,12 @@ export default function TabLayout() {
             tabBarShowLabel: false,
             tabBarActiveTintColor: "#E94057",
             tabBarInactiveTintColor: "#777777",
-            tabBarHideOnKeyboard: true, // 👈 hides when typing
+            tabBarHideOnKeyboard: true,
             tabBarStyle: {
-              height: barHeight, // 👈 include safe area
-              paddingBottom: insets.bottom, // 👈 sit flush to edge
+              height: barHeight,
+              paddingBottom: insets.bottom,
               paddingTop: 8,
+              paddingHorizontal: PADDING_H, // 👈 inner padding (what you asked for)
               position: "absolute",
               borderTopRightRadius: 24,
               borderTopLeftRadius: 24,
@@ -68,13 +75,13 @@ export default function TabLayout() {
             },
             tabBarBackground: () => (
               <View style={{ flex: 1 }}>
+                {/* Moving highlight circle */}
                 <Animated.View
                   style={[
                     {
                       position: "absolute",
-                      // center the circle vertically inside visible bar area
-                      top: (BASE_BAR_H - CIRCLE) / 2, // not affected by inset
-                      left: TAB_WIDTH / 2 - CIRCLE / 2,
+                      top: (BASE_BAR_H - CIRCLE) / 2,     // center vertically in visual area
+                      left: TAB_WIDTH / 2 - CIRCLE / 2,   // start centered under first tab (pre-translate)
                       width: CIRCLE,
                       height: CIRCLE,
                       borderRadius: CIRCLE / 2,
@@ -135,11 +142,7 @@ export default function TabLayout() {
             name="settings"
             options={{
               tabBarIcon: ({ color, focused }) => (
-                <TabIcon
-                  icon={icons.settings}
-                  color={color}
-                  focused={focused}
-                />
+                <TabIcon icon={icons.settings} color={color} focused={focused} />
               ),
             }}
           />

@@ -50,6 +50,8 @@ const SearchBox = ({
         style={{
           color: "#111",
           paddingVertical: 0,
+          height: "100%",
+          includeFontPadding: false,
           ...(Platform.OS === "android" ? { textAlignVertical: "center" } : {}),
         }}
         {...props}
