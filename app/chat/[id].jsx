@@ -1,24 +1,23 @@
-import { useLocalSearchParams, router } from "expo-router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
-  ScrollView,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  FlatList,
 } from "react-native";
 import { ImageBackground, Image } from "expo-image";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLocalSearchParams, router } from "expo-router";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { useSafeAreaInsets, SafeAreaView } from "react-native-safe-area-context";
 import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
-import icons from "../../assets/constants";
-import { dummyUsers } from "../../data/mockData";
 import ChatBoxField from "../../components/ChatBoxField";
 import BottomSheetModal from "../../components/BottomSheetModal";
 import ChatSendModal from "../../components/ChatSendModal";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import ChatGiftModal from "../../components/ChatGiftModal";
+import icons from "../../assets/constants";
+import { dummyUsers } from "../../data/mockData";
 
 const COLORS = {
   bg: "#F5F6FA",
@@ -32,14 +31,34 @@ const COLORS = {
 const ChatRoom = () => {
   const { id } = useLocalSearchParams();
   const insets = useSafeAreaInsets();
+
   const [isSendOptionsVisible, setSendOptionsIsVisible] = useState(false);
   const [isGiftsOptionsVisible, setGiftOptionsIsVisible] = useState(false);
   const [message, setMessage] = useState("");
+  const [headerH, setHeaderH] = useState(0);
+
+  // dummy messages list for example
+  const [messages, setMessages] = useState([
+    { id: "1", fromMe: false, text: "Hey there 👋" },
+    { id: "2", fromMe: true,  text: "Hello!" },
+  ]);
+  const listRef = useRef(null);
+
+  const send = () => {
+    if (!message.trim()) return;
+    setMessages(prev => [...prev, { id: Date.now().toString(), fromMe: true, text: message.trim() }]);
+    setMessage("");
+    // scroll to "bottom" (offset 0 on inverted list)
+    requestAnimationFrame(() => listRef.current?.scrollToOffset({ offset: 0, animated: true }));
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: 20, backgroundColor: COLORS.bg }}>
-      {/* Top bar */}
-      <View className="w-full flex-row items-center pt-4 my-2">
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.bg }} edges={['top','bottom']}>
+      {/* Header (measured for iOS keyboard offset) */}
+      <View
+        onLayout={e => setHeaderH(e.nativeEvent.layout.height)}
+        className="w-full flex-row items-center my-2"
+      >
         <View className="flex w-full flex-row items-center justify-between gap-3">
           <CustomButtonWithIcon
             icon={icons.back}
@@ -51,7 +70,6 @@ const ChatRoom = () => {
             isOutline
           />
 
-          {/* User avatar + name */}
           <TouchableOpacity onPress={() => router.push(`user/${id}`)}>
             <View className="flex-col ml-12 items-center">
               <ImageBackground
@@ -65,128 +83,67 @@ const ChatRoom = () => {
                   {dummyUsers[0].name}
                 </Text>
                 {dummyUsers[0].isVerified && (
-                  <Image
-                    source={icons.verified}
-                    style={{ width: 14, height: 14 }}
-                    contentFit="contain"
-                  />
+                  <Image source={icons.verified} style={{ width: 14, height: 14 }} contentFit="contain" />
                 )}
               </View>
             </View>
           </TouchableOpacity>
 
-          {/* Call buttons */}
           <View className="flex-row items-center">
-            <CustomButtonWithIcon
-              icon={icons.videoCall}
-              iconWidth={24}
-              iconHeight={24}
-              iconColor="black"
-              handlePress={() => {}}
-              containerStyles="w-[50px] h-[50px] items-center justify-center"
-              isOutline
-            />
-            <CustomButtonWithIcon
-              icon={icons.phoneCall}
-              iconWidth={24}
-              iconHeight={24}
-              iconColor="black"
-              handlePress={() => {}}
-              containerStyles="w-[50px] h-[50px] items-center justify-center"
-              isOutline
-            />
+            <CustomButtonWithIcon icon={icons.videoCall} iconWidth={24} iconHeight={24} iconColor="black" containerStyles="w-[50px] h-[50px] items-center justify-center" isOutline />
+            <CustomButtonWithIcon icon={icons.phoneCall} iconWidth={24} iconHeight={24} iconColor="black" containerStyles="w-[50px] h-[50px] items-center justify-center" isOutline />
           </View>
         </View>
       </View>
 
-      {/* Chat messages and input wrapped in KeyboardAvoidingView */}
       <KeyboardAvoidingView
         style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={84} // ≈ header height; tweak for your device
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? headerH : 0}
       >
-        {/* Chat messages */}
-        <ScrollView
-          bounces={false}
-          overScrollMode="never"
-          className="flex-1 px-4"
-          showsVerticalScrollIndicator={false}
+        <FlatList
+          ref={listRef}
+          data={[...messages].reverse()}
+          keyExtractor={(m) => m.id}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 8, paddingBottom: 8 }}
+          renderItem={({ item }) => (
+            <View
+              className={`rounded-xl p-3 my-2 ${item.fromMe ? "self-end rounded-tr-none" : "self-start rounded-tl-none"}`}
+              style={{ backgroundColor: item.fromMe ? COLORS.outBubbleBg : COLORS.inBubbleBg, maxWidth: "78%" }}
+            >
+              <Text style={{ color: item.fromMe ? COLORS.outBubbleText : COLORS.inBubbleText }}>
+                {item.text}
+              </Text>
+            </View>
+          )}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{
-            paddingTop: 8,
-            paddingBottom: 12,        // ⬅️ was 96
-            flexGrow: 1,
-            justifyContent: "flex-end", // ⬅️ pins bubbles to bottom
-          }}
-        >
-          {/* incoming */}
-          <View
-            className="rounded-xl rounded-tl-none p-3 my-2 self-start"
-            style={{
-              backgroundColor: COLORS.inBubbleBg,
-              shadowColor: "#000",
-              shadowOpacity: 0.04,
-              shadowRadius: 6,
-              shadowOffset: { width: 0, height: 2 },
-              elevation: 1,
-            }}
-          >
-            <Text className="font-poppins-regular" style={{ color: COLORS.inBubbleText }}>
-              Hey there 👋
-            </Text>
-          </View>
+        />
 
-          {/* outgoing */}
-          <View
-            className="rounded-xl rounded-tr-none p-3 my-2 self-end"
-            style={{
-              backgroundColor: COLORS.outBubbleBg,
-              shadowColor: "#000",
-              shadowOpacity: 0.04,
-              shadowRadius: 6,
-              shadowOffset: { width: 0, height: 2 },
-              elevation: 1,
-            }}
-          >
-            <Text className="font-poppins-regular" style={{ color: COLORS.outBubbleText }}>
-              Hello!
-            </Text>
-          </View>
-        </ScrollView>
-
-        {/* Bottom bar */}
+        {/* Input bar */}
         <View
-          className="flex-row w-full justify-between px-2 py-3 items-center"
-          style={{ paddingBottom: insets.bottom || 8 }} // ⬅️ safe bottom
+          className="flex-row w-full justify-between px-2 items-center"
+          // keep this small; KAV already lifts on iOS; Android resize handles the rest
+          style={{ paddingBottom: Platform.OS === "ios" ? (insets.bottom || 8) : 8 }}
         >
-          {/* Plus button */}
           <CustomButtonWithIcon
             icon={icons.paperClip}
             iconWidth={24}
             iconHeight={24}
             containerStyles="w-[50px] h-[50px]"
-            handlePress={() => {
-              setGiftOptionsIsVisible(false);
-              setSendOptionsIsVisible(true);
-            }}
+            handlePress={() => { setGiftOptionsIsVisible(false); setSendOptionsIsVisible(true); }}
             isOutline
           />
 
-          {/* Input box */}
           <View className="flex-1 justify-center items-center mr-2">
             <ChatBoxField
               value={message}
               handleChangeText={setMessage}
               placeholder="Type a message ..."
-              onGiftPress={() => {
-                setSendOptionsIsVisible(false);
-                setGiftOptionsIsVisible(true);
-              }}
+              onGiftPress={() => { setSendOptionsIsVisible(false); setGiftOptionsIsVisible(true); }}
               isDarkMode={false}
             />
           </View>
 
-          {/* Mic / Send button (animated) */}
           {message.length === 0 ? (
             <Animated.View entering={FadeIn} exiting={FadeOut}>
               <CustomButtonWithIcon
@@ -196,10 +153,7 @@ const ChatRoom = () => {
                 iconColor="#ffffff"
                 containerStyles="w-[40px] h-[40px] items-center justify-center"
                 isOutline={false}
-                handlePress={() => {
-                  console.log("Record:", message);
-                  setMessage("");
-                }}
+                handlePress={() => { /* record */ }}
               />
             </Animated.View>
           ) : (
@@ -211,30 +165,18 @@ const ChatRoom = () => {
                 iconColor="#ffffff"
                 containerStyles="w-[40px] h-[40px] items-center justify-center"
                 isOutline={false}
-                handlePress={() => {
-                  console.log("Send:", message);
-                  setMessage("");
-                }}
+                handlePress={send}
               />
             </Animated.View>
           )}
         </View>
       </KeyboardAvoidingView>
 
-      {/* Bottom sheet menu */}
-      <BottomSheetModal
-        visible={isSendOptionsVisible}
-        onClose={() => setSendOptionsIsVisible(false)}
-      >
+      {/* Sheets */}
+      <BottomSheetModal visible={isSendOptionsVisible} onClose={() => setSendOptionsIsVisible(false)}>
         <ChatSendModal />
       </BottomSheetModal>
-
-      {/* Gifts sheet menu */}
-      <BottomSheetModal
-        visible={isGiftsOptionsVisible}
-        onClose={() => setGiftOptionsIsVisible(false)}
-        header="🎁 Send a Gift"
-      >
+      <BottomSheetModal visible={isGiftsOptionsVisible} onClose={() => setGiftOptionsIsVisible(false)} header="🎁 Send a Gift">
         <ChatGiftModal />
       </BottomSheetModal>
     </SafeAreaView>
