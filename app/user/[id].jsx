@@ -13,6 +13,7 @@ import MediaGallery from "../../components/MediaGallery";
 import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 import icons from "../../assets/constants";
 import { Image } from "expo-image";
+import { LinearGradient } from "expo-linear-gradient";
 
 const { height: screenHeight } = Dimensions.get("window");
 const HEADER_HEIGHT = screenHeight * 0.75; // top gallery height
@@ -86,7 +87,7 @@ const UserProfile = () => {
             <View className="flex-row items-center justify-between my-2 mb-6">
               <View className="flex-row items-center justify-between">
                 <Text className="text-black text-3xl font-poppins-medium">
-                  {`${user.name}, ${user.age}`}
+                  {`${user.name} ${user.age}`}
                 </Text>
                 {/* Verified */}
                 {user.isVerified && (
@@ -141,30 +142,41 @@ const UserProfile = () => {
 
           {/* Interests */}
           {user.interests?.length > 0 && (
-            <View
-              className="px-6 py-5 mt-1 bg-white rounded-3xl"
-              style={{
-                shadowColor: "#000",
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 1,
-                shadowRadius: 6,
-                elevation: 6,
-                borderColor: "#000",
-              }}
-            >
+            <View className="px-6 py-5 mt-2 rounded-3xl bg-white">
               <Text className="text-black text-sm font-poppins-semibold mb-4">
                 Interests
               </Text>
-              <View className="flex-row flex-wrap">
+
+              <View className="flex-row flex-wrap gap-2">
                 {user.interests.map((interest, index) => (
-                  <View
+                  <LinearGradient
                     key={index}
-                    className="border-[1.5px] border-[#E94057] px-3 py-1 rounded-full mr-2 mb-2"
+                    colors={["#fd297b", "#ff5864", "#ff655b"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{
+                      paddingHorizontal: 14,
+                      paddingVertical: 8,
+                      borderRadius: 999,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      shadowColor: "#000",
+                      shadowOpacity: 0.12,
+                      shadowRadius: 6,
+                      shadowOffset: { width: 0, height: 3 },
+                      elevation: 4,
+                    }}
                   >
-                    <Text className="text-gray-600 text-base font-poppins-regular">
+                    <Text
+                      style={{
+                        fontFamily: "Poppins-Medium",
+                        fontSize: 14,
+                        color: "#fff",
+                      }}
+                    >
                       {interest}
                     </Text>
-                  </View>
+                  </LinearGradient>
                 ))}
               </View>
             </View>
