@@ -35,7 +35,7 @@ const MediaGallery = ({ media }) => {
           borderBottomLeftRadius: 30,
           borderBottomRightRadius: 30,
           borderTopLeftRadius: 15,
-          borderTopRightRadius: 15
+          borderTopRightRadius: 15,
         }}
       />
       {/* ) : (
@@ -55,9 +55,12 @@ const MediaGallery = ({ media }) => {
           <Pressable
             key={i}
             onPress={() => setActiveIndex(i)}
-            className={`h-[5px] flex-1 rounded-full border-[0.5px] border-gray-500/50 ${
+            className={`flex-1 rounded-full border-[0.5px] border-gray-500/50 ${
               i === activeIndex ? "bg-white" : "bg-white/40"
             }`}
+            style={{
+              height: 2.5,
+            }}
           />
         ))}
       </View>

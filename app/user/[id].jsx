@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import {
   Animated,
   Text,
@@ -14,6 +14,7 @@ import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 import icons from "../../assets/constants";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
+import LoveNoteCard from "../../components/LoveNoteCard";
 
 const { height: screenHeight } = Dimensions.get("window");
 const HEADER_HEIGHT = screenHeight * 0.75; // top gallery height
@@ -142,7 +143,17 @@ const UserProfile = () => {
 
           {/* Interests */}
           {user.interests?.length > 0 && (
-            <View className="px-6 py-5 mt-2 rounded-3xl bg-white">
+            <View
+              className="px-6 py-5 mt-1 rounded-3xl bg-white"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 1,
+                shadowRadius: 6,
+                elevation: 6,
+                borderColor: "#000",
+              }}
+            >
               <Text className="text-black text-sm font-poppins-semibold mb-4">
                 Interests
               </Text>
@@ -266,30 +277,8 @@ const UserProfile = () => {
             )}
           </View>
 
-          {/* About / Me */}
-          <View
-            className="px-6 py-5 mt-1 bg-white rounded-3xl"
-            style={{
-              shadowColor: "#000",
-              shadowOffset: { width: 0, height: 4 },
-              shadowOpacity: 1,
-              shadowRadius: 6,
-              elevation: 6,
-              borderColor: "#000",
-            }}
-          >
-            <Text className="text-black text-sm font-poppins-semibold mb-4">
-              Send a love note
-            </Text>
-            <Text className="text-gray-600 text-sm font-poppins-regular mb-2">
-              👉💖 Send a special message before matching to stand out.
-            </Text>
-            <TouchableOpacity className="border-[1.5px] border-[#E94057] px-3 py-1 rounded-full mr-2 mb-2">
-              <Text className="text-gray-400 py-1 font-poppins-medium text-base">
-                Your message
-              </Text>
-            </TouchableOpacity>
-          </View>
+          {/* Love note (gradient background) */}
+          <LoveNoteCard onSend={(msg) => console.log("Love note sent:", msg)} />
 
           {/* Share */}
           <TouchableOpacity
@@ -362,6 +351,8 @@ const UserProfile = () => {
               </View>
             </View>
           </TouchableOpacity>
+
+          <View style={{ height: 120 }} />
         </Animated.ScrollView>
 
         {/* Floating Back Button */}

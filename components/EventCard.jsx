@@ -231,7 +231,7 @@ const EventCard = ({ event }) => {
                 }}
               >
                 <Text
-                  className="font-poppins-semibold"
+                  className="font-poppins-medium"
                   style={{ color: "#111827", fontSize: 12 }}
                 >
                   +{extra}
@@ -258,7 +258,7 @@ const EventCard = ({ event }) => {
               }}
             >
               <Text
-                className="font-poppins-semibold"
+                className="font-poppins-medium"
                 style={{ color: "#fff", fontSize: 14 }}
               >
                 {event.time}
