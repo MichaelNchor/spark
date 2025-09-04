@@ -66,6 +66,10 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     return Math.max(px, py);
   });
 
+  // Add these derived values for badge gating
+  const h = useDerivedValue(() => Math.abs(translateX.value));           // horizontal magnitude
+  const vUp = useDerivedValue(() => Math.max(-translateY.value, 0));     // upward-only magnitude
+
   const currentCardStyle = useAnimatedStyle(() => {
     const shrink = interpolate(
       Math.max(-translateY.value, 0),
@@ -94,32 +98,34 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     };
   });
 
-  const likeStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      translateX.value,
-      [50, 120],
-      [0, 1],
-      Extrapolation.CLAMP
-    ),
-  }));
+  // Only show LIKE if moving right and horizontal dominates
+  const likeStyle = useAnimatedStyle(() => {
+    const isRight = translateX.value > 0;
+    const horizontalDominates = h.value >= vUp.value;
+    const opacity = (isRight && horizontalDominates)
+      ? interpolate(translateX.value, [40, 140], [0, 1], Extrapolation.CLAMP)
+      : 0;
+    return { opacity };
+  });
 
-  const passStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      translateX.value,
-      [-120, -50],
-      [1, 0],
-      Extrapolation.CLAMP
-    ),
-  }));
+  // Only show PASS if moving left and horizontal dominates
+  const passStyle = useAnimatedStyle(() => {
+    const isLeft = translateX.value < 0;
+    const horizontalDominates = h.value >= vUp.value;
+    const opacity = (isLeft && horizontalDominates)
+      ? interpolate(-translateX.value, [40, 140], [0, 1], Extrapolation.CLAMP)
+      : 0;
+    return { opacity };
+  });
 
-  const superLikeStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      progress.value,
-      [0, 1],
-      [0, 1],
-      Extrapolation.CLAMP
-    ),
-  }));
+  // Only show SUPER LIKE if moving upward and vertical dominates
+  const superLikeStyle = useAnimatedStyle(() => {
+    const verticalDominates = vUp.value > h.value;
+    const opacity = verticalDominates
+      ? interpolate(vUp.value, [60, 180], [0, 1], Extrapolation.CLAMP)
+      : 0;
+    return { opacity };
+  });
 
   const setNextCard = useCallback(() => {
     if (currentUserIndex < users.length - 1) {
