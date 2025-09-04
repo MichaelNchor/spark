@@ -12,6 +12,7 @@ import MainSwipeButton from "../../components/MainSwipeButton";
 import SwipeFilter, { DEFAULT_FILTERS } from "../../components/SwipeFilter";
 import FilterFooter from "../../components/FilterFooter";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Home = () => {  
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -32,6 +33,7 @@ const Home = () => {
     setIsModalVisible(false);
   };
   const swiperRef = useRef();
+  const insets = useSafeAreaInsets();
 
   return (
     <SafeAreaView

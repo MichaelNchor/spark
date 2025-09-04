@@ -15,7 +15,6 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
         height: baseHeight,
         paddingHorizontal: 14,
         borderRadius: 999,
-        borderWidth: 1,
         borderColor: "#E5E7EB",
         backgroundColor: "#FFFFFF",
         flexDirection: "row",

@@ -76,7 +76,6 @@ const Events = () => {
                   className="overflow-hidden shadow-lg"
                   style={{
                     borderRadius: 40,
-                    borderWidth: 1,
                     borderColor: "white",
                   }}
                 >
