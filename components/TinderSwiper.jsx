@@ -57,23 +57,40 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
     )}deg`;
   });
 
-  const currentCardStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: translateX.value * 1.5 },
-      { translateY: translateY.value },
-      { rotate: rotateDeg.value },
-    ],
-  }));
+  const progress = useDerivedValue(() => {
+    // how far horizontally (0..1)
+    const px = Math.min(Math.abs(translateX.value) / (width * 0.4), 1);
+    // how far vertically upward (0..1)
+    const py = Math.min(Math.max(-translateY.value, 0) / (height * 0.6), 1);
+    // respond to whichever gesture is stronger
+    return Math.max(px, py);
+  });
 
-  const nextCardStyle = useAnimatedStyle(() => {
-    const scale = interpolate(
-      Math.abs(translateX.value),
-      [0, width * 0.4],
-      [0.95, 1],
+  const currentCardStyle = useAnimatedStyle(() => {
+    const shrink = interpolate(
+      Math.max(-translateY.value, 0),
+      [0, height * 0.6],
+      [1, 0.98],
       Extrapolation.CLAMP
     );
+
     return {
-      transform: [{ scale }],
+      transform: [
+        { translateX: translateX.value * 1.5 },
+        { translateY: translateY.value },
+        { rotate: rotateDeg.value },
+        { scale: shrink },
+      ],
+    };
+  });
+
+  const nextCardStyle = useAnimatedStyle(() => {
+    const scale = interpolate(progress.value, [0, 1], [0.95, 1], Extrapolation.CLAMP);
+    const lift  = interpolate(progress.value, [0, 1], [20, 0], Extrapolation.CLAMP); // slight rise
+    const opacity = interpolate(progress.value, [0, 1], [0.85, 1], Extrapolation.CLAMP);
+    return {
+      opacity,
+      transform: [{ translateY: lift }, { scale }],
     };
   });
 
@@ -97,9 +114,9 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
 
   const superLikeStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
-      translateY.value,
-      [-150, -100],
-      [1, 0],
+      progress.value,
+      [0, 1],
+      [0, 1],
       Extrapolation.CLAMP
     ),
   }));
@@ -118,6 +135,11 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
         stiffness: 100,
         mass: 0.5,
       };
+      const verticalSpringConfig = {
+        damping: 18,
+        stiffness: 90,
+        mass: 0.5,
+      };
       if (direction === "left") {
         translateX.value = withSpring(-width, springConfig, () =>
           runOnJS(setNextCard)()
@@ -127,7 +149,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
           runOnJS(setNextCard)()
         );
       } else if (direction === "up") {
-        translateY.value = withSpring(-height, springConfig, () =>
+        translateY.value = withSpring(-height, verticalSpringConfig, () =>
           runOnJS(setNextCard)()
         );
       }
@@ -160,11 +182,16 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
         stiffness: 100,
         mass: 0.5,
       };
+      const verticalSpringConfig = {
+        damping: 18,
+        stiffness: 90,
+        mass: 0.5,
+      };
 
       if (superLiked) {
         translateY.value = withSpring(
           -height,
-          { ...springConfig, velocity: e.velocityY },
+          { ...verticalSpringConfig, velocity: e.velocityY },
           () => runOnJS(setNextCard)()
         );
       } else if (swipedRight || swipedLeft) {
