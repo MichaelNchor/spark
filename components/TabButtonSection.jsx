@@ -36,7 +36,7 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
       )}
       <Text
         style={{
-          fontFamily: "Poppins-Medium",
+          fontFamily: "Poppins-Regular",
           fontSize: 14,
           color: "#6B7280",
         }}
@@ -74,7 +74,7 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
       )}
       <Text
         style={{
-          fontFamily: "Poppins-SemiBold",
+          fontFamily: "Poppins-Medium",
           fontSize: 14,
           color: "#FFFFFF",
         }}

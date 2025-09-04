@@ -151,7 +151,7 @@ const Settings = () => {
                   }}
                 >
                   <Animated.Text
-                    className="font-poppins-semibold pt-1"
+                    className="font-poppins-medium pt-1"
                     style={{ color: "white", fontSize: 12, fontWeight: "600" }}
                   >
                     {progress}% Complete

@@ -31,7 +31,7 @@ const MediaGallery = ({ media }) => {
         source={{ uri: activeItem.uri }}
         contentFit="cover"
         style={{
-          height: screenHeight - 240,
+          height: screenHeight - 200,
           borderBottomLeftRadius: 30,
           borderBottomRightRadius: 30,
           borderTopLeftRadius: 15,

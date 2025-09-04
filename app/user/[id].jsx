@@ -33,13 +33,13 @@ const UserProfile = () => {
   }
 
   const translateY = scrollY.interpolate({
-    inputRange: [-200, 0, HEADER_HEIGHT],
+    inputRange: [-600, 0, HEADER_HEIGHT],
     outputRange: [-100, 0, HEADER_HEIGHT * 0.7], // moves slower as you scroll
     extrapolate: "clamp",
   });
 
   const scale = scrollY.interpolate({
-    inputRange: [-200, 0],
+    inputRange: [-600, 0],
     outputRange: [1.4, 1], // zoom when pulling down
     extrapolate: "clamp",
   });
@@ -80,7 +80,7 @@ const UserProfile = () => {
               shadowOpacity: 1,
               shadowRadius: 6,
               elevation: 6,
-              borderColor: "#000"
+              borderColor: "#000",
             }}
           >
             <View className="flex-row items-center justify-between my-2 mb-6">
@@ -104,7 +104,7 @@ const UserProfile = () => {
                   className={`text-sm px-3 py-1 font-poppins-medium rounded-full ${
                     user.isOnline
                       ? "bg-green-600 text-white"
-                      : "bg-gray-600 text-gray-300"
+                      : "bg-gray-600 text-gray-200"
                   }`}
                 >
                   {user.isOnline ? "Online" : "Offline"}
@@ -120,7 +120,17 @@ const UserProfile = () => {
           </View>
 
           {/* About / Me */}
-          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
+          <View
+            className="px-6 py-5 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
             <Text className="text-black text-sm font-poppins-semibold mb-4">
               {"About me"}
             </Text>
@@ -131,8 +141,18 @@ const UserProfile = () => {
 
           {/* Interests */}
           {user.interests?.length > 0 && (
-            <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
-              <Text className="text-white text-sm font-poppins-semibold mb-4">
+            <View
+              className="px-6 py-5 mt-1 bg-white rounded-3xl"
+              style={{
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 1,
+                shadowRadius: 6,
+                elevation: 6,
+                borderColor: "#000",
+              }}
+            >
+              <Text className="text-black text-sm font-poppins-semibold mb-4">
                 Interests
               </Text>
               <View className="flex-row flex-wrap">
@@ -141,7 +161,7 @@ const UserProfile = () => {
                     key={index}
                     className="border-[1.5px] border-[#E94057] px-3 py-1 rounded-full mr-2 mb-2"
                   >
-                    <Text className="text-gray-200 text-base font-poppins-regular">
+                    <Text className="text-gray-600 text-base font-poppins-regular">
                       {interest}
                     </Text>
                   </View>
@@ -151,93 +171,184 @@ const UserProfile = () => {
           )}
 
           {/* Occupation / Education */}
-          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
-            <Text className="text-white text-sm font-poppins-semibold mb-4">
+          <View
+            className="px-6 py-5 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
+            <Text className="text-black text-sm font-poppins-semibold mb-4">
               Career & Education
             </Text>
-            <Text className="text-gray-200 text-base font-poppins-regular">
+            <Text className="text-gray-600 text-base font-poppins-regular">
               💼 {user.occupation}
             </Text>
-            <Text className="text-gray-200 text-base font-poppins-regular mt-1">
+            <Text className="text-gray-600 text-base font-poppins-regular mt-1">
               🎓 {user.education}
             </Text>
           </View>
 
           {/* Location */}
-          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
-            <Text className="text-white text-sm font-poppins-semibold mb-4">
+          <View
+            className="px-6 py-5 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
+            <Text className="text-black text-sm font-poppins-semibold mb-4">
               Location
             </Text>
-            <Text className="text-gray-300 font-poppins-regular mb-2">
+            <Text className="text-gray-600 font-poppins-regular mb-2">
               📍{user.location.distance}
             </Text>
-            <Text className="text-gray-300 font-poppins-regular mb-2">
+            <Text className="text-gray-600 font-poppins-regular mb-2">
               🌍{user.location.place}
             </Text>
           </View>
 
           {/* Essentials Section */}
-          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
-            <Text className="text-white text-sm font-poppins-semibold mb-4">
+          <View
+            className="px-6 py-5 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
+            <Text className="text-black text-sm font-poppins-semibold mb-4">
               Essentials
             </Text>
 
             {user.dob && (
-              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
+              <Text className="text-gray-600 text-base font-poppins-regular mb-2">
                 🎂 {user.dob}
               </Text>
             )}
             {user.height && (
-              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
+              <Text className="text-gray-600 text-base font-poppins-regular mb-2">
                 📏 {user.height}
               </Text>
             )}
             {user.gender && (
-              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
+              <Text className="text-gray-600 text-base font-poppins-regular mb-2">
                 🚻 {user.gender}
               </Text>
             )}
             {user.zodiac && (
-              <Text className="text-gray-200 text-base font-poppins-regular mb-2">
+              <Text className="text-gray-600 text-base font-poppins-regular mb-2">
                 ♌ {user.zodiac}
               </Text>
             )}
           </View>
 
           {/* About / Me */}
-          <View className="px-6 py-5 mt-1 bg-white rounded-3xl">
-            <Text className="text-white text-sm font-poppins-semibold mb-4">
+          <View
+            className="px-6 py-5 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
+            <Text className="text-black text-sm font-poppins-semibold mb-4">
               Send a love note
             </Text>
-            <Text className="text-gray-200 text-sm font-poppins-regular mb-2">
+            <Text className="text-gray-600 text-sm font-poppins-regular mb-2">
               👉💖 Send a special message before matching to stand out.
             </Text>
             <TouchableOpacity className="border-[1.5px] border-[#E94057] px-3 py-1 rounded-full mr-2 mb-2">
-              <Text className="text-white py-1 font-poppins-medium text-base">
+              <Text className="text-gray-400 py-1 font-poppins-medium text-base">
                 Your message
               </Text>
             </TouchableOpacity>
           </View>
 
-          {/* Share / Block / Report Section */}
-          <TouchableOpacity className="px-6 py-2 mt-1 bg-[#333333] rounded-3xl">
-            <Text className="text-gray-200 text-base text-center font-poppins-regular mt-1">
-              Share {user.name}
-            </Text>
+          {/* Share */}
+          <TouchableOpacity
+            className="px-6 py-1 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
+            <View className="flex-row justify-center items-center py-5 px-4">
+              <View className="flex-row items-center">
+                <Text
+                  className="ml-3 text-base font-poppins-regular"
+                  style={{ color: "#000" }}
+                >
+                  Share {user.name}
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
 
-          {/* Share / Block / Report Section */}
-          <TouchableOpacity className="px-6 py-2 mt-1 bg-[#333333] rounded-3xl">
-            <Text className="text-gray-200 text-base text-center font-poppins-regular mt-1">
-              Block {user.name}
-            </Text>
+          {/* Block */}
+          <TouchableOpacity
+            className="px-6 py-1 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
+            <View className="flex-row justify-center items-center py-5 px-4">
+              <View className="flex-row items-center">
+                <Text
+                  className="ml-3 text-base font-poppins-regular"
+                  style={{ color: "#000" }}
+                >
+                  Block {user.name}
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
 
-          {/* Share / Block / Report Section */}
-          <TouchableOpacity className="px-6 py-2 mt-1 mb-8 bg-[#333333] rounded-3xl">
-            <Text className="text-red-600 text-base text-center font-poppins-regular mt-1">
-              Report {user.name}
-            </Text>
+          {/* Report */}
+          <TouchableOpacity
+            className="px-6 py-1 mt-1 bg-white rounded-3xl"
+            style={{
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 1,
+              shadowRadius: 6,
+              elevation: 6,
+              borderColor: "#000",
+            }}
+          >
+            <View className="flex-row justify-center items-center py-5 px-4">
+              <View className="flex-row items-center">
+                <Text
+                  className="ml-3 text-base font-poppins-regular"
+                  style={{ color: "#ef4444" }}
+                >
+                  Report {user.name}
+                </Text>
+              </View>
+            </View>
           </TouchableOpacity>
         </Animated.ScrollView>
 
