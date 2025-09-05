@@ -104,8 +104,8 @@ export default function TabLayout() {
               paddingTop: 8,
               paddingHorizontal: PADDING_H, // 👈 inner padding (what you asked for)
               position: "absolute",
-              borderTopRightRadius: 24,
-              borderTopLeftRadius: 24,
+              borderTopRightRadius: 30,
+              borderTopLeftRadius: 30,
               backgroundColor: "white",
               borderTopWidth: 0,
               elevation: 5,
