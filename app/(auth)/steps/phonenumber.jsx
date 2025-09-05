@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import React, { useMemo, useState } from "react";
+import { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import CustomButton from "../../../components/CustomButton";
 import PhoneNumberInput from "../../../components/PhoneNumberInput";
@@ -8,13 +8,10 @@ import { useStep } from "../../../state/StepContext";
 const PhoneNumber = () => {
   const { setStep } = useStep();
   const [phone, setPhone] = useState("");
-
-  const isValid = useMemo(() => {
-    const digits = phone.replace(/\D/g, "");
-    return digits.length >= 6 && digits.length <= 15;
-  }, [phone]);
+  const [isValid, setIsValid] = useState(false);
 
   const handleContinue = () => {
+    if (!isValid) return;
     setStep(4);
     router.push({
       pathname: "/steps/verify-code",
@@ -44,7 +41,13 @@ const PhoneNumber = () => {
           </Text>
 
           <View className="w-full mt-2">
-            <PhoneNumberInput value={phone} onChange={setPhone} locked={true} />
+            <PhoneNumberInput
+              value={phone}
+              onChange={setPhone}
+              onValidityChange={setIsValid}
+              locked
+              minDigits={9}
+            />
             <Text className="mt-2 text-xs text-gray-500 font-poppins-regular">
               We’ll text a code to{" "}
               <Text className="text-gray-700 font-poppins-medium">{phone}</Text>

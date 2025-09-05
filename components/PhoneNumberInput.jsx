@@ -1,27 +1,50 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import CountryPicker from "react-native-country-picker-modal";
 
 const PhoneNumberInput = ({
   defaultCountry = "GH",
   defaultCallingCode = "233",
-  value,
-  onChange,
-  locked = true, // true = Ghana locked, false = allow country change later
+  value,                 // full E.164, e.g. "+233501234567" or ""
+  onChange,              // called with full E.164
+  onValidityChange,      // (optional) called with boolean
+  locked = true,
+  minDigits = 9,         // ✅ minimum national digits required
 }) => {
   const [countryCode] = useState(defaultCountry);
   const [callingCode] = useState(defaultCallingCode);
-  const [nationalNumber, setNationalNumber] = useState(value || "");
 
-//   const fullPhone = useMemo(
-//     () => `+${callingCode}${nationalNumber.replace(/\D/g, "")}`,
-//     [callingCode, nationalNumber]
-//   );
+  const deriveNational = (v) => {
+    if (!v) return "";
+    const stripped = v.replace(new RegExp(`^\\+?${callingCode}`), "");
+    return stripped.replace(/\D/g, "");
+  };
+
+  const [nationalNumber, setNationalNumber] = useState(deriveNational(value));
+
+  useEffect(() => {
+    setNationalNumber(deriveNational(value));
+  }, [value]);
+
+  const fullPhone = useMemo(
+    () => `+${callingCode}${nationalNumber}`,
+    [callingCode, nationalNumber]
+  );
+
+  const isValid = useMemo(
+    () => nationalNumber.length >= minDigits && nationalNumber.length <= 15,
+    [nationalNumber, minDigits]
+  );
+
+  // notify parent when validity changes
+  useEffect(() => {
+    onValidityChange?.(isValid);
+  }, [isValid, onValidityChange]);
 
   const handleChangeText = (txt) => {
     const digits = txt.replace(/\D/g, "");
     setNationalNumber(digits);
-    onChange?.(`+${callingCode}${digits}`);
+    onChange?.(`+${callingCode}${digits}`); // parent decides when to submit
   };
 
   return (
@@ -35,7 +58,6 @@ const PhoneNumberInput = ({
         backgroundColor: "#fff",
       }}
     >
-      {/* Country chip (locked by default) */}
       <TouchableOpacity
         activeOpacity={locked ? 1 : 0.7}
         disabled={locked}
@@ -54,18 +76,19 @@ const PhoneNumberInput = ({
           withFlag
           withEmoji
           withCallingCodeButton={false}
-          visible={false} // list disabled
+          visible={false}
           onSelect={() => {}}
         />
-        <Text className="font-poppins-medium text-base text-gray-900">+{callingCode}</Text>
+        <Text className="font-poppins-medium text-base text-gray-900">
+          +{callingCode}
+        </Text>
       </TouchableOpacity>
 
-      {/* National number input */}
       <TextInput
         value={nationalNumber}
         onChangeText={handleChangeText}
         keyboardType="phone-pad"
-        placeholder="Phone number"
+        placeholder={`Phone number (min ${minDigits} digits)`}
         placeholderTextColor="#9CA3AF"
         style={{
           flex: 1,
