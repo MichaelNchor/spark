@@ -151,7 +151,7 @@ export default function App() {
 
         <LinearGradient
           colors={[
-            "rgba(0,0,0,0.10)", // top
+            "rgba(0,0,0,0)", // top
             "rgba(0,0,0,0.25)",
             "rgba(0,0,0,0.45)", // mid
             "rgba(0,0,0,0.55)", // lower

@@ -42,7 +42,7 @@ const VerifyCode = () => {
               onComplete={(code) => {
                 setStep(5);
                 setVerifyCode(code);
-                router.push("/steps/friends");
+                router.push("/steps/profile-details");
               }}
             />
           </View>
