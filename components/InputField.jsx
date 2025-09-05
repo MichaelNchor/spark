@@ -24,10 +24,10 @@ const InputField = ({
         }`}
       >
         <TextInput
-          className="flex-1 font-poppins-medium text-base h-full py-2"
+          className="flex-1 font-poppins-regular text-base h-full py-2"
           value={value}
           placeholder={placeholder}
-          placeholderTextColor="#6b7280"
+          placeholderTextColor="#9CA3AF"
           onChangeText={handleChangeText}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

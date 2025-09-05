@@ -85,7 +85,7 @@ export default function TabLayout() {
   const barHeight = BASE_BAR_H + insets.bottom;
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor: "white" }}>
       <PaperProvider>
         <Tabs
           // Enable lazy mounting so switching doesn't jank when a tab mounts a big tree

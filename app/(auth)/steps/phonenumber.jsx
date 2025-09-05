@@ -9,9 +9,15 @@ const PhoneNumber = () => {
   const { setStep } = useStep();
   const [phone, setPhone] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [touched, setTouched] = useState(false);
+
+  const showError = touched && !isValid && phone.length > 0;
 
   const handleContinue = () => {
-    if (!isValid) return;
+    if (!isValid) {
+      setTouched(true);
+      return;
+    }
     setStep(4);
     router.push({
       pathname: "/steps/verify-code",
@@ -47,11 +53,16 @@ const PhoneNumber = () => {
               onValidityChange={setIsValid}
               locked
               minDigits={9}
+              touched={touched}
+              onTouched={setTouched}
+              showError={showError}
             />
-            <Text className="mt-2 text-xs text-gray-500 font-poppins-regular">
-              We’ll text a code to{" "}
-              <Text className="text-gray-700 font-poppins-medium">{phone}</Text>
-            </Text>
+            {!showError && (
+              <Text className="mt-2 text-xs text-gray-500 font-poppins-regular">
+                We’ll text a code to{" "}
+                <Text className="text-gray-700 font-poppins-medium">{phone}</Text>
+              </Text>
+            )}
           </View>
         </View>
 
