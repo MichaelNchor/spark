@@ -16,7 +16,7 @@ const VerifyCode = () => {
         contentContainerStyle={{
           height: "100%",
           paddingTop: 20,
-          paddingHorizontal: 30,
+          paddingHorizontal: 10,
         }}
       >
         <View className="w-full gap-4">
@@ -37,7 +37,12 @@ const VerifyCode = () => {
             {"Type the verification code we've sent you."}
           </Text>
 
-          <View className="w-full flex-row">
+          <View
+            className="w-full flex-row"
+            style={{
+              paddingHorizontal: 20,
+            }}
+          >
             <VerificationInput
               onComplete={(code) => {
                 setStep(5);
