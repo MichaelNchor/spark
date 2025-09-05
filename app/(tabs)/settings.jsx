@@ -212,7 +212,7 @@ const Settings = () => {
                     color={COLORS.sub}
                   />
                   <Text
-                    className="ml-3 text-base font-poppins-medium"
+                    className="ml-3 text-base font-poppins-regular"
                     style={{ color: COLORS.title }}
                   >
                     Personal information
@@ -237,7 +237,7 @@ const Settings = () => {
                     color={COLORS.sub}
                   />
                   <Text
-                    className="ml-3 text-base font-poppins-medium"
+                    className="ml-3 text-base font-poppins-regular"
                     style={{ color: COLORS.title }}
                   >
                     Notifications
@@ -255,7 +255,7 @@ const Settings = () => {
                 <View className="flex-row items-center">
                   <Ionicons name="time-outline" size={20} color={COLORS.sub} />
                   <Text
-                    className="ml-3 text-base font-poppins-medium"
+                    className="ml-3 text-base font-poppins-regular"
                     style={{ color: COLORS.title }}
                   >
                     Time Spent
@@ -293,7 +293,7 @@ const Settings = () => {
                     color={COLORS.sub}
                   />
                   <Text
-                    className="ml-3 text-base font-poppins-medium"
+                    className="ml-3 text-base font-poppins-regular"
                     style={{ color: COLORS.title }}
                   >
                     Privacy Policy
@@ -318,7 +318,7 @@ const Settings = () => {
                     color={COLORS.sub}
                   />
                   <Text
-                    className="ml-3 text-base font-poppins-medium"
+                    className="ml-3 text-base font-poppins-regular"
                     style={{ color: COLORS.title }}
                   >
                     Terms & Conditions
@@ -340,7 +340,7 @@ const Settings = () => {
                     color={COLORS.sub}
                   />
                   <Text
-                    className="ml-3 text-base font-poppins-medium"
+                    className="ml-3 text-base font-poppins-regular"
                     style={{ color: COLORS.title }}
                   >
                     FAQ & Help

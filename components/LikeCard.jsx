@@ -56,7 +56,7 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
             top: 10,
             left: 10,
             paddingHorizontal: 10,
-            paddingVertical: 6,
+            paddingVertical: 2,
             borderRadius: 30,
           }}
         >
@@ -133,7 +133,7 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
             borderColor: "rgba(255,255,255,0.45)",
             borderWidth: 0.3,
             paddingHorizontal: 10,
-            paddingVertical: 4,
+            paddingVertical: 1,
             borderRadius: 999,
             marginBottom: 6,
             flexDirection: "row",
@@ -159,7 +159,7 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
         {/* Name + verified + age */}
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
           <Text
-            className="font-poppins-medium text-lg"
+            className="font-poppins-medium text-base"
             numberOfLines={1}
             style={{
               color: "#fff",

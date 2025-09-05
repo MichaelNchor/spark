@@ -3,7 +3,6 @@ import { Tabs } from "expo-router";
 import { View, Dimensions } from "react-native";
 import Animated, {
   useAnimatedStyle,
-  withSpring,
   withTiming,
   useSharedValue,
   useDerivedValue,
