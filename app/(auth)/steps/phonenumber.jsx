@@ -1,15 +1,26 @@
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import CustomButton from "../../../components/CustomButton";
-import InputField from "../../../components/InputField";
+import PhoneNumberInput from "../../../components/PhoneNumberInput";
 import { useStep } from "../../../state/StepContext";
 
 const PhoneNumber = () => {
   const { setStep } = useStep();
-  const [form, setPhoneNumber] = useState({
-    PhoneNumber: "",
-  });
+  const [phone, setPhone] = useState("");
+
+  const isValid = useMemo(() => {
+    const digits = phone.replace(/\D/g, "");
+    return digits.length >= 6 && digits.length <= 15;
+  }, [phone]);
+
+  const handleContinue = () => {
+    setStep(4);
+    router.push({
+      pathname: "/steps/verify-code",
+      params: { phone },
+    });
+  };
 
   return (
     <SafeAreaView className="bg-white flex-1">
@@ -19,38 +30,34 @@ const PhoneNumber = () => {
           paddingTop: 60,
           paddingHorizontal: 30,
           justifyContent: "space-between",
-          paddingBottom: 48, // same as pb-12
+          paddingBottom: 48,
         }}
+        keyboardShouldPersistTaps="handled"
       >
         {/* Content */}
         <View className="w-full gap-4">
           <Text className="font-poppins-medium text-4xl mb-2">My mobile</Text>
 
           <Text className="font-poppins-regular text-gray-500">
-            Please enter your valid phone number. We will send you a 4-digit
-            code to verify your account.
+            Please enter your valid phone number. We’ll send you a 4-digit code
+            to verify your account.
           </Text>
 
-          <View className="w-full">
-            <InputField
-              value={form.PhoneNumber}
-              handleChangeText={(e) => {
-                setPhoneNumber({ ...form, PhoneNumber: e });
-              }}
-              keyboardType="phone-pad"
-            />
+          <View className="w-full mt-2">
+            <PhoneNumberInput value={phone} onChange={setPhone} locked={true} />
+            <Text className="mt-2 text-xs text-gray-500 font-poppins-regular">
+              We’ll text a code to{" "}
+              <Text className="text-gray-700 font-poppins-medium">{phone}</Text>
+            </Text>
           </View>
         </View>
 
-        {/* Fixed bottom button */}
+        {/* Bottom button */}
         <View className="w-full">
           <CustomButton
             text="Continue"
-            handlePress={() => {
-              setStep(4);
-              router.push("/steps/verify-code");
-            }}
-            containerStyles="w-full h-[48px]"
+            handlePress={handleContinue}
+            containerStyles={`w-full h-[48px] ${!isValid ? "opacity-50" : ""}`}
           />
         </View>
       </ScrollView>

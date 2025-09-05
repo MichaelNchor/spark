@@ -192,7 +192,6 @@ const SignUp = () => {
                 },
                 pulseRingStyle,
               ]}
-              // faint pop
               entering={FadeIn.delay(80).duration(400)}
             />
             <Animated.View
@@ -239,8 +238,8 @@ const SignUp = () => {
             />
 
             {/* Center hero (bobs gently) */}
-            <Animated.View style={[heroBobStyle, { zIndex: 5 }]}>
-              <Animated.View entering={ZoomIn.springify().damping(11)}>
+            <Animated.View entering={ZoomIn.springify().damping(11)}>
+              <Animated.View style={[heroBobStyle, { zIndex: 5 }]}>
                 <Circle
                   uri="https://images.unsplash.com/photo-1650702970095-f5b8ebeebce5?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   size={Math.min(160, COLLAGE_H * 0.48)}
