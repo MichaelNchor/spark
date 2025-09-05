@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Dimensions, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import icons from "../assets/constants";
-import { Image,ImageBackground } from "expo-image";
+import { Image, ImageBackground } from "expo-image";
 import { router } from "expo-router";
 
 const screenWidth = Dimensions.get("window").width;
@@ -43,9 +43,12 @@ const SwipeCard = ({ user }) => {
             <Pressable
               key={i}
               onPress={() => setActiveIndex(i)}
-              className={`h-[5px] flex-1 rounded-full border-[0.5px] border-gray-500/50 ${
+              className={`flex-1 rounded-full border-[0.5px] border-gray-500/50 ${
                 i === activeIndex ? "bg-white" : "bg-white/40"
               }`}
+              style={{
+                height: 2.5,
+              }}
             />
           ))}
         </View>
@@ -96,7 +99,7 @@ const SwipeCard = ({ user }) => {
             {/* Right: Profile button */}
             <Pressable
               onPress={() => router.push(`/user/${user.id}`)}
-              className="p-2 rounded-full bg-white/20"
+              className="rounded-full bg-white/20"
             >
               <Image
                 source={icons.up}

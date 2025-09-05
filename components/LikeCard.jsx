@@ -1,4 +1,3 @@
-import React, { use } from "react";
 import { View, Text } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
@@ -29,7 +28,6 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
       style={{
         height,
         borderRadius: radius,
-        borderWidth: 1,
         borderColor: SPARK.border,
         shadowColor: "#000",
         shadowOpacity: 0.12,
@@ -57,7 +55,7 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
             top: 10,
             left: 10,
             paddingHorizontal: 10,
-            paddingVertical: 6,
+            paddingVertical: 2,
             borderRadius: 30,
           }}
         >
@@ -132,9 +130,9 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
             alignSelf: "flex-start",
             backgroundColor: "rgba(255,255,255,0.18)",
             borderColor: "rgba(255,255,255,0.45)",
-            borderWidth: 1,
+            borderWidth: 0.3,
             paddingHorizontal: 10,
-            paddingVertical: 4,
+            paddingVertical: 1,
             borderRadius: 999,
             marginBottom: 6,
             flexDirection: "row",
@@ -160,7 +158,7 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
         {/* Name + verified + age */}
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
           <Text
-            className="font-poppins-medium text-lg"
+            className="font-poppins-medium text-base"
             numberOfLines={1}
             style={{
               color: "#fff",

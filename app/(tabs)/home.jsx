@@ -77,7 +77,7 @@ const Home = () => {
       <View
         style={{
           position: "absolute",
-          bottom: tabBarH + BOTTONBOTTOM_SPACE,
+          bottom: tabBarH + BOTTONBOTTOM_SPACE - 12,
           left: 0,
           right: 0
         }}

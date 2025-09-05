@@ -21,7 +21,6 @@ const SearchBox = ({
       style={{
         height: 56,
         backgroundColor: "#fff",
-        borderWidth: 1,
         borderColor: isFocused ? "#fca5a5" : "#f0f0f0",
         shadowColor: "#000",
         shadowOpacity: 0.08,

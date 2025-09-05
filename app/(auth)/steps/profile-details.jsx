@@ -101,7 +101,12 @@ const ProfileDetails = () => {
       </ScrollView>
 
       {/* Sticky confirm button at bottom */}
-      <View className="absolute bottom-0 left-0 right-0 px-6 pb-12 bg-white">
+      <View
+        className="absolute bottom-0 left-0 right-0 pb-12 bg-white"
+        style={{
+          paddingHorizontal: 30,
+        }}
+      >
         <CustomButton
           text="Confirm"
           handlePress={() => {

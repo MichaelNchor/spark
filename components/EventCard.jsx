@@ -24,7 +24,6 @@ const EventCard = ({ event }) => {
       style={{
         borderRadius: 32,
         backgroundColor: "#fff",
-        borderWidth: 1,
         borderColor: "#EAEAEA",
         shadowColor: "#000",
         shadowOpacity: 0.08,
@@ -75,7 +74,7 @@ const EventCard = ({ event }) => {
               paddingVertical: 6,
               borderRadius: 999,
               backgroundColor: "rgba(0,0,0,0.55)",
-              borderWidth: 1,
+              borderWidth: 0.3,
               borderColor: "rgba(255,255,255,0.18)",
             }}
           >
@@ -110,7 +109,7 @@ const EventCard = ({ event }) => {
               paddingVertical: 6,
               borderRadius: 999,
               backgroundColor: "rgba(0,0,0,0.55)",
-              borderWidth: 1,
+              borderWidth: 0.3,
               borderColor: "rgba(255,255,255,0.18)",
             }}
           >
@@ -141,7 +140,7 @@ const EventCard = ({ event }) => {
               alignItems: "center",
               justifyContent: "space-between",
               backgroundColor: "rgba(255,255,255,0.10)",
-              borderWidth: 1,
+              borderWidth: 0.3,
               borderColor: "rgba(255,255,255,0.18)",
             }}
           >
@@ -177,7 +176,7 @@ const EventCard = ({ event }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 backgroundColor: "rgba(255,255,255,0.22)",
-                borderWidth: 1,
+                borderWidth: 0.3,
                 borderColor: "rgba(255,255,255,0.28)",
               }}
             >
@@ -232,7 +231,7 @@ const EventCard = ({ event }) => {
                 }}
               >
                 <Text
-                  className="font-poppins-semibold"
+                  className="font-poppins-medium"
                   style={{ color: "#111827", fontSize: 12 }}
                 >
                   +{extra}
@@ -259,7 +258,7 @@ const EventCard = ({ event }) => {
               }}
             >
               <Text
-                className="font-poppins-semibold"
+                className="font-poppins-medium"
                 style={{ color: "#fff", fontSize: 14 }}
               >
                 {event.time}

@@ -91,9 +91,9 @@ const VerificationInput = ({ length = 4, onComplete }) => {
   };
 
   return (
-    <View className="w-full">
+    <View className="w-full flex-col justify-between gap-1">
       {/* Digit Boxes */}
-      <View className="flex-row justify-between w-full mb-8">
+      <View className="flex-row justify-between w-full">
         {Array.from({ length }).map((_, index) =>
           renderDigitBox(digits[index], index)
         )}
@@ -126,7 +126,7 @@ const VerificationInput = ({ length = 4, onComplete }) => {
       {/* Resend */}
       <View>
         <TouchableOpacity onPress={() => router.push("/steps/profile-details")}>
-          <Text className="font-poppins-medium text-primary text-lg text-center mt-12">
+          <Text className="font-poppins-medium text-primary text-sm text-center">
             Send again
           </Text>
         </TouchableOpacity>

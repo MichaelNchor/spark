@@ -15,7 +15,6 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
         height: baseHeight,
         paddingHorizontal: 14,
         borderRadius: 999,
-        borderWidth: 1,
         borderColor: "#E5E7EB",
         backgroundColor: "#FFFFFF",
         flexDirection: "row",
@@ -37,7 +36,7 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
       )}
       <Text
         style={{
-          fontFamily: "Poppins-Medium",
+          fontFamily: "Poppins-Regular",
           fontSize: 14,
           color: "#6B7280",
         }}
@@ -75,7 +74,7 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
       )}
       <Text
         style={{
-          fontFamily: "Poppins-SemiBold",
+          fontFamily: "Poppins-Medium",
           fontSize: 14,
           color: "#FFFFFF",
         }}

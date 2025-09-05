@@ -3,9 +3,11 @@ import { Tabs } from "expo-router";
 import { View, Dimensions } from "react-native";
 import Animated, {
   useAnimatedStyle,
-  withSpring,
+  withTiming,
   useSharedValue,
   useDerivedValue,
+  Easing,
+  interpolateColor,
 } from "react-native-reanimated";
 import { Provider as PaperProvider } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
@@ -21,15 +23,42 @@ const BASE_BAR_H = 52;      // visual height (without bottom safe area)
 const CIRCLE = 46;          // highlight circle size
 const TABS_COUNT = 5;
 
-const TabIcon = ({ icon, color, focused }) => (
-  <View className="items-center justify-center w-[56px] h-[56px]">
-    <Image
-      source={icon}
-      contentFit="contain"
-      style={{ width: 24, height: 24, tintColor: focused ? "white" : color }}
-    />
-  </View>
-);
+// map route names to indices so we can animate immediately on press
+const ORDER = ["home", "events", "likes", "chat", "settings"];
+
+// Create an animated version of expo-image
+const AnimatedImage = Animated.createAnimatedComponent(Image);
+
+// Icon that tints based on activeIndex instead of React Navigation's focused flag
+const TabIcon = ({ icon, idx, activeIndex }) => {
+  // animate 0 -> 1 when this tab is the active one
+  const progress = useDerivedValue(() =>
+    withTiming(activeIndex.value === idx ? 1 : 0, {
+      duration: 160,
+      easing: Easing.out(Easing.quad),
+    })
+  );
+
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      tintColor: interpolateColor(
+        progress.value,
+        [0, 1],
+        ["#777777", "#FFFFFF"] // inactive gray -> active white
+      ),
+    };
+  });
+
+  return (
+    <View className="items-center justify-center w-[56px] h-[56px]">
+      <AnimatedImage
+        source={icon}
+        contentFit="contain"
+        style={[{ width: 24, height: 24 }, rStyle]}
+      />
+    </View>
+  );
+};
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
@@ -40,7 +69,11 @@ export default function TabLayout() {
   const activeIndex = useSharedValue(0);
 
   const translateXCore = useDerivedValue(() =>
-    withSpring(activeIndex.value * TAB_WIDTH, { damping: 12, stiffness: 100 })
+    // quicker, deterministic slide
+    withTiming(activeIndex.value * TAB_WIDTH, {
+      duration: 160,
+      easing: Easing.out(Easing.quad),
+    })
   );
 
   const animatedCircleStyle = useAnimatedStyle(() => ({
@@ -55,20 +88,24 @@ export default function TabLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PaperProvider>
         <Tabs
+          // Enable lazy mounting so switching doesn't jank when a tab mounts a big tree
+          sceneContainerStyle={{ backgroundColor: "transparent" }}
           screenOptions={{
             headerShown: false,
             tabBarShowLabel: false,
             tabBarActiveTintColor: "#E94057",
             tabBarInactiveTintColor: "#777777",
             tabBarHideOnKeyboard: true,
+            lazy: true,                 // mount screens on first focus
+            lazyPreloadDistance: 0,     // no preloading to keep main thread free
             tabBarStyle: {
               height: barHeight,
               paddingBottom: insets.bottom,
               paddingTop: 8,
               paddingHorizontal: PADDING_H, // 👈 inner padding (what you asked for)
               position: "absolute",
-              borderTopRightRadius: 24,
-              borderTopLeftRadius: 24,
+              borderTopRightRadius: 30,
+              borderTopLeftRadius: 30,
               backgroundColor: "white",
               borderTopWidth: 0,
               elevation: 5,
@@ -77,6 +114,10 @@ export default function TabLayout() {
               <View style={{ flex: 1 }}>
                 {/* Moving highlight circle */}
                 <Animated.View
+                  // perf flags to keep this layer on GPU
+                  renderToHardwareTextureAndroid
+                  shouldRasterizeIOS
+                  pointerEvents="none"
                   style={[
                     {
                       position: "absolute",
@@ -100,49 +141,56 @@ export default function TabLayout() {
               </View>
             ),
           }}
-          screenListeners={{
+          // make listeners a function so we get the route
+          screenListeners={({ route }) => ({
+            // 1) Kick off the animation immediately on press (optimistic)
+            tabPress: () => {
+              const idx = ORDER.indexOf(route.name);
+              if (idx >= 0) activeIndex.value = idx;
+            },
+            // 2) Also sync to the actual state change (authoritative)
             state: (e) => {
               activeIndex.value = e.data.state.index;
             },
-          }}
+          })}
         >
           <Tabs.Screen
             name="home"
             options={{
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon icon={icons.home} color={color} focused={focused} />
+              tabBarIcon: () => (
+                <TabIcon icon={icons.home} idx={0} activeIndex={activeIndex} />
               ),
             }}
           />
           <Tabs.Screen
             name="events"
             options={{
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon icon={icons.events} color={color} focused={focused} />
+              tabBarIcon: () => (
+                <TabIcon icon={icons.events} idx={1} activeIndex={activeIndex} />
               ),
             }}
           />
           <Tabs.Screen
             name="likes"
             options={{
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon icon={icons.heart} color={color} focused={focused} />
+              tabBarIcon: () => (
+                <TabIcon icon={icons.heart} idx={2} activeIndex={activeIndex} />
               ),
             }}
           />
           <Tabs.Screen
             name="chat"
             options={{
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon icon={icons.chat2} color={color} focused={focused} />
+              tabBarIcon: () => (
+                <TabIcon icon={icons.chat2} idx={3} activeIndex={activeIndex} />
               ),
             }}
           />
           <Tabs.Screen
             name="settings"
             options={{
-              tabBarIcon: ({ color, focused }) => (
-                <TabIcon icon={icons.settings} color={color} focused={focused} />
+              tabBarIcon: () => (
+                <TabIcon icon={icons.settings} idx={4} activeIndex={activeIndex} />
               ),
             }}
           />

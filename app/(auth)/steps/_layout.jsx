@@ -16,6 +16,7 @@ const StepsContent = () => {
         <Stack.Screen name="gender" />
         <Stack.Screen name="interests" />
         <Stack.Screen name="phonenumber" />
+        <Stack.Screen name="email" />
         <Stack.Screen name="verify-code" />
         <Stack.Screen name="friends" />
         <Stack.Screen name="notifications" />

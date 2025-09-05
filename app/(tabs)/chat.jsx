@@ -49,7 +49,7 @@ const Chat = () => {
         >
           <View className="mt-6">
             {/* Activities */}
-            <Text className="px-6 font-poppins-medium text-base text-gray-700">
+            <Text className="px-6 font-poppins-regular text-base text-gray-700">
               Activities
             </Text>
             <FlatList
@@ -75,7 +75,7 @@ const Chat = () => {
 
           <View className="mt-3">
             {/* Activities */}
-            <Text className="px-6 mb-2 font-poppins-medium text-base text-gray-700">
+            <Text className="px-6 mb-2 font-poppins-regular text-base text-gray-700">
               Messages
             </Text>
 
