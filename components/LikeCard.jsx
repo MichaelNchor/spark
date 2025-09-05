@@ -1,4 +1,3 @@
-import React, { use } from "react";
 import { View, Text } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
