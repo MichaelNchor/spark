@@ -84,7 +84,7 @@ const EventCard = ({ event }) => {
                 width: 14,
                 height: 14,
                 tintColor: "#fff",
-                marginRight: 6,
+                marginRight: 3,
               }}
               contentFit="contain"
             />

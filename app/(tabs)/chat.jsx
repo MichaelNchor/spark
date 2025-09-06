@@ -13,7 +13,7 @@ const Chat = () => {
   const users = dummyUsers;
 
   return (
-      <SafeAreaView style={{ marginTop: 20, flex: 1, backgroundColor: "white" }}>
+      <SafeAreaView style={{ marginTop: 10, flex: 1, backgroundColor: "white" }}>
         {/* Top bar with logo left, icons right */}
         <View className="w-full flex-row items-center justify-between px-4 mb-2">
           {/* Logo on the left */}
@@ -58,9 +58,9 @@ const Chat = () => {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{
-                paddingHorizontal: 16,
+                paddingHorizontal: 0,
                 paddingVertical: 12,
-                gap: 12,
+                gap: 2,
                 alignItems: "center",
               }}
               renderItem={({ item }) =>

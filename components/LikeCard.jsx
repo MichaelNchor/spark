@@ -132,7 +132,7 @@ const LikeCard = ({ user, height = 240, radius = 15, showMatch = true }) => {
             borderColor: "rgba(255,255,255,0.18)",
             borderWidth: 0.3,
             paddingHorizontal: 10,
-            paddingVertical: 6,
+            paddingVertical: 3,
             borderRadius: 999,
             marginBottom: 6,
             flexDirection: "row",

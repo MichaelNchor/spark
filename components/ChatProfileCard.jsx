@@ -203,15 +203,15 @@ const ChatProfileCard = ({
             alignItems: "center",
             gap: 12,
             backgroundColor: "white",
-            padding: 12,
+            padding: 8,
           }}
         >
           {/* Avatar with ring + online dot */}
           <View>
             <View
               style={{
-                width: 60,
-                height: 60,
+                width: 52,
+                height: 52,
                 borderRadius: 999,
                 overflow: "hidden",
                 backgroundColor: "#fff",
@@ -243,10 +243,10 @@ const ChatProfileCard = ({
           {/* Center: name + preview */}
           <View style={{ flex: 1, gap: 6 }}>
             <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+              style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
             >
               <Text
-                className="font-poppins-medium text-lg"
+                className="font-poppins-medium text-base"
                 numberOfLines={1}
                 style={{
                   color: SPARK.name,
@@ -308,8 +308,8 @@ const ChatProfileCard = ({
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={{
-                  paddingHorizontal: 10,
-                  paddingVertical: 4,
+                  paddingHorizontal: 5,
+                  paddingVertical: 2,
                   borderRadius: 999,
                   minWidth: 28,
                   alignItems: "center",

@@ -14,20 +14,20 @@ const ChatStatusCard = ({ user, isAdd = false }) => {
       >
         <View
           style={{
-            width: 64,
-            height: 64,
+            width: 52,
+            height: 52,
             borderRadius: 32,
             backgroundColor: "#F3F4F6",
             alignItems: "center",
             justifyContent: "center",
-            borderWidth: 2,
+            borderWidth: 1,
             borderStyle: "dashed",
             borderColor: "#777777",
           }}
         >
           <Ionicons name="add" size={24} color="#111827" />
         </View>
-        <Text className="font-poppins-regular text-base text-gray-700">
+        <Text className="font-poppins-regular text-sm text-gray-700">
           Add
         </Text>
       </TouchableOpacity>
@@ -44,8 +44,8 @@ const ChatStatusCard = ({ user, isAdd = false }) => {
       >
         <View
           style={{
-            width: 60,
-            height: 60,
+            width: 52,
+            height: 52,
             borderRadius: 30,
             overflow: "hidden",
             backgroundColor: "#fff",
