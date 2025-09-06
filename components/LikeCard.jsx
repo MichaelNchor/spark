@@ -159,9 +159,7 @@ const LikeCard = ({ user, height = 240, radius = 15, showMatch = true }) => {
             }}
             numberOfLines={1}
           >
-            {typeof distance === "number"
-              ? `${distance.toFixed(1)} km away`
-              : distance}
+            {user.location.place}
           </Text>
         </View>
 

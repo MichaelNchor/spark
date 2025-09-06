@@ -23,6 +23,7 @@ import Animated, {
   withDelay,
 } from "react-native-reanimated";
 import CustomButton from "../../components/CustomButton";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
 const COLLAGE_H = Math.max(360, Math.min(320, width * 0.9));
@@ -113,6 +114,7 @@ const SignUp = () => {
   // --- shared values for looping ambience ---
   const bob = useSharedValue(0); // hero bobbing
   const pulse = useSharedValue(0); // background ring pulse
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     // Gentle hero bob (-6 to +6 px)
@@ -167,6 +169,9 @@ const SignUp = () => {
             minHeight: "100%",
             paddingHorizontal: 24,
             paddingVertical: 32,
+            flexDirection: "column",
+            justifyContent: "space-between",
+            paddingBottom: insets.bottom || 12,
           }}
           bounces={false}
           showsVerticalScrollIndicator={false}

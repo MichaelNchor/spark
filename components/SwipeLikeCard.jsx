@@ -1,4 +1,3 @@
-import React from "react";
 import { Dimensions, Text } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -9,12 +8,23 @@ import Animated, {
   interpolate,
   Extrapolation,
   runOnJS,
+  Easing,
 } from "react-native-reanimated";
 import LikeCard from "./LikeCard";
 
 const { width } = Dimensions.get("window");
-const SWIPE_THRESHOLD = 0.3 * width; // Reasonable threshold for swipes
-const MIN_SWIPE_VELOCITY = 500; // Minimum velocity for swipe recognition
+
+// 🔧 Tunables
+const DISTANCE_THRESHOLD = 0.22 * width;     // easier distance to trigger
+const VELOCITY_THRESHOLD = 900;               // allow a fast flick to count
+const OFFSCREEN_X = width * 1.6;              // how far it flies off-screen
+
+// Spring presets
+const SPRING_BACK = {
+  damping: 16,
+  stiffness: 220,
+  mass: 0.8,
+};
 
 const SwipeLikeCard = ({
   user,
@@ -25,92 +35,120 @@ const SwipeLikeCard = ({
 }) => {
   const translateX = useSharedValue(0);
   const rotate = useSharedValue(0);
+  const lift = useSharedValue(0);         // 0..1 smooth lift (scale/shadow/elevation)
   const isDragging = useSharedValue(0);
 
-  const cardStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: translateX.value },
-      { rotate: `${rotate.value}deg` },
-      { scale: isDragging.value ? 1.05 : 1 },
-    ],
-    // These help, but parent still must raise its own zIndex/elevation:
-    zIndex: isDragging.value ? 999 : 0,
-    elevation: isDragging.value ? 1000 : 4,
-    shadowColor: "#000",
-    shadowOpacity: isDragging.value ? 0.25 : 0.15,
-    shadowRadius: isDragging.value ? 10 : 8,
-    shadowOffset: { width: 0, height: isDragging.value ? 6 : 4 },
-  }));
+  const cardStyle = useAnimatedStyle(() => {
+    // shadow/elevation + scale react to a smooth lift value
+    const scale = interpolate(lift.value, [0, 1], [1, 1.04], Extrapolation.CLAMP);
+    const shadowOpacity = interpolate(lift.value, [0, 1], [0.12, 0.25]);
+    const shadowRadius = interpolate(lift.value, [0, 1], [6, 10]);
+    const shadowDY = interpolate(lift.value, [0, 1], [4, 8]);
+    const elevation = interpolate(lift.value, [0, 1], [4, 12]);
 
+    return {
+      transform: [
+        { translateX: translateX.value },
+        { rotate: `${rotate.value}deg` },
+        { scale },
+      ],
+      zIndex: isDragging.value ? 999 : 0,      // keep stacking predictable
+      elevation,
+      shadowColor: "#000",
+      shadowOpacity,
+      shadowRadius,
+      shadowOffset: { width: 0, height: shadowDY },
+    };
+  });
+
+  // progress for labels
   const likeStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       translateX.value,
-      [0, width * 0.25],
-      [0, 1],
+      [0, width * 0.15, width * 0.35],
+      [0, 0.4, 1],
       Extrapolation.CLAMP
     );
-    return { opacity };
+    const scale = interpolate(
+      translateX.value,
+      [0, width * 0.35],
+      [0.95, 1],
+      Extrapolation.CLAMP
+    );
+    return { opacity, transform: [{ scale }] };
   });
 
   const passStyle = useAnimatedStyle(() => {
     const opacity = interpolate(
       translateX.value,
-      [-width * 0.25, 0],
-      [1, 0],
+      [-width * 0.35, -width * 0.15, 0],
+      [1, 0.4, 0],
       Extrapolation.CLAMP
     );
-    return { opacity };
+    const scale = interpolate(
+      translateX.value,
+      [-width * 0.35, 0],
+      [1, 0.95],
+      Extrapolation.CLAMP
+    );
+    return { opacity, transform: [{ scale }] };
   });
 
+  const reset = () => {
+    "worklet";
+    translateX.value = withSpring(0, SPRING_BACK);
+    rotate.value = withSpring(0, SPRING_BACK);
+    lift.value = withTiming(0, { duration: 140, easing: Easing.out(Easing.cubic) });
+    isDragging.value = 0;
+  };
+
+  const flyOut = (dir, cb) => {
+    "worklet";
+    const target = dir > 0 ? OFFSCREEN_X : -OFFSCREEN_X;
+    // a short timing to fly out feels crisp
+    translateX.value = withTiming(target, { duration: 180, easing: Easing.out(Easing.cubic) }, () => {
+      isDragging.value = 0;
+      lift.value = 0;
+      if (cb) runOnJS(cb)(user);
+    });
+  };
+
   const pan = Gesture.Pan()
-    .onBegin(() => {
+    .maxPointers(1)
+    .activeOffsetX([-15, 15])      // activate with smaller horizontal travel
+    .failOffsetY([-12, 12])        // fail if vertical travel grows → FlatList scroll wins
+    .onStart(() => {
       "worklet";
       isDragging.value = 1;
+      lift.value = withTiming(1, { duration: 120, easing: Easing.out(Easing.cubic) });
       if (onDragStart) runOnJS(onDragStart)(user);
     })
     .onChange((e) => {
       "worklet";
-      // Allow horizontal movement but with some resistance for vertical gestures
-      const absX = Math.abs(e.translationX);
-      const absY = Math.abs(e.translationY);
-
-      if (absX > absY * 0.3) {
-        // Allow horizontal movement if X movement is at least 30% of Y movement
-        translateX.value = e.translationX;
-        rotate.value = (e.translationX / width) * 15;
-      } else if (absY > absX) {
-        // If predominantly vertical, allow some small horizontal movement but reduce it
-        translateX.value = e.translationX * 0.3;
-        rotate.value = (e.translationX * 0.3 / width) * 15;
-      }
+      translateX.value = e.translationX;
+      rotate.value = (e.translationX / width) * 12; // slightly gentler tilt
     })
     .onEnd((e) => {
       "worklet";
       const distX = e.translationX;
-      const distY = e.translationY;
       const absX = Math.abs(distX);
-      const absY = Math.abs(distY);
-      const velocityX = Math.abs(e.velocityX);
-      const velocityY = Math.abs(e.velocityY);
+      const fast = Math.abs(e.velocityX) > VELOCITY_THRESHOLD;
 
-      // Trigger swipe if: significant horizontal movement + high velocity OR distance threshold
-      const shouldSwipe = (absX > SWIPE_THRESHOLD && velocityX > MIN_SWIPE_VELOCITY) ||
-                         (absX > SWIPE_THRESHOLD * 0.8 && absX > absY * 2);
+      const shouldSwipe = absX > DISTANCE_THRESHOLD || (fast && absX > width * 0.18);
 
       if (shouldSwipe) {
-        if (distX > 0) {
-          translateX.value = withTiming(width * 1.5, { duration: 180 }, () => {
-            if (onSwipeRight) runOnJS(onSwipeRight)(user);
-          });
-        } else {
-          translateX.value = withTiming(-width * 1.5, { duration: 180 }, () => {
-            if (onSwipeLeft) runOnJS(onSwipeLeft)(user);
-          });
-        }
+        flyOut(distX, distX > 0 ? onSwipeRight : onSwipeLeft);
       } else {
-        translateX.value = withSpring(0);
-        rotate.value = withSpring(0);
-        isDragging.value = 0;
+        reset();
+        if (onDragEnd) runOnJS(onDragEnd)();
+      }
+    })
+    .onFinalize(() => {
+      "worklet";
+      // If it failed due to vertical scroll, ensure visuals reset
+      if (!isDragging.value) return;
+      if (Math.abs(translateX.value) < 6) {
+        reset();
         if (onDragEnd) runOnJS(onDragEnd)();
       }
     });

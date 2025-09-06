@@ -14,8 +14,8 @@ const ChatStatusCard = ({ user, isAdd = false }) => {
       >
         <View
           style={{
-            width: 52,
-            height: 52,
+            width: 56,
+            height: 56,
             borderRadius: 32,
             backgroundColor: "#F3F4F6",
             alignItems: "center",
@@ -61,7 +61,7 @@ const ChatStatusCard = ({ user, isAdd = false }) => {
         </View>
       </LinearGradient>
       <Text
-        className="font-poppins-regular text-base text-gray-700"
+        className="font-poppins-regular text-sm text-gray-700"
         style={{
           maxWidth: 64,
         }}

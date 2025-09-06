@@ -367,6 +367,14 @@ const EventTabs = [
   { id: 4, label: "Top Rated", value: "Top Rated" },
 ];
 
+const ChatTabs = [
+  { id: 1, label: "All", value: "All" },
+  { id: 2, label: "Unread 99", value: "Unread 99" },
+  { id: 3, label: "Favorite", value: "Favorite" },
+  { id: 4, label: "Blocked", value: "Blocked" },
+  { id: 5, label: "Verified", value: "Verified" },
+];
+
 const mockEvents = [
   {
     id: 1,
@@ -420,4 +428,5 @@ export {
   EventBanners,
   EventTabs,
   mockEvents,
+  ChatTabs,
 };
