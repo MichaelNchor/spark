@@ -235,7 +235,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
             >
               <Animated.View
                 style={[nextCardStyle]}
-                className="w-full h-full bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
+                className="w-full h-full bg-gray-500 rounded-[30]"
               >
                 <SwipeCard user={nextProfile} />
               </Animated.View>
@@ -249,7 +249,7 @@ const TinderSwiper = forwardRef(({ users }, ref) => {
                 currentCardStyle,
                 { height: height - 2.9 * (tabBarH + BOTTONBOTTOM_SPACE - insets.bottom * 2) + 15 },
               ]}
-              className="absolute z-1 justify-center w-full bg-gray-500 rounded-[30] shadow-gray-400 shadow-2xl"
+              className="absolute z-1 justify-center w-full bg-gray-500 rounded-[30]"
             >
               <SwipeCard user={currentProfile} />
 

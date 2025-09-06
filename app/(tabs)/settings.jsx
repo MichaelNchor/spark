@@ -42,7 +42,7 @@ const SHADOW = {
 
 const Settings = () => {
   const profileCompletion = 70;
-  const size = 170;
+  const size = 140;
   const strokeWidth = 5;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -151,8 +151,8 @@ const Settings = () => {
                   }}
                 >
                   <Animated.Text
-                    className="font-poppins-medium pt-1"
-                    style={{ color: "white", fontSize: 12, fontWeight: "600" }}
+                    className="font-poppins-medium text-xs"
+                    style={{ color: "white"}}
                   >
                     {progress}% Complete
                   </Animated.Text>
@@ -197,7 +197,7 @@ const Settings = () => {
             </Text>
 
             <View
-              className="px-4 rounded-3xl mb-6"
+              className="px-4 rounded-xl mb-6"
               style={{ backgroundColor: COLORS.card, ...SHADOW }}
             >
               {/* Personal Info */}
@@ -278,7 +278,7 @@ const Settings = () => {
             </Text>
 
             <View
-              className="px-4 rounded-3xl mb-6"
+              className="px-4 rounded-xl mb-6"
               style={{ backgroundColor: COLORS.card, ...SHADOW }}
             >
               {/* Privacy Policy */}
@@ -356,7 +356,7 @@ const Settings = () => {
 
             {/* Logout */}
             <TouchableOpacity
-              className="rounded-3xl"
+              className="rounded-xl"
               style={{ backgroundColor: COLORS.card, ...SHADOW }}
             >
               <View className="flex-row justify-between items-center py-5 px-4">

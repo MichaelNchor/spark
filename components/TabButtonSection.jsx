@@ -26,7 +26,7 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
         <Ionicons
           name={icon}
           size={16}
-          color="#6B7280"
+          color="#ff5864"
           style={{ marginRight: 6 }}
         />
       )}
