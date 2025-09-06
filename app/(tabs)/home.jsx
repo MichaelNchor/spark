@@ -38,7 +38,9 @@ const Home = () => {
       style={{ flex: 1, paddingTop: 20, backgroundColor: "white" }}
     >
       {/* Top bar with logo left, icons right */}
-      <View className="w-full flex-row items-center justify-between px-4 pt-4 my-2">
+      <View
+        className="w-full flex-row items-center justify-between px-4 pt-4 my-2"
+      >
         {/* Logo on the left */}
         <Image
           source={icons.logo}
@@ -69,7 +71,15 @@ const Home = () => {
       </View>
 
       {/* Swiper in the center */}
-      <View style={{ flex: 1, marginHorizontal: 5 }}>
+      <View
+        style={{
+          flex: 1,
+          marginHorizontal: 5,
+          overflow: "hidden",
+          zIndex: 0,
+          elevation: 0,
+        }}
+      >
         <TinderSwiper ref={swiperRef} users={dummyUsers} />
       </View>
 
