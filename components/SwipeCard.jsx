@@ -35,7 +35,7 @@ const SwipeCard = ({ user }) => {
         source={{ uri: user.media[activeIndex].uri }}
         contentFit="cover"
         style={{ height: "100%" }}
-        imageStyle={{ borderRadius: 30 }}
+        imageStyle={{ borderRadius: 15 }}
       >
         {/* Top Progress Bar */}
         <View className="absolute flex w-full px-6 h-8 justify-center items-center rounded-3xl flex-row gap-1">
@@ -62,8 +62,8 @@ const SwipeCard = ({ user }) => {
             left: 0,
             right: 0,
             height: 350,
-            borderBottomLeftRadius: 30,
-            borderBottomRightRadius: 30,
+            borderBottomLeftRadius: 15,
+            borderBottomRightRadius: 15,
           }}
         />
 
@@ -132,7 +132,7 @@ const SwipeCard = ({ user }) => {
                     style={{ backgroundColor: "rgba(128,128,128,0.6)" }}
                   >
                     <Text
-                      className="text-gray-200 text-base font-poppins-regular"
+                      className="text-gray-200 text-xs font-poppins-regular"
                       numberOfLines={1}
                     >
                       {interest}

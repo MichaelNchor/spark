@@ -26,16 +26,16 @@ const Likes = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, marginTop: 30 }}>
+    <SafeAreaView style={{ flex: 1, marginTop: 30, backgroundColor: "white" }}>
       {/* Top bar */}
-      <View className="w-full flex-row items-center justify-center px-4 pt-4 my-2">
-        <Text className="font-poppins-semibold text-3xl text-gray-900">
+      <View className="w-full flex-row items-center justify-center px-4 pt-4 my-1">
+        <Text className="font-poppins-medium text-2xl text-gray-900">
           Matches
         </Text>
       </View>
 
       {/* Tagline */}
-      <Text className="font-poppins-medium text-center text-sm text-gray-700 mt-1 mx-4">
+      <Text className="font-poppins-regular text-center text-xs text-gray-700 mt-1 mx-4">
         See who likes you and match with them instantly
       </Text>
 

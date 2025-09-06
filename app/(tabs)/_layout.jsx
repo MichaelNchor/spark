@@ -18,9 +18,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 const { width: SCREEN_W } = Dimensions.get("window");
 
 // Layout constants
-const PADDING_H = 30;       // inner horizontal padding (left + right applied via paddingHorizontal)
-const BASE_BAR_H = 52;      // visual height (without bottom safe area)
-const CIRCLE = 46;          // highlight circle size
+const PADDING_H = 30;
+const BASE_BAR_H = 52;
+const CIRCLE = 46;
 const TABS_COUNT = 5;
 
 // map route names to indices so we can animate immediately on press
@@ -44,7 +44,7 @@ const TabIcon = ({ icon, idx, activeIndex }) => {
       tintColor: interpolateColor(
         progress.value,
         [0, 1],
-        ["#777777", "#FFFFFF"] // inactive gray -> active white
+        ["#777777", "#FFFFFF"]
       ),
     };
   });
@@ -77,9 +77,7 @@ export default function TabLayout() {
   );
 
   const animatedCircleStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: translateXCore.value + PADDING_H },
-    ],
+    transform: [{ translateX: translateXCore.value + PADDING_H }],
   }));
 
   const barHeight = BASE_BAR_H + insets.bottom;
@@ -96,19 +94,21 @@ export default function TabLayout() {
             tabBarActiveTintColor: "#E94057",
             tabBarInactiveTintColor: "#777777",
             tabBarHideOnKeyboard: true,
-            lazy: true,                 // mount screens on first focus
-            lazyPreloadDistance: 0,     // no preloading to keep main thread free
+            lazy: true, // mount screens on first focus
+            lazyPreloadDistance: 0, // no preloading to keep main thread free
             tabBarStyle: {
               height: barHeight,
               paddingBottom: insets.bottom,
               paddingTop: 8,
-              paddingHorizontal: PADDING_H, // 👈 inner padding (what you asked for)
+              paddingHorizontal: PADDING_H,
               position: "absolute",
-              borderTopRightRadius: 30,
-              borderTopLeftRadius: 30,
               backgroundColor: "white",
               borderTopWidth: 0,
-              elevation: 5,
+              elevation: 0, // Android shadow
+              shadowColor: "transparent", // iOS shadow
+              shadowOpacity: 0,
+              shadowRadius: 0,
+              borderTopColor: "transparent",
             },
             tabBarBackground: () => (
               <View style={{ flex: 1 }}>
@@ -121,8 +121,8 @@ export default function TabLayout() {
                   style={[
                     {
                       position: "absolute",
-                      top: (BASE_BAR_H - CIRCLE) / 2,     // center vertically in visual area
-                      left: TAB_WIDTH / 2 - CIRCLE / 2,   // start centered under first tab (pre-translate)
+                      top: (BASE_BAR_H - CIRCLE) / 2, // center vertically in visual area
+                      left: TAB_WIDTH / 2 - CIRCLE / 2, // start centered under first tab (pre-translate)
                       width: CIRCLE,
                       height: CIRCLE,
                       borderRadius: CIRCLE / 2,
@@ -166,7 +166,11 @@ export default function TabLayout() {
             name="events"
             options={{
               tabBarIcon: () => (
-                <TabIcon icon={icons.events} idx={1} activeIndex={activeIndex} />
+                <TabIcon
+                  icon={icons.events}
+                  idx={1}
+                  activeIndex={activeIndex}
+                />
               ),
             }}
           />
@@ -190,7 +194,11 @@ export default function TabLayout() {
             name="settings"
             options={{
               tabBarIcon: () => (
-                <TabIcon icon={icons.settings} idx={4} activeIndex={activeIndex} />
+                <TabIcon
+                  icon={icons.settings}
+                  idx={4}
+                  activeIndex={activeIndex}
+                />
               ),
             }}
           />

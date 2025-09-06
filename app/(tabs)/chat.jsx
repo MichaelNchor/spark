@@ -13,11 +13,11 @@ const Chat = () => {
   const users = dummyUsers;
 
   return (
-      <SafeAreaView>
+      <SafeAreaView style={{ marginTop: 20, flex: 1, backgroundColor: "white" }}>
         {/* Top bar with logo left, icons right */}
         <View className="w-full flex-row items-center justify-between px-4 mb-2">
           {/* Logo on the left */}
-          <Text className="font-poppins-semibold text-3xl text-gray-900">
+          <Text className="font-poppins-medium text-2xl text-gray-900">
             Chat
           </Text>
           {/* Right icons */}

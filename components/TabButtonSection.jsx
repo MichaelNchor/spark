@@ -8,41 +8,29 @@ const SPARK_GRADIENT = ["#fd297b", "#ff5864", "#ff655b"];
 
 const Chip = ({ active, label, icon, onPress, disabled }) => {
   const baseHeight = 40;
+  const borderRadius = 12; // same as searchbox
+  const inactiveBg = "#F2F2F7"; // same as searchbox background
 
   const Inactive = () => (
     <View
       style={{
         height: baseHeight,
         paddingHorizontal: 14,
-        borderRadius: 999,
-        borderColor: "#E5E7EB",
-        backgroundColor: "#FFFFFF",
+        borderRadius,
+        backgroundColor: inactiveBg,
         flexDirection: "row",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOpacity: 0.05,
-        shadowRadius: 3,
-        shadowOffset: { width: 0, height: 1 },
-        elevation: 2,
       }}
     >
       {icon && (
         <Ionicons
           name={icon}
           size={16}
-          color="#E94057"
+          color="#6B7280"
           style={{ marginRight: 6 }}
         />
       )}
-      <Text
-        style={{
-          fontFamily: "Poppins-Regular",
-          fontSize: 14,
-          color: "#6B7280",
-        }}
-      >
-        {label}
-      </Text>
+      <Text className="text-sm font-poppins-regular text-gray-700">{label}</Text>
     </View>
   );
 
@@ -54,7 +42,7 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
       style={{
         height: baseHeight,
         paddingHorizontal: 16,
-        borderRadius: 999,
+        borderRadius,
         flexDirection: "row",
         alignItems: "center",
         shadowColor: "#000",
@@ -72,15 +60,7 @@ const Chip = ({ active, label, icon, onPress, disabled }) => {
           style={{ marginRight: 6 }}
         />
       )}
-      <Text
-        style={{
-          fontFamily: "Poppins-Medium",
-          fontSize: 14,
-          color: "#FFFFFF",
-        }}
-      >
-        {label}
-      </Text>
+      <Text className="text-sm font-poppins-medium text-white">{label}</Text>
     </LinearGradient>
   );
 
@@ -104,16 +84,13 @@ const TabButtonSection = ({
   containerClassName = "mt-2",
 }) => {
   return (
-    <View
-      className={`w-full ${containerClassName}`}
-      style={{ minHeight: 56 }} // 👈 give vertical breathing room
-    >
+    <View className={`w-full ${containerClassName}`} style={{ minHeight: 56 }}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{
           paddingHorizontal: 12,
-          paddingVertical: 8, // 👈 add vertical padding so pills aren’t cut off
+          paddingVertical: 8,
           gap: 10,
           alignItems: "center",
         }}

@@ -22,12 +22,12 @@ const EventCard = ({ event }) => {
     <View
       className="mx-2 mb-4 overflow-hidden"
       style={{
-        borderRadius: 32,
+        borderRadius: 15,
         backgroundColor: "#fff",
         borderColor: "#EAEAEA",
         shadowColor: "#000",
         shadowOpacity: 0.08,
-        shadowRadius: 10,
+        shadowRadius: 15,
         shadowOffset: { width: 0, height: 6 },
         elevation: 4,
         padding: 2,
@@ -42,7 +42,7 @@ const EventCard = ({ event }) => {
           style={{
             width: "100%",
             aspectRatio: 16 / 9,
-            borderRadius: 32,
+            borderRadius: 15,
           }}
           contentFit="cover"
         />
@@ -59,8 +59,8 @@ const EventCard = ({ event }) => {
             right: 0,
             bottom: 0,
             height: 110,
-            borderBottomLeftRadius: 32,
-            borderBottomRightRadius: 32,
+            borderBottomLeftRadius: 15,
+            borderBottomRightRadius: 15,
           }}
         />
 
@@ -72,7 +72,7 @@ const EventCard = ({ event }) => {
               alignItems: "center",
               paddingHorizontal: 10,
               paddingVertical: 6,
-              borderRadius: 999,
+              borderRadius: 15,
               backgroundColor: "rgba(0,0,0,0.55)",
               borderWidth: 0.3,
               borderColor: "rgba(255,255,255,0.18)",
@@ -91,7 +91,7 @@ const EventCard = ({ event }) => {
             <Text
               style={{
                 color: "#fff",
-                fontSize: 12,
+                fontSize: 10,
                 fontFamily: "Poppins-Medium",
               }}
               numberOfLines={1}
@@ -107,7 +107,7 @@ const EventCard = ({ event }) => {
             style={{
               paddingHorizontal: 10,
               paddingVertical: 6,
-              borderRadius: 999,
+              borderRadius: 15,
               backgroundColor: "rgba(0,0,0,0.55)",
               borderWidth: 0.3,
               borderColor: "rgba(255,255,255,0.18)",
@@ -116,8 +116,8 @@ const EventCard = ({ event }) => {
             <Text
               style={{
                 color: "#F3F4F6",
-                fontSize: 12,
-                fontFamily: "Poppins-Medium",
+                fontSize: 10,
+                fontFamily: "Poppins-Regular",
               }}
               numberOfLines={1}
             >
@@ -132,7 +132,7 @@ const EventCard = ({ event }) => {
             intensity={60}
             tint="dark"
             style={{
-              borderRadius: 40,
+              borderRadius: 0,
               overflow: "hidden",
               paddingHorizontal: 16,
               paddingVertical: 10,
@@ -146,18 +146,17 @@ const EventCard = ({ event }) => {
           >
             <View style={{ flexShrink: 1, paddingRight: 12 }}>
               <Text
-                className="font-poppins-semibold"
-                style={{ color: "#fff", fontSize: 18 }}
+                className="font-poppins-semibold text-sm"
+                style={{ color: "#fff"}}
                 numberOfLines={1}
               >
                 {event.title}
               </Text>
               {!!event.description && (
                 <Text
-                  className="font-poppins-regular"
+                  className="font-poppins-regular text-xs"
                   style={{
                     color: "rgba(255,255,255,0.9)",
-                    fontSize: 13,
                   }}
                   numberOfLines={1}
                 >
@@ -221,7 +220,7 @@ const EventCard = ({ event }) => {
                 style={{
                   width: 32,
                   height: 32,
-                  borderRadius: 16,
+                  borderRadius: 15,
                   justifyContent: "center",
                   alignItems: "center",
                   marginLeft: -10,

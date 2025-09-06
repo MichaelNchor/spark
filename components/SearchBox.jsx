@@ -1,92 +1,70 @@
 import React, { useState } from "react";
 import { View, TextInput, TouchableOpacity, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import { Image } from "expo-image";
-import icons from "../assets/constants";
 
 const SearchBox = ({
   value,
-  placeholder = "Search Events",
-  handleChangeText,
-  onFilterPress,
+  placeholder = "Search",
+  onChangeText,
+  onSubmitEditing,
   otherStyles = "",
+  containerStyle,             // <— NEW
   ...props
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const bg = Platform.OS === "ios" ? "#F2F2F7" : "#F4F4F4";
 
   return (
     <View
-      className={`flex-row items-center w-full rounded-full px-3 ${otherStyles}`}
+      className={`flex-row items-center ${otherStyles}`}
       style={{
-        height: 56,
-        backgroundColor: "#fff",
-        borderColor: isFocused ? "#fca5a5" : "#f0f0f0",
-        shadowColor: "#000",
-        shadowOpacity: 0.08,
-        shadowRadius: 6,
-        shadowOffset: { width: 0, height: 3 },
-        elevation: 3,
+        width: "100%",          // <— ensure width
+        alignSelf: "stretch",   // <— ensure it stretches in parents
+        height: 44,
+        borderRadius: 12,
+        paddingHorizontal: 10,
+        backgroundColor: bg,
+        borderWidth: focused ? 1 : 0,
+        borderColor: focused ? "#D1D5DB" : "transparent",
+        ...containerStyle,      // <— allow caller overrides
       }}
     >
-      {/* Search icon */}
       <Ionicons
-        name="search"
-        size={20}
-        color="#9CA3AF"
-        style={{ marginRight: 8 }}
+        name="search-outline"
+        size={22}
+        color="#000"
+        style={{ marginRight: 3 }}
       />
-
-      {/* Input */}
       <TextInput
-        className="flex-1 font-poppins-medium text-base"
+        style={{
+          flex: 1,
+          height: "100%",
+          paddingVertical: 0,
+          fontFamily: "Poppins-Regular",
+          color: "#111",
+          fontSize: 16,
+          ...(Platform.OS === "android" ? { textAlignVertical: "center" } : null),
+        }}
         value={value}
         placeholder={placeholder}
-        placeholderTextColor="#9CA3AF"
-        onChangeText={handleChangeText}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        style={{
-          color: "#111",
-          paddingVertical: 0,
-          height: "100%",
-          includeFontPadding: false,
-          ...(Platform.OS === "android" ? { textAlignVertical: "center" } : {}),
-        }}
+        placeholderTextColor="#8E8E93"
+        onChangeText={onChangeText}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        returnKeyType="search"
+        onSubmitEditing={onSubmitEditing}
+        clearButtonMode={Platform.OS === "ios" ? "while-editing" : "never"}
         {...props}
       />
-
-      {/* Filter button (TouchableOpacity) */}
-      <TouchableOpacity
-        onPress={onFilterPress}
-        activeOpacity={0.8}
-        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          overflow: "hidden",
-          marginLeft: 8,
-          shadowColor: "#000",
-          shadowOpacity: 0.12,
-          shadowRadius: 8,
-          shadowOffset: { width: 0, height: 4 },
-          elevation: 4,
-        }}
-      >
-        <LinearGradient
-          colors={["#fd297b", "#ff5864", "#ff655b"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      {Platform.OS !== "ios" && !!value && (
+        <TouchableOpacity
+          onPress={() => onChangeText && onChangeText("")}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          style={{ width: 26, height: 26, borderRadius: 13, alignItems: "center", justifyContent: "center" }}
         >
-          <Image
-            source={icons.filter}
-            style={{ width: 16, height: 16, tintColor: "white" }}
-            contentFit="cover"
-          />
-        </LinearGradient>
-      </TouchableOpacity>
+          <Ionicons name="close-circle" size={18} color="#C7C7CC" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

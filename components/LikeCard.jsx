@@ -10,7 +10,7 @@ const SPARK = {
   border: "rgba(0,0,0,0.06)",
 };
 
-const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
+const LikeCard = ({ user, height = 240, radius = 15, showMatch = true }) => {
   const {
     name,
     age,
@@ -128,26 +128,36 @@ const LikeCard = ({ user, height = 240, radius = 20, showMatch = true }) => {
         <View
           style={{
             alignSelf: "flex-start",
-            backgroundColor: "rgba(255,255,255,0.18)",
-            borderColor: "rgba(255,255,255,0.45)",
+            backgroundColor: "rgba(0,0,0,0.55)",
+            borderColor: "rgba(255,255,255,0.18)",
             borderWidth: 0.3,
             paddingHorizontal: 10,
-            paddingVertical: 1,
+            paddingVertical: 6,
             borderRadius: 999,
             marginBottom: 6,
             flexDirection: "row",
             alignItems: "center",
+            justifyContent: "center",
             gap: 6,
           }}
         >
           <Image
             source={icons.location}
-            style={{ width: 16, height: 25, tintColor: "white" }}
+            style={{
+              width: 10,
+              height: 10,
+              tintColor: "#fff",
+              marginRight: 1,
+            }}
             contentFit="contain"
           />
           <Text
-            className="font-poppins-medium text-xs"
-            style={{ color: "#fff" }}
+            style={{
+              color: "#fff",
+              fontSize: 10,
+              fontFamily: "Poppins-Regular",
+            }}
+            numberOfLines={1}
           >
             {typeof distance === "number"
               ? `${distance.toFixed(1)} km away`

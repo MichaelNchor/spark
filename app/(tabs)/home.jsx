@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <SafeAreaView
-      style={{ flex: 1, paddingTop: 20 }}
+      style={{ flex: 1, paddingTop: 20, backgroundColor: "white" }}
     >
       {/* Top bar with logo left, icons right */}
       <View className="w-full flex-row items-center justify-between px-4 pt-4 my-2">
@@ -77,7 +77,7 @@ const Home = () => {
       <View
         style={{
           position: "absolute",
-          bottom: tabBarH + BOTTONBOTTOM_SPACE - 12,
+          bottom: tabBarH + BOTTONBOTTOM_SPACE - 14,
           left: 0,
           right: 0
         }}

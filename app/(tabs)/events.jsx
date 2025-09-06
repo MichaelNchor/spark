@@ -11,7 +11,7 @@ import CustomButtonWithIcon from "../../components/CustomButtonWithIcon";
 import { ImageBackground } from "expo-image";
 import icons from "../../assets/constants";
 import Carousel from "react-native-reanimated-carousel";
-import { EventBanners , EventTabs , mockEvents } from "../../data/mockData";
+import { EventBanners, EventTabs, mockEvents } from "../../data/mockData";
 import { LinearGradient } from "expo-linear-gradient";
 import TabButtonSection from "../../components/TabButtonSection";
 import EventCard from "../../components/EventCard";
@@ -25,10 +25,10 @@ const Events = () => {
   const [activeTab, setActiveTab] = useState("Today");
 
   return (
-    <SafeAreaView style={{ marginTop: 20, flex: 1 }}>
+    <SafeAreaView style={{ marginTop: 20, flex: 1, backgroundColor: "white" }}>
       {/* Top bar */}
       <View className="w-full flex-row items-center justify-between px-4 pt-4 my-2">
-        <Text className="font-poppins-semibold text-3xl text-gray-900">
+        <Text className="font-poppins-medium text-2xl text-gray-900">
           Events
         </Text>
         <CustomButtonWithIcon
@@ -75,7 +75,7 @@ const Events = () => {
                 <View
                   className="overflow-hidden shadow-lg"
                   style={{
-                    borderRadius: 40,
+                    borderRadius: 15,
                     borderColor: "white",
                   }}
                 >
@@ -84,7 +84,7 @@ const Events = () => {
                     source={{ uri: item.image }}
                     contentFit="cover"
                     style={{ width: "100%", height: 200 }}
-                    imageStyle={{ borderRadius: 40 }}
+                    imageStyle={{ borderRadius: 15 }}
                   >
                     <LinearGradient
                       colors={[
@@ -100,8 +100,8 @@ const Events = () => {
                         right: 0,
                         bottom: 0,
                         height: 90,
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
+                        borderBottomLeftRadius: 15,
+                        borderBottomRightRadius: 15,
                       }}
                     />
 
@@ -118,7 +118,7 @@ const Events = () => {
                         intensity={55} // increase for more blur (e.g., 70–90)
                         tint="dark" // "light" | "dark" | "default"
                         style={{
-                          borderRadius: 40,
+                          borderRadius: 15,
                           overflow: "hidden",
                           paddingHorizontal: 14,
                           paddingVertical: 10,
@@ -151,7 +151,7 @@ const Events = () => {
                           style={{
                             width: 36,
                             height: 36,
-                            borderRadius: 18,
+                            borderRadius: 15,
                             alignItems: "center",
                             justifyContent: "center",
                             backgroundColor: "rgba(255,255,255,0.2)", // frosted circle

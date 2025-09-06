@@ -23,7 +23,7 @@ import { dummyUsers, ProfileTabs } from "../../data/mockData";
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const COLORS = {
-  bg: "#F5F6FA",
+  bg: "white",
   card: "#FFFFFF",
   line: "#E5E7EB",
   title: "#0F172A",
