@@ -7,6 +7,13 @@ import { router } from "expo-router";
 
 const screenWidth = Dimensions.get("window").width;
 
+// put near the top of the file
+const SPARK_GRADIENT = ["#fd297b", "#ff5864", "#ff655b"]; // your theme
+const DOT = 6;          // inactive dot size
+const PILL_W = 24;      // active pill width
+const PILL_H = 6;       // active pill height
+const GAP = 6;          // spacing between dots
+
 const SwipeCard = ({ user }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -37,20 +44,66 @@ const SwipeCard = ({ user }) => {
         style={{ height: "100%" }}
         imageStyle={{ borderRadius: 15 }}
       >
-        {/* Top Progress Bar */}
-        <View className="absolute flex w-full px-6 h-8 justify-center items-center rounded-3xl flex-row gap-1">
-          {user.media.map((_, i) => (
-            <Pressable
-              key={i}
-              onPress={() => setActiveIndex(i)}
-              className={`flex-1 rounded-full border-[0.5px] border-gray-500/50 ${
-                i === activeIndex ? "bg-white" : "bg-white/40"
-              }`}
-              style={{
-                height: 2.5,
-              }}
-            />
-          ))}
+        {/* Top Progress (pill + dots) */}
+        <View
+          style={{
+            position: "absolute",
+            top: 10,
+            left: 0,
+            right: 0,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          pointerEvents="box-none"
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: GAP,
+            }}
+          >
+            {user.media.map((_, i) => {
+              const isActive = i === activeIndex;
+
+              if (isActive) {
+                // gradient pill for the active item
+                return (
+                  <Pressable key={i} onPress={() => setActiveIndex(i)}>
+                    <LinearGradient
+                      colors={SPARK_GRADIENT}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={{
+                        width: PILL_W,
+                        height: PILL_H,
+                        borderRadius: PILL_H / 2,
+                        shadowColor: "#000",
+                        shadowOpacity: 0.2,
+                        shadowRadius: 3,
+                        shadowOffset: { width: 0, height: 1 },
+                        elevation: 2,
+                      }}
+                    />
+                  </Pressable>
+                );
+              }
+
+              // inactive dots
+              return (
+                <Pressable key={i} onPress={() => setActiveIndex(i)}>
+                  <View
+                    style={{
+                      width: DOT,
+                      height: DOT,
+                      borderRadius: DOT / 2,
+                      backgroundColor: "rgba(255,255,255,0.85)",
+                    }}
+                  />
+                </Pressable>
+              );
+            })}
+          </View>
         </View>
 
         {/* Bottom Gradient Overlay */}
@@ -116,7 +169,7 @@ const SwipeCard = ({ user }) => {
               style={{ width: 16, height: 25, tintColor: "white" }}
               contentFit="contain"
             />
-            <Text className="text-white font-poppins-regular text-base ml-1">
+            <Text className="text-gray-200 font-poppins-regular text-sm ml-1">
               {user.location.place}
             </Text>
           </View>
